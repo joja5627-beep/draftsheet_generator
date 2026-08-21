@@ -326,3 +326,4 @@ Overrides require a games range and a written reason so manual judgment stays au
 Add a `sources` list with `provider`, `url`, `updated_at`, and `note` when the override
 corroborates or replaces a live-feed estimate.
 # draftsheet_generator
+# draftsheet_generator
