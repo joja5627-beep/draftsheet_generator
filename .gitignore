@@ -1,0 +1,49 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+build/
+dist/
+.venv/
+
+# Editors and operating systems
+.DS_Store
+.idea/
+.vscode/
+
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+
+# Third-party source material and reproducible build products
+/NFL26_CS_PPR300.pdf
+/output/
+/tmp/
+/context/cache/
+
+# Generated context. Keep the hand-maintained model, overrides, source catalog,
+# research notes, and validation methodology under version control.
+/context/build_manifest.json
+/context/context_validation.json
+/context/draft_context.json
+/context/draft_context.md
+/context/market_context.json
+/context/market_context.md
+/context/player_depth_charts.json
+/context/player_depth_charts.md
+/context/player_injuries.json
+/context/player_injuries.md
+/context/reweighted_cheat_sheet.json
+/context/reweighted_cheat_sheet.md
+/context/sleeper_consensus.json
+/context/sleeper_consensus.md
+/context/source_audit.json
+/context/source_audit.md
+/context/strength_of_schedule.json
+/context/strength_of_schedule.md

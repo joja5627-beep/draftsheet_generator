@@ -1,0 +1,49 @@
+[project]
+name = "fantasy-football-2026"
+version = "0.1.0"
+description = "PDF tools for preparing a 2026 fantasy football draft sheet."
+authors = [
+    { name = "Joseph Jackson" },
+]
+readme = "README.md"
+requires-python = ">=3.11,<4.0"
+dependencies = [
+    "pdfplumber>=0.11,<1.0",
+    "pymupdf>=1.26,<2",
+    "pypdf>=5,<7",
+    "reportlab>=4.2,<5",
+]
+
+[project.scripts]
+fantasy-pdf = "fantasy_football_2026.cli:main"
+fantasy-injuries = "fantasy_football_2026.injury_context:main"
+fantasy-depth-charts = "fantasy_football_2026.depth_chart_context:main"
+fantasy-schedule = "fantasy_football_2026.schedule_context:main"
+fantasy-market = "fantasy_football_2026.market_context:main"
+fantasy-sleepers = "fantasy_football_2026.sleeper_consensus:main"
+fantasy-rankings = "fantasy_football_2026.ranking_model:main"
+fantasy-rebuild = "fantasy_football_2026.rebuild:main"
+
+[tool.poetry]
+packages = [
+    { include = "fantasy_football_2026", from = "src" },
+]
+
+[tool.poetry.group.dev.dependencies]
+pytest = ">=8,<10"
+ruff = ">=0.12,<1"
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[build-system]
+requires = ["poetry-core>=2.0,<3.0"]
+build-backend = "poetry.core.masonry.api"

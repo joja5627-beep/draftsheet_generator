@@ -1,0 +1,165 @@
+{
+  "metadata": {
+    "research_date": "2026-08-21",
+    "market_generated_at": "2026-08-21T13:16:52+00:00",
+    "league": "12-team, one-QB, half-PPR redraft with custom yardage and big-play bonuses",
+    "method": "Count independent publisher families once, then require current market, depth-chart, and injury checks before assigning a draft action.",
+    "tiers": {
+      "A": "At least three independent recommendation families plus viable price and role.",
+      "B": "Two independent recommendation families plus role or market corroboration.",
+      "C": "One family, material disagreement, or a role, health, or price blocker."
+    },
+    "market_context": "context/market_context.json",
+    "depth_chart_context": "context/player_depth_charts.json",
+    "injury_context": "context/player_injuries.json"
+  },
+  "source_families": {
+    "fantasypros": "https://www.fantasypros.com/nfl/sleepers.php",
+    "nfl": "https://www.nfl.com/news/2026-nfl-fantasy-football-six-late-round-sleepers-to-target",
+    "cbs": "https://www.cbssports.com/fantasy/football/news/2026-fantasy-football-rookie-sleepers-mike-washington-jr-a-top-handcuff/",
+    "yahoo": "https://uk.sports.yahoo.com/news/2026-fantasy-football-jayden-reed-among-justin-boones-top-sleeper-picks-at-wr-131516755.html",
+    "pff": "https://www.pff.com/news/2026-fantasy-football-5-breakout-candidates-for-drafts",
+    "rotoballer": "https://www.rotoballer.com/8-fantasy-football-sleepers-to-draft-undervalued-players-2026/1901710",
+    "ftn": "https://ftnfantasy.com/nfl/fantasy-football-breakout-candidates-for-2026",
+    "fantasy_life": "https://www.fantasylife.com/articles/fantasy/fantasy-football-sleepers-jonathon-brooks-chig-okonkwo-2026",
+    "draft_sharks": "https://www.draftsharks.com/article/fantasy-football-sleepers/dynasty-rookie",
+    "fanduel": "https://www.fanduel.com/research/fantasy-football-sleepers-4-breakout-players-you-need-to-target-in-2026",
+    "si": "https://www.si.com/onsi/fantasy/news/tyler-shough-leads-5-nfc-south-fantasy-football-sleepers-to-target-in-2026"
+  },
+  "sleepers": [
+    {
+      "priority": 1,
+      "player": "Chig Okonkwo",
+      "position_team": "TE-WAS",
+      "tier": "A",
+      "source_families": ["fantasypros", "cbs", "fantasy_life", "ftn", "rotoballer"],
+      "fftoday_adp": 144.5,
+      "consensus_rank": 168.7,
+      "draft_action": "Target rounds 12-13; stop before round 11."
+    },
+    {
+      "priority": 2,
+      "player": "Jonah Coleman",
+      "position_team": "RB-DEN",
+      "tier": "A",
+      "source_families": ["fantasypros", "nfl", "rotoballer"],
+      "fftoday_adp": 153.5,
+      "consensus_rank": 151.0,
+      "draft_action": "Target round 13; stop before round 12."
+    },
+    {
+      "priority": 3,
+      "player": "Denzel Boston",
+      "position_team": "WR-CLE",
+      "tier": "B",
+      "source_families": ["nfl", "rotoballer"],
+      "fftoday_adp": 141.0,
+      "consensus_rank": 146.6,
+      "draft_action": "Target round 12; stop before round 11."
+    },
+    {
+      "priority": 4,
+      "player": "Jayden Reed",
+      "position_team": "WR-GB",
+      "tier": "A",
+      "source_families": ["yahoo", "rotoballer", "fantasy_life"],
+      "fftoday_adp": 91.0,
+      "consensus_rank": 100.0,
+      "draft_action": "Target rounds 8-9; stop before round 7; classify as value rather than deep sleeper."
+    },
+    {
+      "priority": 5,
+      "player": "Tyler Shough",
+      "position_team": "QB-NO",
+      "tier": "A",
+      "source_families": ["ftn", "rotoballer", "fanduel", "si"],
+      "fftoday_adp": 129.5,
+      "consensus_rank": 129.1,
+      "draft_action": "Target round 11 only when waiting at QB; otherwise round 12 or later."
+    },
+    {
+      "priority": 6,
+      "player": "Isaiah Likely",
+      "position_team": "TE-NYG",
+      "tier": "A",
+      "source_families": ["ftn", "rotoballer", "fantasy_life"],
+      "fftoday_adp": 123.5,
+      "consensus_rank": 118.5,
+      "draft_action": "Target rounds 10-11; stop before round 9."
+    },
+    {
+      "priority": 7,
+      "player": "Rashid Shaheed",
+      "position_team": "WR-SEA",
+      "tier": "B",
+      "source_families": ["yahoo", "pff"],
+      "fftoday_adp": 134.0,
+      "consensus_rank": 143.4,
+      "draft_action": "Target rounds 11-12; stop before round 10."
+    },
+    {
+      "priority": 8,
+      "player": "Jared Goff",
+      "position_team": "QB-DET",
+      "tier": "B",
+      "source_families": ["yahoo", "fantasypros"],
+      "fftoday_adp": 114.5,
+      "consensus_rank": 118.9,
+      "draft_action": "Target round 10 when waiting at QB; stop before round 9."
+    },
+    {
+      "priority": 9,
+      "player": "Dalton Kincaid",
+      "position_team": "TE-BUF",
+      "tier": "B",
+      "source_families": ["nfl", "fantasypros"],
+      "fftoday_adp": 115.5,
+      "consensus_rank": 115.2,
+      "draft_action": "Target rounds 10-11; stop before round 9; recheck health."
+    },
+    {
+      "priority": 10,
+      "player": "Malik Willis",
+      "position_team": "QB-MIA",
+      "tier": "A",
+      "source_families": ["fantasypros", "yahoo", "cbs", "ftn", "rotoballer"],
+      "fftoday_adp": 133.5,
+      "consensus_rank": 139.7,
+      "draft_action": "Round 12 or later only; broad consensus is reduced by one-QB format fit."
+    },
+    {
+      "priority": 11,
+      "player": "Chris Rodriguez Jr.",
+      "position_team": "RB-JAC",
+      "tier": "B",
+      "source_families": ["nfl", "fantasypros"],
+      "fftoday_adp": 119.5,
+      "consensus_rank": 127.4,
+      "draft_action": "Target rounds 10-11 only if the first-team workload remains competitive."
+    },
+    {
+      "priority": 12,
+      "player": "De'Zhaun Stribling",
+      "position_team": "WR-SF",
+      "tier": "B",
+      "source_families": ["nfl", "fantasy_life", "rotoballer"],
+      "fftoday_adp": 123.5,
+      "consensus_rank": 132.4,
+      "draft_action": "Round 11 or later; stop inside the top 100 and require a clean health update."
+    }
+  ],
+  "rookie_breakout_candidates": [
+    {"priority": 1, "player": "Carnell Tate", "position_team": "WR-TEN", "tier": "A-premium", "source_families": ["fantasypros", "espn", "yahoo"], "draft_action": "Target round 6; acceptable early round 7."},
+    {"priority": 2, "player": "Makai Lemon", "position_team": "WR-PHI", "tier": "A-premium", "source_families": ["fantasypros", "espn", "pff"], "draft_action": "Target rounds 8-9."},
+    {"priority": 3, "player": "Jadarian Price", "position_team": "RB-SEA", "tier": "A-premium", "source_families": ["fantasypros", "espn", "pff"], "draft_action": "Target round 6 only after confirming passing-down work."},
+    {"priority": 4, "player": "Jonah Coleman", "position_team": "RB-DEN", "tier": "A-value", "source_families": ["fantasypros", "nfl", "rotoballer"], "draft_action": "Target round 13."},
+    {"priority": 5, "player": "Denzel Boston", "position_team": "WR-CLE", "tier": "B-value", "source_families": ["nfl", "rotoballer"], "draft_action": "Target round 12."},
+    {"priority": 6, "player": "KC Concepcion", "position_team": "WR-CLE", "tier": "B", "source_families": ["fantasypros", "cbs"], "draft_action": "Target rounds 10-11."},
+    {"priority": 7, "player": "De'Zhaun Stribling", "position_team": "WR-SF", "tier": "B-risk", "source_families": ["nfl", "fantasy_life", "rotoballer"], "draft_action": "Round 11 or later after a clean health update."},
+    {"priority": 8, "player": "Caleb Douglas", "position_team": "WR-MIA", "tier": "B-deep", "source_families": ["nfl", "draft_sharks"], "draft_action": "Final round in deep benches; otherwise waiver watch."},
+    {"priority": 9, "player": "Mike Washington Jr.", "position_team": "RB-LV", "tier": "B-disputed", "source_families": ["cbs", "nfl", "draft_sharks"], "draft_action": "Final two rounds only after confirming RB2."},
+    {"priority": 10, "player": "Ja'Kobi Lane", "position_team": "WR-BAL", "tier": "B-deep", "source_families": ["nfl", "draft_sharks"], "draft_action": "Final round only."},
+    {"priority": 11, "player": "Terrance Ferguson", "position_team": "TE-LAR", "tier": "B-deep", "source_families": ["yahoo", "fantasypros"], "draft_action": "Final two rounds only after confirming routes."},
+    {"priority": 12, "player": "Nicholas Singleton", "position_team": "RB-TEN", "tier": "C-watch", "source_families": ["rotoballer", "draft_sharks"], "draft_action": "Do not draft in ordinary redraft until he rises from RB4."}
+  ]
+}

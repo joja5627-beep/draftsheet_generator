@@ -1,0 +1,189 @@
+{
+  "metadata": {
+    "effective_date": "2026-08-21",
+    "purpose": "Cross-reference every data family displayed in the DC, OFF, OL, SOS, and INJ PDF columns without averaging incompatible methods.",
+    "policy": "The named primary source supplies the displayed value. Independent sources validate direction and bucket; disagreements remain visible in this audit.",
+    "palette": {
+      "green": "#34785B",
+      "yellow": "#956B1D",
+      "red": "#A84F52"
+    },
+    "rank_buckets": {
+      "green": "1-10",
+      "yellow": "11-22",
+      "red": "23-32 or unavailable"
+    },
+    "depth_chart_buckets": {
+      "green": "order 1 or DST",
+      "yellow": "order 2",
+      "red": "order 3+ or unavailable"
+    },
+    "injury_buckets": {
+      "green": "0 projected regular-season fantasy weeks missed or DST not applicable",
+      "yellow": "1-2 weeks at the upper end of the range",
+      "red": "3+ weeks or unresolved current injury"
+    }
+  },
+  "columns": {
+    "DC": {
+      "primary": {
+        "name": "Sleeper NFL player API",
+        "url": "https://api.sleeper.app/v1/players/nfl?active=true",
+        "retrieved_at": "2026-08-21T11:25:46+00:00"
+      },
+      "cross_checks": [
+        {
+          "name": "ESPN 2026 fantasy team depth charts",
+          "url": "https://g.espncdn.com/s/ffldraftkit/26/NFL26_CS_Depth.pdf?adddata=2026CS_Depth",
+          "effective_date": "2026-08-19"
+        },
+        {
+          "name": "ESPN NFL depth charts for all 32 teams",
+          "url": "https://www.espn.com/nfl/story/_/id/29098001/nfl-depth-charts-all-32-teams",
+          "effective_date": "2026-08-19"
+        }
+      ],
+      "comparison": {
+        "eligible_skill_rows": 260,
+        "same_order": 227,
+        "different_order": 31,
+        "missing_from_espn_ranked_chart": 2,
+        "different_order_ranks": [66, 68, 78, 91, 99, 100, 115, 120, 143, 144, 147, 158, 208, 211, 225, 228, 239, 241, 244, 246, 249, 253, 261, 264, 276, 279, 281, 283, 284, 290, 291],
+        "missing_ranks": [265, 295],
+        "note": "ESPN explicitly orders this chart by fantasy value, while Sleeper preserves roster alignment such as LWR, RWR, and SWR. Sleeper remains primary; differences are not silently overwritten."
+      }
+    },
+    "OFF": {
+      "primary": {
+        "name": "First Down Studio 2026 Vegas implied totals",
+        "url": "https://www.firstdown.studio/implied-totals/season",
+        "effective_date": "2026-08-20"
+      },
+      "cross_checks": [
+        {
+          "name": "Mike Clay 2026 NFL Projection Guide",
+          "url": "https://g.espncdn.com/s/ffldraftkit/26/NFLDK2026_CS_ClayProjections2026.pdf",
+          "effective_date": "2026-08-19"
+        }
+      ],
+      "comparison": {
+        "spearman_rank_correlation": 0.924,
+        "same_bucket": 24,
+        "team_count": 32,
+        "different_bucket_teams": ["ATL", "CHI", "GB", "HOU", "KC", "NE", "PHI", "SEA"],
+        "note": "Both sources project scoring environment, but one is market-implied and one is a football-stat projection. The strong rank agreement supports using the market rank while retaining the eight boundary disagreements."
+      }
+    },
+    "OL": {
+      "primary": {
+        "name": "Sharp Football Analysis 2026 offensive line rankings",
+        "url": "https://www.sharpfootballanalysis.com/analysis/best-nfl-offensive-line-rankings/",
+        "effective_date": "2026-06-30"
+      },
+      "cross_checks": [
+        {
+          "name": "4for4 2026 projected offensive line rankings",
+          "url": "https://www.4for4.com/2026/preseason/2026-projected-offensive-line-rankings",
+          "effective_date": "2026-06-22"
+        },
+        {
+          "name": "Mike Clay 2026 NFL Projection Guide OL unit grades and projected starters",
+          "url": "https://g.espncdn.com/s/ffldraftkit/26/NFLDK2026_CS_ClayProjections2026.pdf",
+          "effective_date": "2026-08-19"
+        }
+      ],
+      "comparison": {
+        "sharp_vs_4for4_same_bucket": 18,
+        "sharp_vs_espn_same_bucket": 21,
+        "team_count": 32,
+        "sharp_vs_4for4_different_bucket_teams": ["ARI", "ATL", "BUF", "CAR", "HOU", "IND", "KC", "LAC", "LV", "MIN", "NE", "NO", "SEA", "WAS"],
+        "sharp_vs_espn_different_bucket_teams": ["ARI", "ATL", "BAL", "GB", "IND", "KC", "LAC", "LV", "PIT", "SEA", "WAS"],
+        "note": "Sharp blends staff film, statistics, and projections; 4for4 models eight expected linemen from PFF-derived grades; ESPN uses unit grades. Method disagreement is material, so the Sharp value remains labeled as a projection and is not averaged."
+      }
+    },
+    "SOS": {
+      "primary": {
+        "name": "DraftCall 2026 position-specific strength of schedule",
+        "url": "https://draftcall.io/strength-of-schedule/",
+        "source_page_label": "Refreshed July 3, 2026",
+        "retrieved_at": "2026-08-21T12:14:25+00:00"
+      },
+      "cross_checks": [
+        {
+          "name": "RankFantasy fantasy strength of schedule",
+          "url": "https://www.rankfantasy.com/strength-of-schedule"
+        },
+        {
+          "name": "FantasyPros fantasy strength of schedule",
+          "url": "https://www.fantasypros.com/nfl/strength-of-schedule.php"
+        },
+        {
+          "name": "FFToolbox 2026 fantasy strength of schedule",
+          "url": "https://www.fftoolbox.com/football/strength_of_schedule.cfm"
+        }
+      ],
+      "comparison": {
+        "draftcall_vs_fftoolbox_same_bucket": 145,
+        "team_position_count": 192,
+        "same_bucket_by_position": {
+          "QB": "30/32",
+          "RB": "26/32",
+          "WR": "30/32",
+          "TE": "28/32",
+          "K": "20/32",
+          "DEF": "11/32"
+        },
+        "note": "Skill-position tiers agree strongly. Kicker and defense rankings are scoring-sensitive and disagree materially, so those colors are low-confidence tiebreakers rather than projections."
+      }
+    },
+    "INJ": {
+      "primary_feeds": [
+        {
+          "name": "Sleeper NFL player API",
+          "url": "https://api.sleeper.app/v1/players/nfl?active=true",
+          "retrieved_at": "2026-08-21T12:39:36+00:00"
+        },
+        {
+          "name": "ESPN NFL injury report",
+          "url": "https://www.espn.com/nfl/injuries",
+          "retrieved_at": "2026-08-21T12:39:36+00:00"
+        }
+      ],
+      "cross_checks": [
+        {
+          "name": "NFL 2026-27 reporting calendar",
+          "url": "https://www.nfl.com/news/2026-27-national-football-league-important-dates"
+        },
+        {
+          "name": "San Francisco 49ers August 18 practice report",
+          "url": "https://www.49ers.com/news/day-14-of-2026-training-camp-kaelon-black-returns-for-joint-practice-with-chargers"
+        },
+        {
+          "name": "FantasyPros Jordan James injury page",
+          "url": "https://www.fantasypros.com/nfl/players/jordan-james.php"
+        },
+        {
+          "name": "FantasyPros Jordyn Tyson injury update",
+          "url": "https://www.fantasypros.com/nfl/news/602917/jordyn-tyson-hamstring-out-two-months-with-hamstring-injury.php"
+        },
+        {
+          "name": "DraftKings Network Jordyn Tyson injury analysis",
+          "url": "https://dknetwork.draftkings.com/2026/08/17/jordyn-tyson-injury-update-where-should-you-draft-saints-rookie-wr/"
+        }
+      ],
+      "comparison": {
+        "ranked_players": 278,
+        "current_signal_count": 51,
+        "sleeper_and_espn_signal_count": 50,
+        "supplemented_single_feed_count": 1,
+        "corroborated_signal_count": 51,
+        "display_bucket_counts_including_dst": {
+          "green": 292,
+          "yellow": 7,
+          "red": 1
+        },
+        "note": "Weeks are schedule-mapped regular-season fantasy weeks missed. Preseason status-only cases remain broad because formal weekly NFL game-status reports begin in kickoff week."
+      }
+    }
+  }
+}

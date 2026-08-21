@@ -1,0 +1,85 @@
+{
+  "schema_version": "1.0.0",
+  "policy": "Each publisher family contributes at most one vote per player. Heading mode discovers player sections; explicit mode verifies the configured names occur in article text.",
+  "minimum_available_sources": 6,
+  "sources": [
+    {
+      "id": "rotoballer_aug14_sleepers",
+      "family": "rotoballer",
+      "url": "https://www.rotoballer.com/8-fantasy-football-sleepers-to-draft-undervalued-players-2026/1901710",
+      "mode": "explicit",
+      "players": ["Luther Burden III", "Isaiah Likely", "Jayden Reed", "Cam Ward", "Tyler Shough", "Tyrone Tracy Jr.", "Juwan Johnson", "Woody Marks"]
+    },
+    {
+      "id": "rotoballer_aug1_values",
+      "family": "rotoballer",
+      "url": "https://www.rotoballer.com/8-fantasy-football-sleepers-breakouts-and-league-winners-2026/1877912",
+      "mode": "headings"
+    },
+    {
+      "id": "rotoballer_rookie_wr",
+      "family": "rotoballer",
+      "url": "https://www.rotoballer.com/5-fantasy-football-rookie-wr-sleepers-potential-league-winners-2026/1903102",
+      "mode": "headings"
+    },
+    {
+      "id": "rotoballer_rookie_rb",
+      "family": "rotoballer",
+      "url": "https://www.rotoballer.com/4-rookie-running-back-breakout-candidates-fantasy-football-sleepers-2026/1867702",
+      "mode": "headings"
+    },
+    {
+      "id": "ftn_breakouts",
+      "family": "ftn",
+      "url": "https://ftnfantasy.com/nfl/fantasy-football-breakout-candidates-for-2026",
+      "mode": "headings"
+    },
+    {
+      "id": "fantasy_life_consensus",
+      "family": "fantasy_life",
+      "url": "https://www.fantasylife.com/articles/fantasy/fantasy-football-sleepers-jonathon-brooks-chig-okonkwo-2026",
+      "mode": "explicit",
+      "players": ["Jonathon Brooks", "Josh Downs", "Jayden Reed", "Chig Okonkwo", "Isaiah Likely"]
+    },
+    {
+      "id": "draft_sharks_rookies",
+      "family": "draft_sharks",
+      "url": "https://www.draftsharks.com/article/fantasy-football-sleepers/dynasty-rookie",
+      "mode": "headings"
+    },
+    {
+      "id": "fanduel_breakouts",
+      "family": "fanduel",
+      "url": "https://www.fanduel.com/research/fantasy-football-sleepers-4-breakout-players-you-need-to-target-in-2026",
+      "mode": "headings"
+    },
+    {
+      "id": "yahoo_jayden_reed",
+      "family": "yahoo",
+      "url": "https://uk.sports.yahoo.com/news/2026-fantasy-football-jayden-reed-among-justin-boones-top-sleeper-picks-at-wr-131516755.html",
+      "mode": "explicit",
+      "players": ["Jayden Reed"]
+    },
+    {
+      "id": "nfl_late_sleepers",
+      "family": "nfl",
+      "url": "https://www.nfl.com/news/2026-nfl-fantasy-football-six-late-round-sleepers-to-target",
+      "mode": "explicit",
+      "players": ["Stefon Diggs", "Chris Rodriguez Jr.", "Dalton Kincaid", "Denzel Boston", "Ja'Kobi Lane", "Tank Dell"]
+    },
+    {
+      "id": "nfl_late_rookies",
+      "family": "nfl",
+      "url": "https://www.nfl.com/news/2026-nfl-fantasy-football-15-rookies-worth-a-late-round-draft-pick",
+      "mode": "explicit",
+      "players": ["Denzel Boston", "Caleb Douglas", "Mike Washington Jr.", "Ja'Kobi Lane", "Emmett Johnson", "De'Zhaun Stribling"]
+    },
+    {
+      "id": "pff_breakouts",
+      "family": "pff",
+      "url": "https://www.pff.com/news/2026-fantasy-football-5-breakout-candidates-for-drafts",
+      "mode": "explicit",
+      "players": ["Luther Burden III", "Emeka Egbuka", "Quinshon Judkins"]
+    }
+  ]
+}

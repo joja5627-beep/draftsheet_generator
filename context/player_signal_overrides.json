@@ -1,0 +1,121 @@
+{
+  "metadata": {
+    "effective_date": "2026-08-21",
+    "purpose": "Structured, sourced player-level signals that cannot yet be derived reliably from the automated feeds.",
+    "policy": "A manual grade affects the model only when at least two independent sources explicitly support that signal. Stale records are reported by the rebuild audit.",
+    "grade_scale": "0-100; 50 is neutral",
+    "risk_scale": "Additional role or uncertainty penalty from 0-5; combined total remains capped at 5"
+  },
+  "players": {
+    "Carnell Tate": {
+      "opportunity_grade": 72,
+      "custom_scoring_fit_grade": 84,
+      "rationale": "Top-four draft capital and an outside/vertical profile fit the yardage bonuses, but Tennessee has several established receivers.",
+      "sources": [
+        {"provider": "Titans", "url": "https://www.tennesseetitans.com/news/titans-2026-training-camp-preview-a-look-at-the-wide-receivers", "effective_date": "2026-07-16", "supports": ["opportunity_grade", "coaching_continuity_grade", "role_risk_penalty"]},
+        {"provider": "ESPN", "url": "https://www.espn.com/fantasy/football/story/_/id/48100578/fantasy-football-rankings-2026-nfl-rookies-draft-preview", "effective_date": "2026-03-06", "supports": ["custom_scoring_fit_grade", "opportunity_grade"]},
+        {"provider": "FantasyPros", "url": "https://www.fantasypros.com/nfl/rankings/?type=rookies", "effective_date": "2026-08-19", "supports": ["opportunity_grade", "custom_scoring_fit_grade"]}
+      ]
+    },
+    "Makai Lemon": {
+      "opportunity_grade": 74,
+      "custom_scoring_fit_grade": 76,
+      "role_risk_penalty": 0.3,
+      "rationale": "First-round capital and an open WR2 path support volume; half-PPR modestly trims a slot-oriented reception profile.",
+      "sources": [
+        {"provider": "Eagles", "url": "https://www.philadelphiaeagles.com/news/eagles-2026-training-camp-position-preview-wide-receiver", "effective_date": "2026-07-08", "supports": ["opportunity_grade", "role_risk_penalty"]},
+        {"provider": "PFF", "url": "https://www.pff.com/news/fantasy-football-2026-rookie-training-camp-status-checks", "effective_date": "2026-07-31", "supports": ["opportunity_grade", "custom_scoring_fit_grade", "role_risk_penalty"]},
+        {"provider": "ESPN", "url": "https://www.espn.com/fantasy/football/story/_/id/48100578/fantasy-football-rankings-2026-nfl-rookies-draft-preview", "effective_date": "2026-03-06", "supports": ["custom_scoring_fit_grade"]}
+      ]
+    },
+    "Jadarian Price": {
+      "opportunity_grade": 70,
+      "custom_scoring_fit_grade": 68,
+      "role_risk_penalty": 0.7,
+      "rationale": "First-round capital and early receiving reps create upside, but the committee and limited college receiving sample remain material.",
+      "sources": [
+        {"provider": "Seahawks", "url": "https://www.seahawks.com/news/seahawks-mailbag-hard-knocks-training-camp-competitions-more", "effective_date": "2026-07-22", "supports": ["opportunity_grade", "coaching_continuity_grade", "role_risk_penalty"]},
+        {"provider": "PFF", "url": "https://www.pff.com/news/fantasy-football-2026-rookie-training-camp-status-checks", "effective_date": "2026-07-31", "supports": ["opportunity_grade", "custom_scoring_fit_grade", "role_risk_penalty"]},
+        {"provider": "ESPN", "url": "https://www.espn.com/fantasy/football/story/_/id/48100578/fantasy-football-rankings-2026-nfl-rookies-draft-preview", "effective_date": "2026-03-06", "supports": ["custom_scoring_fit_grade"]}
+      ]
+    },
+    "Jeremiyah Love": {
+      "opportunity_grade": 68,
+      "custom_scoring_fit_grade": 88,
+      "role_risk_penalty": 1.0,
+      "rationale": "Elite three-down talent fits the league, but current backup usage, a crowded room, and line uncertainty make the Round 2 market aggressive.",
+      "sources": [
+        {"provider": "PFF", "url": "https://www.pff.com/news/fantasy-football-2026-rookie-training-camp-status-checks", "effective_date": "2026-07-31", "supports": ["opportunity_grade", "custom_scoring_fit_grade", "role_risk_penalty"]},
+        {"provider": "NFL.com", "url": "https://www.nfl.com/news/2026-nfl-fantasy-football-10-overvalued-undervalued-nfl-players-to-know-before-you-draft", "effective_date": "2026-08-18", "supports": ["opportunity_grade", "coaching_continuity_grade", "role_risk_penalty"]},
+        {"provider": "ESPN", "url": "https://www.espn.com/fantasy/football/story/_/id/48100578/fantasy-football-rankings-2026-nfl-rookies-draft-preview", "effective_date": "2026-03-06", "supports": ["custom_scoring_fit_grade"]}
+      ]
+    },
+    "Denzel Boston": {
+      "opportunity_grade": 76,
+      "coaching_continuity_grade": 48,
+      "custom_scoring_fit_grade": 88,
+      "role_risk_penalty": 0.5,
+      "rationale": "First-team work and a perimeter/downfield role directly access yardage, milestone, and long-play bonuses.",
+      "sources": [
+        {"provider": "Browns", "url": "https://www.clevelandbrowns.com/news/denzel-boston-posts-standout-performance-on-day-12-training-camp-observations", "effective_date": "2026-08-11", "supports": ["opportunity_grade", "custom_scoring_fit_grade", "coaching_continuity_grade", "role_risk_penalty"]},
+        {"provider": "NFL.com", "url": "https://www.nfl.com/news/2026-nfl-fantasy-football-six-late-round-sleepers-to-target", "effective_date": "2026-08-18", "supports": ["opportunity_grade", "custom_scoring_fit_grade", "coaching_continuity_grade", "role_risk_penalty"]}
+      ]
+    },
+    "Jonah Coleman": {
+      "opportunity_grade": 55,
+      "custom_scoring_fit_grade": 80,
+      "role_risk_penalty": 0.7,
+      "rationale": "Receiving, pass protection, and after-contact ability support three-down contingency value despite a crowded initial role.",
+      "sources": [
+        {"provider": "FantasyPros", "url": "https://www.fantasypros.com/nfl/rankings/rb-sleepers.php/1000", "effective_date": "2026-08-18", "supports": ["opportunity_grade", "custom_scoring_fit_grade", "role_risk_penalty"]},
+        {"provider": "NFL.com", "url": "https://www.nfl.com/news/2026-nfl-fantasy-football-15-rookies-worth-a-late-round-draft-pick", "effective_date": "2026-08-18", "supports": ["opportunity_grade", "role_risk_penalty"]},
+        {"provider": "PFF", "url": "https://www.pff.com/news/fantasy-football-2026-nfl-draft-top-3-receiving-running-back-prospects", "effective_date": "2026-03-01", "supports": ["custom_scoring_fit_grade"]}
+      ]
+    },
+    "Rashid Shaheed": {
+      "opportunity_grade": 66,
+      "coaching_continuity_grade": 65,
+      "custom_scoring_fit_grade": 92,
+      "role_risk_penalty": 0.4,
+      "rationale": "The expanded receiving role and downfield speed fit long-play bonuses; return production is intentionally excluded.",
+      "sources": [
+        {"provider": "Seahawks", "url": "https://www.seahawks.com/news/top-2026-training-camp-storylines-does-rashid-shaheed-still-handle-both-return-jobs", "effective_date": "2026-07-15", "supports": ["opportunity_grade", "coaching_continuity_grade", "role_risk_penalty"]},
+        {"provider": "PFF", "url": "https://www.pff.com/news/fantasy-football-sleeper-wide-receivers-2026", "effective_date": "2026-07-23", "supports": ["opportunity_grade", "custom_scoring_fit_grade", "coaching_continuity_grade", "role_risk_penalty"]},
+        {"provider": "Yahoo", "url": "https://ca.sports.yahoo.com/news/10-sleepers-you-cannot-sleep-on-in-fantasy-drafts-040000766.html", "effective_date": "2026-08-18", "supports": ["custom_scoring_fit_grade"]}
+      ]
+    },
+    "Jared Goff": {
+      "opportunity_grade": 92,
+      "coaching_continuity_grade": 78,
+      "custom_scoring_fit_grade": 94,
+      "rationale": "Repeated high passing volume and 300-yard paths receive direct value from the league's passing-yard and milestone rules.",
+      "sources": [
+        {"provider": "FantasyPros", "url": "https://www.fantasypros.com/nfl/rankings/qb-sleepers.php", "effective_date": "2026-08-17", "supports": ["opportunity_grade", "custom_scoring_fit_grade", "coaching_continuity_grade"]},
+        {"provider": "Yahoo", "url": "https://sports.yahoo.com/fantasy/article/fantasy-football-draft-targets-and-fades-scott-pianowski-reveals-his-top-picks-and-players-to-avoid-at-each-position-184335459.html", "effective_date": "2026-08-17", "supports": ["opportunity_grade", "custom_scoring_fit_grade", "coaching_continuity_grade"]}
+      ]
+    },
+    "Chig Okonkwo": {
+      "opportunity_grade": 78,
+      "coaching_continuity_grade": 68,
+      "custom_scoring_fit_grade": 78,
+      "role_risk_penalty": 0.4,
+      "rationale": "A receiving-focused role, YAC, and improved quarterback environment create a yardage path without relying on six-point touchdowns.",
+      "sources": [
+        {"provider": "Commanders", "url": "https://www.commanders.com/news/commanders-2026-training-camp-preview-tight-end", "effective_date": "2026-07-14", "supports": ["opportunity_grade", "coaching_continuity_grade", "custom_scoring_fit_grade", "role_risk_penalty"]},
+        {"provider": "FantasyPros", "url": "https://www.fantasypros.com/nfl/rankings/te-sleepers.php", "effective_date": "2026-08-18", "supports": ["opportunity_grade", "custom_scoring_fit_grade", "role_risk_penalty"]},
+        {"provider": "CBS", "url": "https://secure-www.cbssports.com/fantasy/football/news/dave-richards-sleepers-1-0-mahomes-could-be-the-steal-of-your-draft/", "effective_date": "2026-08-18", "supports": ["opportunity_grade", "coaching_continuity_grade", "custom_scoring_fit_grade", "role_risk_penalty"]}
+      ]
+    },
+    "De'Zhaun Stribling": {
+      "opportunity_grade": 67,
+      "coaching_continuity_grade": 70,
+      "custom_scoring_fit_grade": 82,
+      "role_risk_penalty": 0.6,
+      "rationale": "Early opportunity and a vertical profile fit the bonuses, but target competition and a rising market price limit the adjustment.",
+      "sources": [
+        {"provider": "NFL.com", "url": "https://www.nfl.com/news/2026-nfl-fantasy-football-15-rookies-worth-a-late-round-draft-pick", "effective_date": "2026-08-18", "supports": ["opportunity_grade", "custom_scoring_fit_grade", "coaching_continuity_grade", "role_risk_penalty"]},
+        {"provider": "Fantasy Life", "url": "https://www.fantasylife.com/articles/fantasy/fantasy-football-sleeper-opportunity-knocks-for-dezhaun-stribling", "effective_date": "2026-08-18", "supports": ["opportunity_grade", "custom_scoring_fit_grade", "coaching_continuity_grade", "role_risk_penalty"]}
+      ]
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "_comment": "Optional human-reviewed overrides keyed by player name. See README.md for fields.",
+  "players": {
+    "Jordyn Tyson": {
+      "games_min": 5,
+      "games_max": 6,
+      "confidence": "medium",
+      "reason": "Sleeper and ESPN identify the hamstring injury, while FantasyPros and DraftKings Network independently carry the reported two-month timeline. Mapping the possible mid-October return to New Orleans' schedule produces a 5-6 regular-season fantasy-week range.",
+      "sources": [
+        {
+          "provider": "FantasyPros",
+          "url": "https://www.fantasypros.com/nfl/news/602917/jordyn-tyson-hamstring-out-two-months-with-hamstring-injury.php",
+          "updated_at": "2026-08-17",
+          "note": "Reports an expected absence of about two months and a mid-October return window."
+        },
+        {
+          "provider": "DraftKings Network",
+          "url": "https://dknetwork.draftkings.com/2026/08/17/jordyn-tyson-injury-update-where-should-you-draft-saints-rookie-wr/",
+          "updated_at": "2026-08-17",
+          "note": "Reports the two-month timeline and estimates at least five missed games."
+        }
+      ]
+    },
+    "Jordan James": {
+      "games_min": 0,
+      "games_max": 1,
+      "confidence": "low",
+      "reason": "A rib fracture remains without a firm return timetable. The 49ers reported him sidelined on August 18, while FantasyPros independently reported that he will miss time; a 0-1 regular-season week range preserves the unresolved Week 1 uncertainty.",
+      "sources": [
+        {
+          "provider": "San Francisco 49ers",
+          "url": "https://www.49ers.com/news/day-14-of-2026-training-camp-kaelon-black-returns-for-joint-practice-with-chargers",
+          "updated_at": "2026-08-18",
+          "note": "The team listed Jordan James as sidelined with a rib injury."
+        },
+        {
+          "provider": "FantasyPros",
+          "url": "https://www.fantasypros.com/nfl/players/jordan-james.php",
+          "updated_at": "2026-08-21",
+          "note": "FantasyPros reports a fractured rib, time missed, and no firm return timetable."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,71 @@
+Scoring
+Passing
+Every 10 passing yards (PY10) 0.5
+TD Pass (PTD) 4
+40+ yard TD pass bonus (PTD40) 1
+50+ yard TD pass bonus (PTD50) 2
+Interceptions Thrown (INT) -2
+2pt Passing Conversion (2PC) 2
+300-399 yard passing game (P300) 2
+400+ yard passing game (P400) 3
+Rushing
+Rushing Yards (RY) 0.1
+TD Rush (RTD) 5
+40+ yard TD rush bonus (RTD40) 1
+50+ yard TD rush bonus (RTD50) 2
+2pt Rushing Conversion (2PR) 2
+100-199 yard rushing game (RY100) 2
+200+ yard rushing game (RY200) 4
+Receiving
+Receiving Yards (REY) 0.1
+Each reception (REC) 0.5
+TD Reception (RETD) 5
+40+ yard TD rec bonus (RETD40) 1
+50+ yard TD rec bonus (RETD50) 2
+2pt Receiving Conversion (2PRE) 2
+100-199 yard receiving game (REY100) 2
+200+ yard receiving game (REY200) 4
+Kicking
+Each PAT Made (PAT) 0.5
+Each PAT Missed (PATM) -0.5
+FG Made (0-39 yards) (FG0) 2
+FG Made (40-49 yards) (FG40) 2.5
+FG Missed (0-39 yards) (FGM0) -2
+FG Missed (40-49 yards) (FGM40) -1
+FG Missed (50-59 yards) (FGM50) -1
+FG Made (50-59 yards) (FG50) 3
+FG Made (60+ yards) (FG60) 3.5
+Team Defense / Special Teams
+Every 25 kickoff return yards (KR25) 0.1
+Every 25 punt return yards (PR25) 0.1
+Kickoff Return TD (KRTD) 4
+Punt Return TD (PRTD) 4
+Interception Return TD (INTTD) 4
+Fumble Return TD (FRTD) 4
+Blocked Punt or FG return for TD (BLKKRTD) 4
+Each Sack (SK) 1
+Blocked Punt, PAT or FG (BLKK) 2
+Each Interception (INT) 1
+Each Fumble Recovered (FR) 1
+Each Safety (SF) 2
+0 points allowed (PA0) 10
+1-6 points allowed (PA1) 6
+7-13 points allowed (PA7) 4
+14-17 points allowed (PA14) 3
+22-27 points allowed (PA22) -1
+28-34 points allowed (PA28) -2
+35-45 points allowed (PA35) -3
+46+ points allowed (PA46) -5
+Less than 100 total yards allowed (YA100) 3
+100-199 total yards allowed (YA199) 2
+450-499 total yards allowed (YA499) -1
+500-549 total yards allowed (YA549) -2
+550+ total yards allowed (YA550) -3
+Miscellaneous
+Kickoff Return TD (KRTD) 4
+Punt Return TD (PRTD) 4
+Fumble Recovered for TD (FTD) 4
+Total Fumbles Lost (FUML) -2
+Interception Return TD (INTTD) 4
+Fumble Return TD (FRTD) 4
+Blocked Punt or FG return for TD (BLKKRTD) 4

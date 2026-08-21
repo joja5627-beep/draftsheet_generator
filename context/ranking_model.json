@@ -1,0 +1,69 @@
+{
+  "model_version": "1.0.0",
+  "description": "Conservative custom-league reranking model. Context reorders players inside bounded neighborhoods rather than replacing projection tiers.",
+  "weights": {
+    "baseline_consensus": 0.58,
+    "league_vorp_proxy": 0.15,
+    "opportunity": 0.1,
+    "team_offense": 0.06,
+    "offensive_line_fit": 0.04,
+    "coaching_continuity": 0.03,
+    "custom_scoring_fit": 0.02,
+    "strength_of_schedule": 0.02
+  },
+  "risk_penalty_cap": 5.0,
+  "minimum_independent_sources_for_manual_signal": 2,
+  "manual_signal_freshness_days": 14,
+  "score_difference_to_reorder": 2.0,
+  "replacement_levels": {
+    "QB": 15,
+    "RB": 42,
+    "WR": 54,
+    "TE": 15,
+    "K": 12,
+    "DST": 12
+  },
+  "offensive_line_position_multiplier": {
+    "QB": 1.0,
+    "RB": 1.0,
+    "WR": 0.4,
+    "TE": 0.5,
+    "K": 0.0,
+    "DST": 0.0
+  },
+  "movement_caps": [
+    {"minimum_rank": 1, "maximum_rank": 24, "spots": 2},
+    {"minimum_rank": 25, "maximum_rank": 72, "spots": 4},
+    {"minimum_rank": 73, "maximum_rank": 144, "spots": 8},
+    {"minimum_rank": 145, "maximum_rank": 300, "spots": 12}
+  ],
+  "source_registry": {
+    "baseline_consensus": [
+      {"name": "ESPN 2026 PPR Top 300", "role": "projection baseline", "url": "https://g.espncdn.com/s/ffldraftkit/26/NFL26_CS_PPR300.pdf?adddata=2026CS_PPR300"},
+      {"name": "FantasyPros half-PPR ECR", "role": "multi-expert consensus", "url": "https://www.fantasypros.com/nfl/rankings/half-point-ppr-cheatsheets.php"},
+      {"name": "FFToday half-PPR ADP", "role": "Underdog and Yahoo market price", "url": "https://www.fftoday.com/rankings/26-adp-half-ppr.html"}
+    ],
+    "opportunity": [
+      {"name": "Sleeper NFL player API", "role": "primary live roster depth", "url": "https://api.sleeper.app/v1/players/nfl?active=true"},
+      {"name": "ESPN NFL depth charts", "role": "independent live order cross-check", "url": "https://www.espn.com/nfl/story/_/id/29098001/nfl-depth-charts-all-32-teams"}
+    ],
+    "team_offense": [
+      {"name": "First Down Studio implied totals", "role": "primary market-implied scoring environment", "url": "https://www.firstdown.studio/implied-totals/season"},
+      {"name": "Mike Clay NFL Projection Guide", "role": "independent football-stat projection cross-check", "url": "https://g.espncdn.com/s/ffldraftkit/26/NFLDK2026_CS_ClayProjections2026.pdf"}
+    ],
+    "offensive_line_fit": [
+      {"name": "Sharp Football Analysis offensive line rankings", "role": "primary forward-looking staff rank", "url": "https://www.sharpfootballanalysis.com/analysis/best-nfl-offensive-line-rankings/"},
+      {"name": "4for4 projected offensive line rankings", "role": "personnel and PFF-grade cross-check", "url": "https://www.4for4.com/2026/preseason/2026-projected-offensive-line-rankings"},
+      {"name": "Mike Clay NFL Projection Guide", "role": "unit-grade and starter cross-check", "url": "https://g.espncdn.com/s/ffldraftkit/26/NFLDK2026_CS_ClayProjections2026.pdf"}
+    ],
+    "strength_of_schedule": [
+      {"name": "DraftCall position-specific SOS", "role": "primary schedule rank", "url": "https://draftcall.io/strength-of-schedule/"},
+      {"name": "FantasyPros position-specific SOS", "role": "method cross-check", "url": "https://www.fantasypros.com/nfl/strength-of-schedule.php"},
+      {"name": "FFToolbox fantasy SOS", "role": "independent tier cross-check", "url": "https://www.fftoolbox.com/football/strength_of_schedule.cfm"}
+    ],
+    "injury_risk": [
+      {"name": "Sleeper NFL player API", "role": "live designation feed", "url": "https://api.sleeper.app/v1/players/nfl?active=true"},
+      {"name": "ESPN NFL injury report", "role": "live injury and return-date feed", "url": "https://www.espn.com/nfl/injuries"}
+    ]
+  }
+}
