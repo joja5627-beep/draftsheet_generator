@@ -1,6 +1,6 @@
 # Generated running back handcuff consensus
 
-**Generated:** `2026-08-25T13:37:55+00:00`
+**Generated:** `2026-08-25T15:53:56+00:00`
 **Source pages available:** 8/8
 
 Publisher families are deduplicated; a player must be a current ranked RB2/RB3. Highlighting requires RB2 status, candidate health, and the configured minimum number of independent publisher families.
@@ -27,17 +27,17 @@ Publisher families are deduplicated; a player must be a current ranked RB2/RB3. 
 | 18 | RJ Harvey | DEN | J.K. Dobbins | A | 96.0 | 4 | RB2 | 21 | 0 | 0 | yes | Handcuff target in Round 8 or later behind J.K. Dobbins. |
 | 19 | Rachaad White | WAS | Jacory Croskey-Merritt | A | 96.0 | 5 | RB2 | 15 | 0 | 0 | yes | Handcuff target in Round 10 or later behind Jacory Croskey-Merritt. |
 | 20 | Alvin Kamara | NO | Travis Etienne Jr. | A | 95.0 | 4 | RB2 | 23 | 0-1 | 0 | yes | Handcuff target in Round 14 or later behind Travis Etienne Jr. |
-| 21 | Braelon Allen | NYJ | Breece Hall | A | 95.0 | 5 | RB2 | 31 | 0 | 0 | yes | Handcuff target in Round 18 or later behind Breece Hall. |
+| 21 | Braelon Allen | NYJ | Breece Hall | A | 95.0 | 5 | RB2 | 32 | 0 | 0 | yes | Handcuff target in Round 18 or later behind Breece Hall. |
 | 22 | Brian Robinson Jr. | ATL | Bijan Robinson | A | 95.0 | 7 | RB2 | 25 | 0 | 0 | yes | Handcuff target in Round 15 or later behind Bijan Robinson. |
 | 23 | Dylan Sampson | CLE | Quinshon Judkins | A | 95.0 | 5 | RB2 | 30 | 0 | 0 | yes | Handcuff target in Round 15 or later behind Quinshon Judkins. |
 | 24 | Jaylen Wright | MIA | De'Von Achane | A | 95.0 | 4 | RB2 | 29 | 0 | 0 | yes | Handcuff target in Round 19 or later behind De'Von Achane. |
 | 25 | Mike Washington Jr. | LV | Ashton Jeanty | A | 95.0 | 6 | RB2 | 28 | 0 | 0 | yes | Handcuff target in Round 15 or later behind Ashton Jeanty. |
 | 26 | Tyjae Spears | TEN | Tony Pollard | A | 95.0 | 5 | RB2 | 27 | 0 | 0 | yes | Handcuff target in Round 13 or later behind Tony Pollard. |
-| 27 | Tyler Allgeier | ARI | Jeremiyah Love | A | 95.0 | 7 | RB2 | 32 | 0 | 0-1 | yes | Handcuff target in Round 12 or later behind Jeremiyah Love. |
+| 27 | Tyler Allgeier | ARI | Jeremiyah Love | A | 95.0 | 7 | RB2 | 31 | 0 | 0-1 | yes | Handcuff target in Round 12 or later behind Jeremiyah Love. |
 | 28 | Rhamondre Stevenson | NE | TreVeyon Henderson | A | 94.0 | 4 | RB2 | 13 | 0 | 0 | yes | Handcuff target in Round 6 or later behind TreVeyon Henderson. |
 | 29 | Jonathon Brooks | CAR | Chuba Hubbard | A | 92.0 | 5 | RB2 | 26 | 0 | 0-1 | yes | Handcuff target in Round 7 or later behind Chuba Hubbard. |
 | 30 | Rico Dowdle | PIT | Jaylen Warren | A | 92.0 | 5 | RB2 | 24 | 0 | 0 | yes | Handcuff target in Round 8 or later behind Jaylen Warren. |
-| 31 | Emari Demercado | KC | Kenneth Walker III | B | 63.0 | 2 | RB2 | 11 | 0 | 0 | yes | Handcuff target in Round 24 or later behind Kenneth Walker III. |
+| 31 | Emari Demercado | KC | Kenneth Walker III | B | 63.0 | 2 | RB2 | 11 | 0 | 0 | yes | Handcuff target in Round 23 or later behind Kenneth Walker III. |
 | 32 | Jaydon Blue | DAL | Javonte Williams | C | 93.0 | 5 | RB3 | 6 | 0 | 0 | no | Watchlist only; needs stronger consensus, direct RB2 status, or health. |
 | 33 | Ray Davis | BUF | James Cook III | C | 93.0 | 5 | RB3 | 2 | 0 | 0 | no | Watchlist only; needs stronger consensus, direct RB2 status, or health. |
 | 34 | Emmett Johnson | KC | Kenneth Walker III | C | 89.0 | 6 | RB3 | 11 | 0 | 0 | no | Watchlist only; needs stronger consensus, direct RB2 status, or health. |
@@ -54,5 +54,5 @@ Publisher families are deduplicated; a player must be a current ranked RB2/RB3. 
 | 45 | Tahj Brooks | CIN | Chase Brown | C | 39.0 | 1 | RB3 | 4 | 0 | 0 | no | Watchlist only; needs stronger consensus, direct RB2 status, or health. |
 | 46 | Najee Harris | NYG | Cam Skattebo | C | 35.0 | 1 | RB3 | 22 | 0 | 0 | no | Watchlist only; needs stronger consensus, direct RB2 status, or health. |
 | 47 | Sean Tucker | TB | Bucky Irving | C | 35.0 | 1 | RB3 | 18 | 0 | 0 | no | Watchlist only; needs stronger consensus, direct RB2 status, or health. |
-| 48 | Isaiah Davis | NYJ | Breece Hall | C | 31.0 | 1 | RB3 | 31 | 0 | 0 | no | Watchlist only; needs stronger consensus, direct RB2 status, or health. |
-| 49 | James Conner | ARI | Jeremiyah Love | C | 31.0 | 1 | RB3 | 32 | 0 | 0-1 | no | Watchlist only; needs stronger consensus, direct RB2 status, or health. |
+| 48 | Isaiah Davis | NYJ | Breece Hall | C | 31.0 | 1 | RB3 | 32 | 0 | 0 | no | Watchlist only; needs stronger consensus, direct RB2 status, or health. |
+| 49 | James Conner | ARI | Jeremiyah Love | C | 31.0 | 1 | RB3 | 31 | 0 | 0-1 | no | Watchlist only; needs stronger consensus, direct RB2 status, or health. |

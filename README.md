@@ -123,14 +123,19 @@ Primary outputs:
 - `context/build_manifest.json` - stage timing, status, metrics, and SHA-256 hashes for every
   generated artifact; failed runs record the exact stage and error
 
-The reweighted PDF highlights every current sleeper or rookie target from
-`context/sleeper_consensus.json` in palette-matched yellow and every eligible running back
-handcuff from `context/handcuff_consensus.json` in pale lavender. Both keys appear on every
-page. Handcuffs require current RB2 status, candidate health, and mentions from at least two
-independent publisher families; RB3 and single-source candidates remain in the generated
-watchlist without a highlight. If a player qualifies for both categories, lavender takes
-precedence so the handcuff role stays visible. Because both colors read generated consensus
-artifacts instead of hard-coded name lists, they update automatically on the next rebuild.
+The reweighted PDF uses palette-matched yellow for every current sleeper or rookie target from
+`context/sleeper_consensus.json` and for one automated value pick in each draft round. A round
+value is the non-kicker/non-defense player with the largest positive gap between the blended
+consensus anchor and the rank supported by the complete adjusted score. The model stores the
+score-supported rank, value delta, draft round, and selection flag in the generated JSON and
+CSV so every yellow value designation is auditable and refreshes on the next rebuild.
+
+Eligible running back handcuffs from `context/handcuff_consensus.json` remain pale lavender.
+Both keys appear on every page. Handcuffs require current RB2 status, candidate health, and
+mentions from at least two independent publisher families; RB3 and single-source candidates
+remain in the generated watchlist without a highlight. If a player qualifies for both yellow
+and handcuff categories, lavender takes precedence so the handcuff role stays visible. No
+highlight category depends on a hard-coded player list.
 
 ### Ranking contract
 
@@ -144,12 +149,32 @@ uses every normalized signal in the score:
  2% team offense
  2% position-adjusted offensive line
  1% position-specific strength of schedule
-- capped 0-5 injury risk
+- availability-adjusted projections plus capped 0-8 residual injury risk
 ```
 
-The order changes only when the adjusted-score difference reaches two points. Ordinary
-movement is capped at 2 spots for ranks 1-24, 4 for 25-72, 8 for 73-144, and 12 after
-rank 144. This keeps context from turning a modest edge into a multi-tier leap.
+The weighted ESPN/FantasyPros/FFToday consensus establishes the baseline order and movement
+anchor; ESPN remains only the deterministic tie-breaker and lineage reference. The order
+normally changes only when the adjusted-score difference reaches two points.
+One deterministic tiebreaker corrects same-team QB, RB, or TE role inversions when the
+better depth-chart role also has the higher adjusted score. It never forces a starter over a
+more valuable backup, and it still respects both players' movement caps. Ordinary movement
+is capped at 2 spots for ranks 1-24, 4 for 25-72, 8 for 73-144, and 12 after rank 144. This
+keeps context from turning a modest edge into a multi-tier leap.
+
+Round-value highlighting separately sorts the complete board by adjusted score without
+movement caps, compares that score-supported rank with the consensus anchor, and selects the
+largest positive discount within each 12-player round. It does not change player ordering or
+the weighting strategy; it exposes the strongest existing model-versus-market value signal at
+each stage of the draft. Kickers and defenses are excluded from this designation.
+
+Injuries use confidence-weighted expected games missed to reduce the projected-value grade
+and add a bounded residual penalty. A multi-game absence corroborated by both injury providers
+can expand only the player's downside movement cap, at four additional spots per expected game
+and no more than 24 ordinary bonus spots. A corroborated absence of at least five projected
+games can fall to the rank supported by its availability-adjusted score, including through the
+full board for a season-long absence. Players below such an absence receive only the passive
+promotion allowance needed to fill that vacancy; it is tracked separately from ordinary model
+movement. Single-source signals never receive either cap exception.
 
 The projected-value input averages ESPN Mike Clay and FFToday raw statistics, scores the
 result from the supplied league rules, simulates RB/WR starter and flex demand, and applies

@@ -30,14 +30,23 @@ from fantasy_football_2026.presentation.buckets import BUCKET_COLORS
 from fantasy_football_2026.presentation.pdf import draft_round_for_rank
 
 WEIGHTED_ROUND_GAP = 5.5
+DEPTH_ORDER_PATTERN = re.compile(r"^(?P<position>QB|RB|TE)(?P<order>\d+)$")
 
 
 @dataclass(frozen=True, slots=True)
 class ReweightedPlayer:
     final_rank: int
     source_rank: int
+    movement_anchor_rank: int
     rank_delta: int
+    source_rank_delta: int
     movement_cap: int
+    injury_movement_bonus: int
+    injury_displacement_bonus: int
+    score_supported_rank: int
+    unconstrained_value_delta: int
+    draft_round: int
+    round_value_pick: bool
     name: str
     team: str
     position: str
@@ -46,6 +55,8 @@ class ReweightedPlayer:
     adjusted_score: float
     baseline_consensus_grade: float
     custom_projected_value_grade: float
+    availability_adjusted_projected_value_grade: float
+    availability_factor: float
     custom_projected_points: float | None
     projection_baseline_points: float | None
     projected_value_over_baseline: float | None
@@ -62,6 +73,26 @@ class ReweightedPlayer:
     injury_weeks: str
     injury_tier: str
     source_coverage: dict[str, int]
+
+
+@dataclass(frozen=True, slots=True)
+class RoleOrderingCorrection:
+    team: str
+    position: str
+    promoted_player: str
+    promoted_from: int
+    promoted_to: int
+    demoted_player: str
+    demoted_from: int
+    demoted_to: int
+    score_advantage: float
+
+
+@dataclass(frozen=True, slots=True)
+class InjuryAdjustment:
+    penalty: float
+    availability_factor: float
+    movement_bonus: int
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -198,7 +229,11 @@ def update_reweighted_rankings(
     source_registry = model["source_registry"]
     weights = model["weights"]
     initial: list[ReweightedPlayer] = []
-    for player in market_players:
+    anchored_market_players = sorted(
+        market_players,
+        key=lambda player: (float(player["consensus_rank"]), int(player["source_rank"])),
+    )
+    for movement_anchor_rank, player in enumerate(anchored_market_players, start=1):
         source_rank = int(player["source_rank"])
         depth = depth_by_rank[source_rank]
         injury = injury_by_rank[source_rank]
@@ -213,25 +248,36 @@ def update_reweighted_rankings(
         )
         line_grade = round(50.0 + ((line_raw - 50.0) * line_multiplier), 2)
         schedule_grade = _team_rank_grade(depth.get("strength_of_schedule_rank"))
-        risk_penalty = _injury_penalty(injury)
+        injury_adjustment = _injury_adjustment(injury, model=model)
+        availability_adjusted_projected_value_grade = (
+            projected_value_grade * injury_adjustment.availability_factor
+        )
 
         score = round(
-            (float(weights["custom_projected_value"]) * projected_value_grade)
+            (float(weights["custom_projected_value"]) * availability_adjusted_projected_value_grade)
             + (float(weights["baseline_consensus"]) * baseline_grade)
             + (float(weights["opportunity"]) * opportunity_grade)
             + (float(weights["team_offense"]) * offense_grade)
             + (float(weights["offensive_line_fit"]) * line_grade)
             + (float(weights["strength_of_schedule"]) * schedule_grade)
-            - risk_penalty,
+            - injury_adjustment.penalty,
             3,
         )
 
         initial.append(
             ReweightedPlayer(
-                final_rank=source_rank,
+                final_rank=movement_anchor_rank,
                 source_rank=source_rank,
+                movement_anchor_rank=movement_anchor_rank,
                 rank_delta=0,
-                movement_cap=_movement_cap(source_rank, model),
+                source_rank_delta=source_rank - movement_anchor_rank,
+                movement_cap=_movement_cap(movement_anchor_rank, model),
+                injury_movement_bonus=injury_adjustment.movement_bonus,
+                injury_displacement_bonus=0,
+                score_supported_rank=movement_anchor_rank,
+                unconstrained_value_delta=0,
+                draft_round=draft_round_for_rank(movement_anchor_rank, teams),
+                round_value_pick=False,
                 name=str(player["name"]),
                 team=str(player["team"]),
                 position=str(player["position"]),
@@ -240,6 +286,10 @@ def update_reweighted_rankings(
                 adjusted_score=score,
                 baseline_consensus_grade=round(baseline_grade, 2),
                 custom_projected_value_grade=round(projected_value_grade, 2),
+                availability_adjusted_projected_value_grade=round(
+                    availability_adjusted_projected_value_grade, 2
+                ),
+                availability_factor=injury_adjustment.availability_factor,
                 custom_projected_points=_optional_float(projection.get("custom_projected_points")),
                 projection_baseline_points=_optional_float(projection.get("baseline_points")),
                 projected_value_over_baseline=_optional_float(
@@ -249,7 +299,7 @@ def update_reweighted_rankings(
                 team_offense_grade=round(offense_grade, 2),
                 offensive_line_fit_grade=line_grade,
                 strength_of_schedule_grade=round(schedule_grade, 2),
-                risk_penalty=risk_penalty,
+                risk_penalty=injury_adjustment.penalty,
                 consensus_rank=float(player["consensus_rank"]),
                 depth_chart_label=str(depth.get("pdf_label") or "--"),
                 offense_rank=_optional_int(depth.get("offense_rank")),
@@ -269,10 +319,29 @@ def update_reweighted_rankings(
             )
         )
 
-    ranked = _bounded_reorder(
+    initial = list(_apply_major_injury_displacement_allowance(tuple(initial)))
+    bounded = _bounded_reorder(
         initial,
         threshold=float(model["score_difference_to_reorder"]),
     )
+    role_policy = model["same_team_depth_chart_tiebreaker"]
+    ranked, role_corrections = _apply_same_team_depth_chart_tiebreaker(
+        bounded,
+        positions=frozenset(str(value) for value in role_policy["positions"]),
+        minimum_score_advantage=float(role_policy["minimum_score_advantage"]),
+    )
+    value_policy = model["round_value_highlights"]
+    ranked = _annotate_round_value_picks(
+        ranked,
+        teams=teams,
+        picks_per_round=int(value_policy["picks_per_round"]),
+        minimum_value_delta=int(value_policy["minimum_unconstrained_value_spots"]),
+        excluded_positions=frozenset(str(value) for value in value_policy["excluded_positions"]),
+    )
+    round_value_players = frozenset(
+        normalize_name(player.name) for player in ranked if player.round_value_pick
+    )
+    yellow_highlighted_players = highlighted_players | round_value_players
     generated_at = datetime.now(UTC).isoformat(timespec="seconds")
     audit = _build_audit(
         generated_at=generated_at,
@@ -287,8 +356,14 @@ def update_reweighted_rankings(
         "model_version": model["model_version"],
         "teams": teams,
         "weights": weights,
+        "risk_penalty_cap": model["risk_penalty_cap"],
+        "movement_anchor_policy": model["movement_anchor"],
         "movement_policy": model["movement_caps"],
+        "injury_adjustment_policy": model["injury_adjustment"],
+        "round_value_highlight_policy": value_policy,
         "score_difference_to_reorder": model["score_difference_to_reorder"],
+        "same_team_depth_chart_tiebreaker": role_policy,
+        "role_ordering_corrections": [asdict(correction) for correction in role_corrections],
         "source_audit": str(audit_json_path),
         "inputs": {
             "market": str(market_path),
@@ -299,9 +374,23 @@ def update_reweighted_rankings(
             "sleeper_highlights": str(sleeper_context_path),
             "handcuff_highlights": str(handcuff_context_path),
         },
-        "highlighted_player_count": len(highlighted_players),
+        "highlighted_player_count": len(yellow_highlighted_players),
+        "sleeper_rookie_highlighted_player_count": len(highlighted_players),
+        "round_value_pick_count": len(round_value_players),
+        "round_value_picks": [
+            {
+                "round": player.draft_round,
+                "player": player.name,
+                "final_rank": player.final_rank,
+                "movement_anchor_rank": player.movement_anchor_rank,
+                "score_supported_rank": player.score_supported_rank,
+                "unconstrained_value_delta": player.unconstrained_value_delta,
+            }
+            for player in ranked
+            if player.round_value_pick
+        ],
         "handcuff_highlighted_player_count": len(handcuff_players),
-        "highlight_overlap_count": len(highlighted_players & handcuff_players),
+        "highlight_overlap_count": len(yellow_highlighted_players & handcuff_players),
         "caveat": (
             "Projected value excludes milestone, long-touchdown, and two-point-conversion "
             "bonuses because the aggregate source does not forecast their occurrence. "
@@ -322,11 +411,13 @@ def update_reweighted_rankings(
         generated_at=generated_at,
         teams=teams,
         highlighted_players=highlighted_players,
+        round_value_players=round_value_players,
         handcuff_players=handcuff_players,
     )
     return {
         "player_count": len(ranked),
         "moved_count": sum(player.rank_delta != 0 for player in ranked),
+        "role_ordering_correction_count": len(role_corrections),
         "json_path": str(json_path),
         "markdown_path": str(markdown_path),
         "audit_json_path": str(audit_json_path),
@@ -349,11 +440,12 @@ def _bounded_reorder(
             lower = ordered[index]
             upper_new_rank = index + 1
             lower_new_rank = index
-            if lower.adjusted_score - upper.adjusted_score < threshold:
+            required_gap = 0.0 if upper.injury_movement_bonus >= len(ordered) else threshold
+            if lower.adjusted_score - upper.adjusted_score < required_gap:
                 continue
-            if abs(upper_new_rank - upper.source_rank) > upper.movement_cap:
+            if not _movement_is_allowed(upper, upper_new_rank):
                 continue
-            if abs(lower_new_rank - lower.source_rank) > lower.movement_cap:
+            if not _movement_is_allowed(lower, lower_new_rank):
                 continue
             ordered[index - 1], ordered[index] = lower, upper
             changed = True
@@ -361,10 +453,88 @@ def _bounded_reorder(
         replace(
             player,
             final_rank=index,
-            rank_delta=player.source_rank - index,
+            rank_delta=player.movement_anchor_rank - index,
+            source_rank_delta=player.source_rank - index,
         )
         for index, player in enumerate(ordered, start=1)
     )
+
+
+def _apply_same_team_depth_chart_tiebreaker(
+    players: tuple[ReweightedPlayer, ...],
+    *,
+    positions: frozenset[str],
+    minimum_score_advantage: float,
+) -> tuple[tuple[ReweightedPlayer, ...], tuple[RoleOrderingCorrection, ...]]:
+    """Correct teammate role inversions without overriding the model's adjusted score."""
+    ordered = list(players)
+    corrections: list[RoleOrderingCorrection] = []
+    changed = True
+    while changed:
+        changed = False
+        for upper_index, upper in enumerate(ordered):
+            upper_order = _comparable_depth_order(upper, positions=positions)
+            if upper_order is None:
+                continue
+            for lower_index in range(upper_index + 1, len(ordered)):
+                lower = ordered[lower_index]
+                if lower.team != upper.team or lower.position != upper.position:
+                    continue
+                lower_order = _comparable_depth_order(lower, positions=positions)
+                score_advantage = lower.adjusted_score - upper.adjusted_score
+                if (
+                    lower_order is None
+                    or lower_order >= upper_order
+                    or score_advantage <= minimum_score_advantage
+                ):
+                    continue
+                upper_new_rank = lower_index + 1
+                lower_new_rank = upper_index + 1
+                if not _movement_is_allowed(upper, upper_new_rank):
+                    continue
+                if not _movement_is_allowed(lower, lower_new_rank):
+                    continue
+                corrections.append(
+                    RoleOrderingCorrection(
+                        team=upper.team,
+                        position=upper.position,
+                        promoted_player=lower.name,
+                        promoted_from=lower_index + 1,
+                        promoted_to=lower_new_rank,
+                        demoted_player=upper.name,
+                        demoted_from=upper_index + 1,
+                        demoted_to=upper_new_rank,
+                        score_advantage=round(score_advantage, 3),
+                    )
+                )
+                ordered[upper_index], ordered[lower_index] = lower, upper
+                changed = True
+                break
+            if changed:
+                break
+    ranked = tuple(
+        replace(
+            player,
+            final_rank=index,
+            rank_delta=player.movement_anchor_rank - index,
+            source_rank_delta=player.source_rank - index,
+        )
+        for index, player in enumerate(ordered, start=1)
+    )
+    return ranked, tuple(corrections)
+
+
+def _comparable_depth_order(
+    player: ReweightedPlayer,
+    *,
+    positions: frozenset[str],
+) -> int | None:
+    if player.position not in positions:
+        return None
+    match = DEPTH_ORDER_PATTERN.fullmatch(player.depth_chart_label)
+    if match is None or match.group("position") != player.position:
+        return None
+    return int(match.group("order"))
 
 
 def render_markdown(metadata: dict[str, Any], players: tuple[ReweightedPlayer, ...]) -> str:
@@ -379,8 +549,13 @@ def render_markdown(metadata: dict[str, Any], players: tuple[ReweightedPlayer, .
         "## Model",
         "",
         "Every displayed signal is refreshed or derived from automated inputs. "
-        "A two-point score gap is "
-        "required to swap players, and every move is bounded by the configured rank cap.",
+        "The weighted market consensus establishes the movement anchor. A two-point score "
+        "gap is required to swap players, and every move is bounded by the configured rank "
+        "cap. Corroborated missed-game projections can expand only the downside cap. A "
+        "same-team QB/RB/TE role inversion is corrected only when the better depth-chart "
+        "role also has the higher adjusted score. One automated round-value target is selected "
+        "from each round using the largest positive score-supported discount versus consensus; "
+        "kickers and defenses are excluded.",
         "",
         "| Signal | Weight |",
         "|---|---:|",
@@ -389,19 +564,24 @@ def render_markdown(metadata: dict[str, Any], players: tuple[ReweightedPlayer, .
     lines.extend(
         [
             "",
-            "Risk is subtracted after weighting and remains capped at five points.",
+            "Projected value is reduced by confidence-weighted availability. Residual risk "
+            f"is subtracted after weighting and capped at {metadata['risk_penalty_cap']:g} points.",
             "",
             "## Reweighted Top 300",
             "",
-            "| New | Base | Delta | Player | Pos-Team | Score | Market | Proj VBD | "
+            "| New | Rd | Value | Score Rank | Value Delta | Anchor | Delta | ESPN | Player | "
+            "Pos-Team | Score | Market | Proj VBD | "
             "Proj Pts | VBD Pts | Opp | OFF | OL | SOS | Risk | DC | INJ |",
-            "|---:|---:|---:|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---|",
+            "|---:|---:|:---:|---:|---:|---:|---:|---:|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---|",
         ]
     )
     for player in players:
         delta = f"+{player.rank_delta}" if player.rank_delta > 0 else str(player.rank_delta)
         lines.append(
-            f"| {player.final_rank} | {player.source_rank} | {delta} | {player.name} | "
+            f"| {player.final_rank} | {player.draft_round} | "
+            f"{'yes' if player.round_value_pick else ''} | {player.score_supported_rank} | "
+            f"{player.unconstrained_value_delta:+d} | {player.movement_anchor_rank} | {delta} | "
+            f"{player.source_rank} | {player.name} | "
             f"{player.position}-{player.team} | {player.adjusted_score:.2f} | "
             f"{player.baseline_consensus_grade:.1f} | "
             f"{player.custom_projected_value_grade:.1f} | "
@@ -423,6 +603,7 @@ def render_pdf(
     generated_at: str,
     teams: int,
     highlighted_players: frozenset[str],
+    round_value_players: frozenset[str],
     handcuff_players: frozenset[str],
 ) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -454,7 +635,7 @@ def render_pdf(
         canvas.drawString(
             margin,
             height - 31,
-            "Delta is improvement vs ESPN source rank. Signals: DC depth, O offense, "
+            "Delta is improvement vs blended-consensus anchor. Signals: DC depth, O offense, "
             "L line, S schedule, I projected weeks missed.",
         )
         legend_x = width - 230
@@ -464,7 +645,7 @@ def render_pdf(
         canvas.rect(legend_x, height - 33, 9, 7, stroke=1, fill=1)
         canvas.setFillColor(HexColor("#4A5B6B"))
         canvas.setFont("Helvetica-Bold", 6.0)
-        canvas.drawString(legend_x + 13, height - 31.5, "Sleeper or rookie target")
+        canvas.drawString(legend_x + 13, height - 31.5, "Sleeper, rookie or round value")
         handcuff_legend_x = legend_x + 112
         canvas.setFillColor(HexColor(HANDCUFF_HIGHLIGHT_COLOR))
         canvas.setStrokeColor(HexColor("#9B7DB8"))
@@ -485,6 +666,7 @@ def render_pdf(
                 row_height=row_height,
                 teams=teams,
                 highlighted_players=highlighted_players,
+                round_value_players=round_value_players,
                 handcuff_players=handcuff_players,
             )
         canvas.setStrokeColor(HexColor("#C8D4DE"))
@@ -494,8 +676,8 @@ def render_pdf(
         canvas.drawString(
             margin,
             9,
-            "Projection-first model: custom-scored consensus VBD + market and live-context "
-            "guardrails - capped injury risk. See context/source_audit.md.",
+            "Projection-first model: availability-adjusted custom VBD + consensus and "
+            "live-context guardrails. See context/source_audit.md.",
         )
         canvas.showPage()
     canvas.save()
@@ -512,6 +694,7 @@ def _draw_pdf_column(
     row_height: float,
     teams: int,
     highlighted_players: frozenset[str],
+    round_value_players: frozenset[str],
     handcuff_players: frozenset[str],
 ) -> None:
     canvas.setFillColor(HexColor("#EAF2F8"))
@@ -537,6 +720,7 @@ def _draw_pdf_column(
         highlight_color = _row_highlight_color(
             player.name,
             sleeper_players=highlighted_players,
+            round_value_players=round_value_players,
             handcuff_players=handcuff_players,
         )
         if highlight_color:
@@ -766,7 +950,10 @@ def _build_audit(
             "weight_or_role": f"subtract up to {float(model['risk_penalty_cap']):g}",
             "two_source_rows": two_source_rows["injury"],
             "neutral_rows": player_count - two_source_rows["injury"],
-            "evidence_rule": "Sleeper and ESPN injury feeds",
+            "evidence_rule": (
+                "Sleeper and ESPN injury feeds; confidence-weighted missed games reduce "
+                "projected value and corroborated absences expand only downside movement"
+            ),
         },
     }
     return {
@@ -774,6 +961,9 @@ def _build_audit(
         "status": status,
         "model_version": model["model_version"],
         "active_input_policy": "automated-only",
+        "movement_anchor_policy": model["movement_anchor"],
+        "injury_adjustment_policy": model["injury_adjustment"],
+        "round_value_highlight_policy": model["round_value_highlights"],
         "coverage": {
             "market_three_source": sum(
                 player.source_coverage["baseline"] >= 3 for player in players
@@ -807,13 +997,24 @@ def _write_csv(path: Path, players: tuple[ReweightedPlayer, ...]) -> None:
     temporary = path.with_name(f".{path.name}.tmp")
     fields = [
         "final_rank",
+        "movement_anchor_rank",
         "source_rank",
         "rank_delta",
+        "source_rank_delta",
+        "movement_cap",
+        "injury_movement_bonus",
+        "injury_displacement_bonus",
+        "score_supported_rank",
+        "unconstrained_value_delta",
+        "draft_round",
+        "round_value_pick",
         "name",
         "position",
         "team",
         "adjusted_score",
         "consensus_rank",
+        "availability_factor",
+        "availability_adjusted_projected_value_grade",
         "depth_chart_label",
         "offense_rank",
         "offensive_line_rank",
@@ -847,6 +1048,62 @@ def _validate_model(model: dict[str, Any]) -> None:
     }
     if set(weights) != required:
         raise InjuryContextError("Ranking model weight keys do not match the required signals.")
+    movement_anchor = model.get("movement_anchor")
+    if not isinstance(movement_anchor, dict) or movement_anchor.get("strategy") != (
+        "weighted_consensus_order"
+    ):
+        raise InjuryContextError("Ranking model movement anchor must use weighted_consensus_order.")
+    injury_adjustment = model.get("injury_adjustment")
+    required_injury_adjustment = {
+        "availability_penalty_per_game",
+        "downside_cap_bonus_per_game",
+        "maximum_downside_cap_bonus",
+        "unbounded_downside_minimum_games",
+        "unbounded_downside_cap_bonus",
+        "rule",
+    }
+    if not isinstance(injury_adjustment, dict) or set(injury_adjustment) != (
+        required_injury_adjustment
+    ):
+        raise InjuryContextError("Ranking model injury adjustment policy is incomplete.")
+    numeric_injury_fields = required_injury_adjustment - {"rule"}
+    if any(
+        not isinstance(injury_adjustment[field], (int, float))
+        or float(injury_adjustment[field]) < 0
+        for field in numeric_injury_fields
+    ):
+        raise InjuryContextError("Ranking model injury adjustment values must be non-negative.")
+    value_policy = model.get("round_value_highlights")
+    required_value_policy = {
+        "picks_per_round",
+        "minimum_unconstrained_value_spots",
+        "excluded_positions",
+        "rule",
+    }
+    if not isinstance(value_policy, dict) or set(value_policy) != required_value_policy:
+        raise InjuryContextError("Ranking model round-value highlight policy is incomplete.")
+    if not isinstance(value_policy["picks_per_round"], int) or value_policy["picks_per_round"] < 1:
+        raise InjuryContextError("Round-value picks per round must be a positive integer.")
+    if (
+        not isinstance(value_policy["minimum_unconstrained_value_spots"], int)
+        or value_policy["minimum_unconstrained_value_spots"] < 1
+    ):
+        raise InjuryContextError("Round-value minimum discount must be a positive integer.")
+    excluded_positions = value_policy["excluded_positions"]
+    if not isinstance(excluded_positions, list) or not set(excluded_positions) <= {"K", "DST"}:
+        raise InjuryContextError("Round-value excluded positions may contain only K and DST.")
+    risk_penalty_cap = model.get("risk_penalty_cap")
+    if not isinstance(risk_penalty_cap, (int, float)) or float(risk_penalty_cap) <= 0:
+        raise InjuryContextError("Ranking model risk penalty cap must be positive.")
+    role_policy = model.get("same_team_depth_chart_tiebreaker")
+    if not isinstance(role_policy, dict):
+        raise InjuryContextError("Ranking model is missing the depth-chart tiebreaker policy.")
+    positions = role_policy.get("positions")
+    if not isinstance(positions, list) or not positions or not set(positions) <= {"QB", "RB", "TE"}:
+        raise InjuryContextError("Depth-chart tiebreaker positions must use QB, RB, or TE.")
+    minimum_advantage = role_policy.get("minimum_score_advantage")
+    if not isinstance(minimum_advantage, (int, float)) or minimum_advantage < 0:
+        raise InjuryContextError("Depth-chart tiebreaker score advantage must be non-negative.")
     required_source_groups = {
         "custom_projected_value",
         "baseline_consensus",
@@ -893,7 +1150,11 @@ def _team_rank_grade(rank: Any) -> float:
     return 50.0 if value is None else _rank_grade(value, maximum=32)
 
 
-def _injury_penalty(injury: dict[str, Any]) -> float:
+def _injury_adjustment(
+    injury: dict[str, Any],
+    *,
+    model: dict[str, Any],
+) -> InjuryAdjustment:
     games_max = injury.get("projected_games_max")
     tier = str(injury.get("tier") or "CLEAR")
     base_by_tier = {
@@ -905,10 +1166,123 @@ def _injury_penalty(injury: dict[str, Any]) -> float:
         "VERY HIGH": 5.0,
         "SEASON": 5.0,
     }
-    multiplier = {"high": 1.0, "medium": 0.85, "low": 0.60}.get(
+    confidence_multiplier = {"high": 1.0, "medium": 0.85, "low": 0.60}.get(
         str(injury.get("confidence") or "low"), 0.60
     )
-    return round(base_by_tier.get(tier, 0.0) * multiplier, 2)
+    missed_games = _optional_float(injury.get("projected_games_estimate")) or 0.0
+    effective_missed_games = missed_games * confidence_multiplier
+    availability_factor = max(0.0, min(1.0, (17.0 - effective_missed_games) / 17.0))
+    policy = model["injury_adjustment"]
+    penalty = min(
+        float(model["risk_penalty_cap"]),
+        (base_by_tier.get(tier, 0.0) * confidence_multiplier)
+        + (effective_missed_games * float(policy["availability_penalty_per_game"])),
+    )
+
+    corroborated = (
+        injury.get("source_agreement") == "corroborated"
+        and int(injury.get("signal_source_count") or 0) >= 2
+    )
+    movement_bonus = 0
+    if corroborated and effective_missed_games > 0:
+        movement_bonus = min(
+            int(policy["maximum_downside_cap_bonus"]),
+            math.ceil(effective_missed_games * float(policy["downside_cap_bonus_per_game"])),
+        )
+        if missed_games >= float(policy["unbounded_downside_minimum_games"]):
+            movement_bonus = int(policy["unbounded_downside_cap_bonus"])
+
+    return InjuryAdjustment(
+        penalty=round(penalty, 2),
+        availability_factor=round(availability_factor, 4),
+        movement_bonus=movement_bonus,
+    )
+
+
+def _movement_is_allowed(player: ReweightedPlayer, new_rank: int) -> bool:
+    movement = player.movement_anchor_rank - new_rank
+    if movement >= 0:
+        return movement <= player.movement_cap + player.injury_displacement_bonus
+    return abs(movement) <= player.movement_cap + player.injury_movement_bonus
+
+
+def _annotate_round_value_picks(
+    players: tuple[ReweightedPlayer, ...],
+    *,
+    teams: int,
+    picks_per_round: int,
+    minimum_value_delta: int,
+    excluded_positions: frozenset[str],
+) -> tuple[ReweightedPlayer, ...]:
+    """Select model-supported discounts within each final-rank draft round."""
+    score_order = sorted(
+        players,
+        key=lambda player: (
+            -player.adjusted_score,
+            player.movement_anchor_rank,
+            player.source_rank,
+        ),
+    )
+    score_rank_by_source = {
+        player.source_rank: rank for rank, player in enumerate(score_order, start=1)
+    }
+    annotated = tuple(
+        replace(
+            player,
+            score_supported_rank=score_rank_by_source[player.source_rank],
+            unconstrained_value_delta=(
+                player.movement_anchor_rank - score_rank_by_source[player.source_rank]
+            ),
+            draft_round=draft_round_for_rank(player.final_rank, teams),
+            round_value_pick=False,
+        )
+        for player in players
+    )
+
+    selected_sources: set[int] = set()
+    rounds = sorted({player.draft_round for player in annotated})
+    for draft_round in rounds:
+        candidates = sorted(
+            (
+                player
+                for player in annotated
+                if player.draft_round == draft_round
+                and player.position not in excluded_positions
+                and player.unconstrained_value_delta >= minimum_value_delta
+            ),
+            key=lambda player: (
+                -player.unconstrained_value_delta,
+                -player.rank_delta,
+                -player.adjusted_score,
+                player.final_rank,
+            ),
+        )
+        selected_sources.update(player.source_rank for player in candidates[:picks_per_round])
+    return tuple(
+        replace(player, round_value_pick=player.source_rank in selected_sources)
+        for player in annotated
+    )
+
+
+def _apply_major_injury_displacement_allowance(
+    players: tuple[ReweightedPlayer, ...],
+) -> tuple[ReweightedPlayer, ...]:
+    """Let healthy players fill vacancies created by corroborated major absences."""
+    board_size = len(players)
+    major_absence_anchors = tuple(
+        player.movement_anchor_rank
+        for player in players
+        if player.injury_movement_bonus >= board_size
+    )
+    return tuple(
+        replace(
+            player,
+            injury_displacement_bonus=sum(
+                anchor < player.movement_anchor_rank for anchor in major_absence_anchors
+            ),
+        )
+        for player in players
+    )
 
 
 def _movement_cap(rank: int, model: dict[str, Any]) -> int:
@@ -962,12 +1336,13 @@ def _row_highlight_color(
     name: str,
     *,
     sleeper_players: frozenset[str],
+    round_value_players: frozenset[str],
     handcuff_players: frozenset[str],
 ) -> str | None:
     normalized = normalize_name(name)
     if normalized in handcuff_players:
         return HANDCUFF_HIGHLIGHT_COLOR
-    if normalized in sleeper_players:
+    if normalized in sleeper_players or normalized in round_value_players:
         return SLEEPER_HIGHLIGHT_COLOR
     return None
 

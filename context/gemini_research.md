@@ -585,7 +585,7 @@ Apply injury information through the existing **0-5 total risk penalty**, not as
 
 Multiply the fallback penalty by confidence: **high 1.0**, **medium 0.85**, **low 0.60**. Injury plus suspension, role, and other uncertainty remains capped at the guide's existing five-point total risk penalty.
 
-Current player tiers: **SEASON 0**, **VERY HIGH 0**, **HIGH 1**, **MEDIUM 0**, **SHORT 0**, **WATCH 53**, **CLEAR 224**.
+Current player tiers: **SEASON 0**, **VERY HIGH 0**, **HIGH 1**, **MEDIUM 0**, **SHORT 0**, **WATCH 52**, **CLEAR 225**.
 
 #### Players with possible regular-season availability impact
 
@@ -603,7 +603,7 @@ Current player tiers: **SEASON 0**, **VERY HIGH 0**, **HIGH 1**, **MEDIUM 0**, *
 
 #### Watchlist with no regular-season games currently projected
 
-Puka Nacua (#4), Christian McCaffrey (#6), Ashton Jeanty (#13), Breece Hall (#23), Malik Nabers (#29), Josh Jacobs (#30), Quinshon Judkins (#39), Emeka Egbuka (#42), Tyler Warren (#50), TreVeyon Henderson (#63), Michael Pittman Jr. (#66), DK Metcalf (#68), Parker Washington (#69), Alec Pierce (#70), Sam LaPorta (#73), Mike Evans (#76), Jakobi Meyers (#81), Khalil Shakir (#90), Xavier Worthy (#92), Patrick Mahomes (#94), Tucker Kraft (#101), George Kittle (#102), Jacory Croskey-Merritt (#107), Rachaad White (#108), Quentin Johnston (#112), Kenyon Sadiq (#118), De'Zhaun Stribling (#129), Zach Charbonnet (#137), Jalen McMillan (#145), Tre Harris (#204), Jordan James (#212), Ollie Gordon II (#222), Ty Johnson (#225), Isaiah Davis (#226), Xavier Legette (#227), Keon Coleman (#234), Adam Randall (#243), LeQuint Allen (#245), James Conner (#248), DJ Giddens (#251), Cade Otton (#260), Emanuel Wilson (#265), Tory Horton (#271), Phil Mafah (#276), Jawhar Jordan (#282)
+Puka Nacua (#4), Christian McCaffrey (#6), Ashton Jeanty (#13), Breece Hall (#23), Malik Nabers (#29), Josh Jacobs (#30), Quinshon Judkins (#39), Emeka Egbuka (#42), Tyler Warren (#50), TreVeyon Henderson (#63), Michael Pittman Jr. (#66), DK Metcalf (#68), Alec Pierce (#70), Sam LaPorta (#73), Mike Evans (#76), Jakobi Meyers (#81), Khalil Shakir (#90), Xavier Worthy (#92), Patrick Mahomes (#94), Tucker Kraft (#101), George Kittle (#102), Jacory Croskey-Merritt (#107), Rachaad White (#108), Quentin Johnston (#112), Kenyon Sadiq (#118), De'Zhaun Stribling (#129), Zach Charbonnet (#137), Jalen McMillan (#145), Tre Harris (#204), Jordan James (#212), Ollie Gordon II (#222), Ty Johnson (#225), Isaiah Davis (#226), Xavier Legette (#227), Keon Coleman (#234), Adam Randall (#243), LeQuint Allen (#245), James Conner (#248), DJ Giddens (#251), Cade Otton (#260), Emanuel Wilson (#265), Tory Horton (#271), Phil Mafah (#276), Jawhar Jordan (#282)
 
 Treat this snapshot as time-sensitive. The full context includes evidence dates, source links, confidence, and rationale for every ranked player. A CLEAR result means no current designation was found; it is not a forecast of future health.
 <!-- END GENERATED INJURY REWEIGHTING -->

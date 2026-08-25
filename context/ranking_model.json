@@ -1,5 +1,5 @@
 {
-  "model_version": "3.0.0",
+  "model_version": "3.3.0",
   "description": "Projection-first custom-league value model. Aggregated raw-stat projections are scored under league rules and converted to corrected value over baseline; market and live context remain conservative guardrails.",
   "weights": {
     "custom_projected_value": 0.60,
@@ -9,8 +9,32 @@
     "offensive_line_fit": 0.02,
     "strength_of_schedule": 0.01
   },
-  "risk_penalty_cap": 5.0,
+  "risk_penalty_cap": 8.0,
+  "movement_anchor": {
+    "strategy": "weighted_consensus_order",
+    "tie_breaker": "espn_source_rank",
+    "rule": "Order the baseline by the weighted ESPN, FantasyPros, and FFToday consensus; use ESPN only as the deterministic tie-breaker and lineage reference."
+  },
+  "injury_adjustment": {
+    "availability_penalty_per_game": 0.65,
+    "downside_cap_bonus_per_game": 4.0,
+    "maximum_downside_cap_bonus": 24,
+    "unbounded_downside_minimum_games": 5.0,
+    "unbounded_downside_cap_bonus": 300,
+    "rule": "Confidence-weighted expected games missed reduce projected value and add residual risk. Only absences corroborated by at least two providers expand the downside movement cap; projected absences of at least five games may move to their score-supported rank. Promotion caps never expand."
+  },
+  "round_value_highlights": {
+    "picks_per_round": 1,
+    "minimum_unconstrained_value_spots": 1,
+    "excluded_positions": ["K", "DST"],
+    "rule": "Within each final-rank draft round, highlight the non-kicker/non-defense player with the largest positive gap between the blended-consensus movement anchor and the rank supported by the full adjusted model score. Break ties by actual upward movement, adjusted score, then final rank."
+  },
   "score_difference_to_reorder": 2.0,
+  "same_team_depth_chart_tiebreaker": {
+    "positions": ["QB", "RB", "TE"],
+    "minimum_score_advantage": 0.0,
+    "rule": "When comparable teammates are inverted, promote the better depth-chart role only when it also has the higher adjusted score and both movement caps remain valid."
+  },
   "league_structure": {
     "starting_slots": {
       "QB": 1,

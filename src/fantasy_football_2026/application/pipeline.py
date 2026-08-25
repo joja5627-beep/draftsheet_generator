@@ -342,6 +342,21 @@ class ValidationStage(PipelineStage):
         rankings = self.store.load_object(paths.context_file(ContextFile.REWEIGHTED_JSON))
         unified_players = unified.get("players", [])
         ranked_players = rankings.get("players", [])
+        value_policy = rankings.get("metadata", {}).get("round_value_highlight_policy", {})
+        picks_per_round = int(value_policy.get("picks_per_round") or 0)
+        minimum_value_delta = int(value_policy.get("minimum_unconstrained_value_spots") or 0)
+        excluded_positions = set(value_policy.get("excluded_positions") or [])
+        eligible_value_counts: dict[int, int] = {}
+        selected_value_counts: dict[int, int] = {}
+        for player in ranked_players:
+            draft_round = int(player.get("draft_round") or 0)
+            if (
+                player.get("position") not in excluded_positions
+                and int(player.get("unconstrained_value_delta") or 0) >= minimum_value_delta
+            ):
+                eligible_value_counts[draft_round] = eligible_value_counts.get(draft_round, 0) + 1
+            if player.get("round_value_pick") is True:
+                selected_value_counts[draft_round] = selected_value_counts.get(draft_round, 0) + 1
         checks = {
             "unified_player_count": len(unified_players) == TOTAL_RANKED_PLAYERS,
             "unified_ranks_contiguous": [player.get("rank") for player in unified_players]
@@ -350,9 +365,22 @@ class ValidationStage(PipelineStage):
             "ranking_ranks_contiguous": [player.get("final_rank") for player in ranked_players]
             == list(range(1, TOTAL_RANKED_PLAYERS + 1)),
             "ranking_movement_bounded": all(
-                abs(int(player["rank_delta"])) <= int(player["movement_cap"])
+                (
+                    int(player["rank_delta"])
+                    <= int(player["movement_cap"])
+                    + int(player.get("injury_displacement_bonus") or 0)
+                    if int(player["rank_delta"]) >= 0
+                    else abs(int(player["rank_delta"]))
+                    <= int(player["movement_cap"]) + int(player.get("injury_movement_bonus") or 0)
+                )
                 for player in ranked_players
             ),
+            "round_value_pick_coverage": bool(eligible_value_counts)
+            and all(
+                selected_value_counts.get(draft_round, 0) == min(picks_per_round, eligible_count)
+                for draft_round, eligible_count in eligible_value_counts.items()
+            )
+            and not (set(selected_value_counts) - set(eligible_value_counts)),
             "pdf_fields_complete": all(
                 all(
                     key in player

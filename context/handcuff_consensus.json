@@ -88,7 +88,7 @@
       "flags": [],
       "highlighted": true,
       "injury_weeks": "0",
-      "market_consensus_rank": 230.3,
+      "market_consensus_rank": 229.8,
       "offense_rank": 7,
       "player": "Kaelon Black",
       "source_families": [
@@ -164,7 +164,7 @@
       "flags": [],
       "highlighted": true,
       "injury_weeks": "0",
-      "market_consensus_rank": 243.62,
+      "market_consensus_rank": 246.75,
       "offense_rank": 4,
       "player": "Samaje Perine",
       "source_families": [
@@ -509,8 +509,8 @@
       "flags": [],
       "highlighted": true,
       "injury_weeks": "0",
-      "market_consensus_rank": 179.6,
-      "offense_rank": 31,
+      "market_consensus_rank": 179.1,
+      "offense_rank": 32,
       "player": "Braelon Allen",
       "source_families": [
         "athlon",
@@ -534,7 +534,7 @@
       "flags": [],
       "highlighted": true,
       "injury_weeks": "0",
-      "market_consensus_rank": 153.2,
+      "market_consensus_rank": 152.7,
       "offense_rank": 25,
       "player": "Brian Robinson Jr.",
       "source_families": [
@@ -661,8 +661,8 @@
       "flags": [],
       "highlighted": true,
       "injury_weeks": "0",
-      "market_consensus_rank": 136.5,
-      "offense_rank": 32,
+      "market_consensus_rank": 136.0,
+      "offense_rank": 31,
       "player": "Tyler Allgeier",
       "source_families": [
         "athlon",
@@ -712,7 +712,7 @@
       "flags": [],
       "highlighted": true,
       "injury_weeks": "0",
-      "market_consensus_rank": 87.3,
+      "market_consensus_rank": 87.8,
       "offense_rank": 26,
       "player": "Jonathon Brooks",
       "source_families": [
@@ -757,12 +757,12 @@
       "consensus_score": 63.0,
       "depth_chart_label": "RB2",
       "depth_chart_order": 2,
-      "draft_action": "Handcuff target in Round 24 or later behind Kenneth Walker III.",
+      "draft_action": "Handcuff target in Round 23 or later behind Kenneth Walker III.",
       "fftoday_adp": null,
       "flags": [],
       "highlighted": true,
       "injury_weeks": "0",
-      "market_consensus_rank": 277.12,
+      "market_consensus_rank": 276.5,
       "offense_rank": 11,
       "player": "Emari Demercado",
       "source_families": [
@@ -868,7 +868,7 @@
       ],
       "highlighted": false,
       "injury_weeks": "0",
-      "market_consensus_rank": 241.37,
+      "market_consensus_rank": 240.75,
       "offense_rank": 7,
       "player": "Jordan James",
       "source_families": [
@@ -893,7 +893,7 @@
       ],
       "highlighted": false,
       "injury_weeks": "0",
-      "market_consensus_rank": 148.5,
+      "market_consensus_rank": 149.0,
       "offense_rank": 21,
       "player": "Jonah Coleman",
       "source_families": [
@@ -943,7 +943,7 @@
       ],
       "highlighted": false,
       "injury_weeks": "0",
-      "market_consensus_rank": 282.5,
+      "market_consensus_rank": 281.88,
       "offense_rank": 17,
       "player": "Seth McGowan",
       "source_families": [
@@ -993,7 +993,7 @@
       ],
       "highlighted": false,
       "injury_weeks": "0",
-      "market_consensus_rank": 271.12,
+      "market_consensus_rank": 270.5,
       "offense_rank": 5,
       "player": "Adam Randall",
       "source_families": [
@@ -1065,7 +1065,7 @@
       ],
       "highlighted": false,
       "injury_weeks": "0",
-      "market_consensus_rank": 257.5,
+      "market_consensus_rank": 258.75,
       "offense_rank": 16,
       "player": "LeQuint Allen",
       "source_families": [
@@ -1113,7 +1113,7 @@
       ],
       "highlighted": false,
       "injury_weeks": "0",
-      "market_consensus_rank": 292.37,
+      "market_consensus_rank": 290.5,
       "offense_rank": 4,
       "player": "Tahj Brooks",
       "source_families": [
@@ -1182,8 +1182,8 @@
       ],
       "highlighted": false,
       "injury_weeks": "0",
-      "market_consensus_rank": 237.88,
-      "offense_rank": 31,
+      "market_consensus_rank": 238.5,
+      "offense_rank": 32,
       "player": "Isaiah Davis",
       "source_families": [
         "fantasypros"
@@ -1205,8 +1205,8 @@
       ],
       "highlighted": false,
       "injury_weeks": "0",
-      "market_consensus_rank": 223.0,
-      "offense_rank": 32,
+      "market_consensus_rank": 223.5,
+      "offense_rank": 31,
       "player": "James Conner",
       "source_families": [
         "fantasy_alarm"
@@ -1219,7 +1219,7 @@
     }
   ],
   "metadata": {
-    "generated_at": "2026-08-25T13:37:55+00:00",
+    "generated_at": "2026-08-25T15:53:56+00:00",
     "inputs": {
       "catalog": "/Users/jjackson/dev/fantasy_football_2026/context/handcuff_sources.json",
       "depth": "/Users/jjackson/dev/fantasy_football_2026/context/player_depth_charts.json",

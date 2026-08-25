@@ -6,7 +6,7 @@
       "TE": 142.2,
       "WR": 157.65
     },
-    "generated_at": "2026-08-25T13:37:50+00:00",
+    "generated_at": "2026-08-25T15:53:53+00:00",
     "inputs": {
       "market": "/Users/jjackson/dev/fantasy_football_2026/context/market_context.json",
       "model": "/Users/jjackson/dev/fantasy_football_2026/context/ranking_model.json",
@@ -50,14 +50,14 @@
       "ESPN Mike Clay": {
         "from_cache": true,
         "player_count": 418,
-        "retrieved_at": "2026-08-25T13:22:07+00:00",
+        "retrieved_at": "2026-08-25T15:03:30+00:00",
         "url": "https://g.espncdn.com/s/ffldraftkit/26/NFLDK2026_CS_ClayProjections2026.pdf"
       },
       "FFToday": {
         "from_cache": true,
         "page_count": 9,
         "player_count": 354,
-        "retrieved_at": "2026-08-25T13:22:24+00:00",
+        "retrieved_at": "2026-08-25T15:03:43+00:00",
         "urls": {
           "QB": "https://www.fftoday.com/rankings/playerproj.php?Season=2026&PosID=10&LeagueID=1",
           "RB": "https://www.fftoday.com/rankings/playerproj.php?Season=2026&PosID=20&LeagueID=1",

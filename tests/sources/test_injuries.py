@@ -103,6 +103,39 @@ def test_return_date_on_game_day_keeps_that_game_uncertain() -> None:
     assert (projection.games_min, projection.games_max) == (1, 2)
 
 
+def test_explicit_recovery_window_overrides_optimistic_structured_return_date() -> None:
+    entity = RankedEntity(1, "WR1", "WR", "Example Player", "DET", 6, "player")
+    record = SourceRecord(
+        provider="ESPN",
+        source_id="1",
+        name=entity.name,
+        team="DET",
+        position=None,
+        roster_status=None,
+        injury_status="Doubtful",
+        injury_type="Hamstring",
+        return_date="2026-09-10",
+        updated_at="2026-08-21T00:00:00Z",
+        source_url="https://example.com",
+        news_text="The player is expected to be sidelined 6-8 weeks.",
+    )
+    projection = project_games_missed(
+        entity,
+        (record,),
+        schedules={
+            "DET": tuple(date(2026, 9, day) for day in (10, 17, 24))
+            + (date(2026, 10, 1), date(2026, 10, 8), date(2026, 10, 15)),
+        },
+        season_phase="pre",
+        as_of=date(2026, 8, 21),
+        override=None,
+    )
+
+    assert (projection.games_min, projection.games_max) == (4, 6)
+    assert projection.tier == "HIGH"
+    assert "takes precedence" in projection.rationale
+
+
 def test_preseason_pup_is_a_range_not_an_automatic_four_game_absence() -> None:
     entity = RankedEntity(1, "RB1", "RB", "Example Player", "DET", 6, "player")
     record = SourceRecord(

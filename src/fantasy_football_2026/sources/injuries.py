@@ -640,6 +640,24 @@ def project_games_missed(
             rationale="A current report explicitly states an expected games-missed range.",
         )
 
+    explicit_weeks = _explicit_weeks_range(all_news)
+    if explicit_weeks:
+        early_return = as_of + timedelta(weeks=explicit_weeks[0])
+        late_return = as_of + timedelta(weeks=explicit_weeks[1])
+        minimum = _games_range_for_return(schedules.get(entity.team, ()), early_return)[0]
+        maximum = _games_range_for_return(schedules.get(entity.team, ()), late_return)[1]
+        return _projection(
+            minimum,
+            maximum,
+            current_injury=True,
+            confidence="medium",
+            rationale=(
+                f"Reported {explicit_weeks[0]}-{explicit_weeks[1]} week recovery window "
+                "was mapped against the team's regular-season schedule and takes precedence "
+                "over a less-specific structured return date."
+            ),
+        )
+
     return_dates = sorted(
         parsed
         for parsed in (_parse_date(record.return_date) for record in active_records)
@@ -657,23 +675,6 @@ def project_games_missed(
                 f"Structured expected return date {expected_return.isoformat()} maps to "
                 f"{minimum}-{maximum} scheduled regular-season games before return; a game "
                 "on the return date remains uncertain."
-            ),
-        )
-
-    explicit_weeks = _explicit_weeks_range(all_news)
-    if explicit_weeks:
-        early_return = as_of + timedelta(weeks=explicit_weeks[0])
-        late_return = as_of + timedelta(weeks=explicit_weeks[1])
-        minimum = _games_range_for_return(schedules.get(entity.team, ()), early_return)[0]
-        maximum = _games_range_for_return(schedules.get(entity.team, ()), late_return)[1]
-        return _projection(
-            minimum,
-            maximum,
-            current_injury=True,
-            confidence="medium",
-            rationale=(
-                f"Reported {explicit_weeks[0]}-{explicit_weeks[1]} week recovery window "
-                "was mapped against the team's regular-season schedule."
             ),
         )
 

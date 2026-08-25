@@ -1,7 +1,7 @@
 # Automated 2026 team projections
 
-**Generated:** `2026-08-25T13:37:21+00:00`
-**Effective date:** `2026-08-24`
+**Generated:** `2026-08-25T15:53:41+00:00`
+**Effective date:** `2026-08-25`
 
 Ranks are parsed on every live refresh; no hand-entered team ranks are used.
 
@@ -10,7 +10,7 @@ OL: [Sharp Football forward-looking staff ranking.](https://www.sharpfootballana
 
 | Team | OFF rank | Avg pts | OL rank | OL score |
 |---|---:|---:|---:|---:|
-| LAR | 1 | 26.6 | 5 | 84 |
+| LAR | 1 | 26.7 | 5 | 84 |
 | BUF | 2 | 26.1 | 3 | 87 |
 | DET | 3 | 26.1 | 14 | 56 |
 | CIN | 4 | 26.0 | 28 | 16 |
@@ -40,5 +40,5 @@ OL: [Sharp Football forward-looking staff ranking.](https://www.sharpfootballana
 | LV | 28 | 19.2 | 25 | 31 |
 | MIA | 29 | 19.0 | 29 | 10 |
 | CLE | 30 | 18.7 | 32 | 5 |
-| NYJ | 31 | 18.5 | 19 | 47 |
-| ARI | 32 | 18.4 | 26 | 28 |
+| ARI | 31 | 18.5 | 26 | 28 |
+| NYJ | 32 | 18.4 | 19 | 47 |
