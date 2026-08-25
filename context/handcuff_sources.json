@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0.0",
+  "policy": "Each publisher family contributes at most one vote. Player names must appear in the refreshed page and candidates must also be current live RB2/RB3 depth-chart entries.",
+  "minimum_available_sources": 5,
+  "minimum_families_to_highlight": 2,
+  "sources": [
+    {
+      "id": "fantasypros_handcuffs",
+      "family": "fantasypros",
+      "url": "https://www.fantasypros.com/2026/05/fantasy-football-running-back-handcuff-rankings-2026/",
+      "mode": "explicit"
+    },
+    {
+      "id": "pff_handcuffs",
+      "family": "pff",
+      "url": "https://www.pff.com/news/fantasy-football-2026-best-running-back-handcuffs",
+      "mode": "explicit"
+    },
+    {
+      "id": "fantasy_life_handcuffs",
+      "family": "fantasy_life",
+      "url": "https://www.fantasylife.com/articles/fantasy/fantasy-football-rb-handcuff-rankings-and-tiers-for-2026-blake-c",
+      "mode": "explicit"
+    },
+    {
+      "id": "draft_sharks_handcuffs",
+      "family": "draft_sharks",
+      "url": "https://www.draftsharks.com/article/best-rb-handcuffs",
+      "mode": "explicit"
+    },
+    {
+      "id": "fantasy_alarm_handcuffs",
+      "family": "fantasy_alarm",
+      "url": "https://www.fantasyalarm.com/articles/nfl/fantasy-football-draft-guide/2026-handcuff-rankings/192276",
+      "mode": "explicit"
+    },
+    {
+      "id": "fantrax_handcuffs",
+      "family": "fantrax",
+      "url": "https://fantraxhq.com/6-underrated-rb-handcuffs-for-fantasy-football-in-2026/",
+      "mode": "explicit"
+    },
+    {
+      "id": "athlon_rb2_tiers_yahoo_mirror",
+      "family": "athlon",
+      "url": "https://sports.yahoo.com/articles/2026-fantasy-football-rb2-tiers-234759356.html",
+      "mode": "explicit"
+    },
+    {
+      "id": "yahoo_top_handcuffs",
+      "family": "yahoo",
+      "url": "https://sports.yahoo.com/articles/top-6-rb-handcuffs-target-202618605.html",
+      "mode": "explicit"
+    }
+  ]
+}

@@ -5,15 +5,21 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from fantasy_football_2026.depth_chart_context import load_draft_sheet_context
-from fantasy_football_2026.injury_context import InjuryContextError
-from fantasy_football_2026.pdf_rounds import (
-    DraftSheetError,
+from fantasy_football_2026.constants import (
+    DEFAULT_LEAGUE_TEAMS,
+    ROUND_LINE_COLOR,
+    TOTAL_RANKED_PLAYERS,
+    ContextFile,
+    DirectoryName,
+)
+from fantasy_football_2026.errors import DraftSheetError, InjuryContextError
+from fantasy_football_2026.presentation.pdf import (
     HighlightStyle,
     highlight_draft_rounds,
     inspect_draft_sheet,
     reflow_draft_sheet,
 )
+from fantasy_football_2026.sources.depth_charts import load_draft_sheet_context
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -40,8 +46,8 @@ def build_parser() -> argparse.ArgumentParser:
         type=Path,
         help="output PDF (default: output/pdf/<input>-12-team-rounds.pdf)",
     )
-    highlight_parser.add_argument("--teams", type=int, default=12)
-    highlight_parser.add_argument("--color", default="#75AADB")
+    highlight_parser.add_argument("--teams", type=int, default=DEFAULT_LEAGUE_TEAMS)
+    highlight_parser.add_argument("--color", default=ROUND_LINE_COLOR)
     highlight_parser.add_argument("--primary-opacity", type=float, default=0.0)
     highlight_parser.add_argument("--secondary-opacity", type=float, default=0.0)
     highlight_parser.add_argument(
@@ -68,7 +74,7 @@ def build_parser() -> argparse.ArgumentParser:
     highlight_parser.add_argument(
         "--depth-chart-context",
         type=Path,
-        default=Path("context/draft_context.json"),
+        default=Path(DirectoryName.CONTEXT, ContextFile.DRAFT_CONTEXT_JSON),
         help="unified market, depth-chart, offense, line, schedule, injury, and sleeper context",
     )
     highlight_parser.set_defaults(remove_dollar_column=True)
@@ -100,11 +106,12 @@ def main(argv: list[str] | None = None) -> int:
 
         output = args.output or _default_output(args.input, args.teams)
         draft_context_labels = (
-            None
-            if args.keep_bye_week
-            else load_draft_sheet_context(args.depth_chart_context)
+            None if args.keep_bye_week else load_draft_sheet_context(args.depth_chart_context)
         )
-        reflowed_input = Path("tmp/pdfs") / f".{args.input.stem}-expanded-layout.pdf"
+        reflowed_input = (
+            Path(DirectoryName.TEMPORARY, DirectoryName.PDF)
+            / f".{args.input.stem}-expanded-layout.pdf"
+        )
         source_for_highlighting = args.input
         try:
             if not args.keep_footer_layout:
@@ -148,11 +155,13 @@ def main(argv: list[str] | None = None) -> int:
 
 def _add_rank_range_arguments(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--minimum-rank", type=int, default=1)
-    parser.add_argument("--maximum-rank", type=int, default=300)
+    parser.add_argument("--maximum-rank", type=int, default=TOTAL_RANKED_PLAYERS)
 
 
 def _default_output(input_path: Path, teams: int) -> Path:
-    return Path("output/pdf") / f"{input_path.stem}-{teams}-team-rounds.pdf"
+    return Path(DirectoryName.OUTPUT, DirectoryName.PDF) / (
+        f"{input_path.stem}-{teams}-team-rounds.pdf"
+    )
 
 
 if __name__ == "__main__":

@@ -27,8 +27,9 @@ draws the line overlay, and `pypdf` merges that overlay into a new file.
 
 ## Repository policy
 
-The repository tracks source code, tests, the ranking model, hand-maintained overrides,
-source catalogs, and research notes. It intentionally does not track third-party source
+The repository tracks source code, tests, the ranking model, source catalogs, and research
+notes. Historical override and seed files are retained for provenance but are inactive in
+the default automated rebuild. It intentionally does not track third-party source
 PDFs, downloaded caches, or generated context/output artifacts. This keeps clones small,
 avoids publishing third-party draft-kit material, and prevents generated metadata from
 capturing machine-specific paths.
@@ -83,14 +84,16 @@ Preview the dependency-ordered work without changing files:
 poetry run fantasy-rebuild --plan
 ```
 
-`rebuild_context.py` remains as a stable root-level wrapper, so
-`poetry run python rebuild_context.py --refresh` is equivalent.
+The compatibility wrapper lives with the other maintenance utilities, so
+`poetry run python scripts/rebuild_context.py --refresh` is equivalent.
 
 The rebuild order is fixed and fail-closed:
 
 ```text
-schedule -> injuries -> Sleeper + ESPN depth charts -> ESPN/FantasyPros/FFToday market
-         -> sleeper/rookie consensus -> unified player context
+team offense/OL -> schedule -> injuries -> Sleeper + ESPN depth charts
+         -> ESPN/FantasyPros/FFToday market
+         -> ESPN Mike Clay + FFToday raw-stat projection ensemble
+         -> sleeper/rookie consensus + RB handcuff consensus -> unified player context
          -> source-order annotated PDF + weighted ranking model -> validation/manifest
 ```
 
@@ -101,6 +104,12 @@ Primary outputs:
   sleeper evidence are kept together under a stable schema
 - `context/sleeper_consensus.json` and `.md` - publisher-family-deduplicated sleeper and
   rookie consensus, dynamically adjusted for current price, depth order, and injury state
+- `context/handcuff_consensus.json` and `.md` - publisher-family-deduplicated RB handcuff
+  candidates verified against the refreshed live depth chart and injury context
+- `context/projection_context.json` and `.md` - league-scored ESPN/FFToday projection
+  ensemble, replacement baselines, source coverage, and player-level projected value
+- `context/weighting_strategy_research.md` - evidence review, alternatives, selected
+  heuristic, assumptions, and limitations
 - `context/reweighted_cheat_sheet.json` - complete score, component grades, evidence
   counts, rank deltas, and movement caps for all 300 rows
 - `context/reweighted_cheat_sheet.md` - readable version of the complete calculation
@@ -115,9 +124,13 @@ Primary outputs:
   generated artifact; failed runs record the exact stage and error
 
 The reweighted PDF highlights every current sleeper or rookie target from
-`context/sleeper_consensus.json` in palette-matched yellow and includes a key on every
-page. Because the PDF reads the generated consensus instead of a hard-coded name list,
-the highlights update automatically on the next rebuild.
+`context/sleeper_consensus.json` in palette-matched yellow and every eligible running back
+handcuff from `context/handcuff_consensus.json` in pale lavender. Both keys appear on every
+page. Handcuffs require current RB2 status, candidate health, and mentions from at least two
+independent publisher families; RB3 and single-source candidates remain in the generated
+watchlist without a highlight. If a player qualifies for both categories, lavender takes
+precedence so the handcuff role stays visible. Because both colors read generated consensus
+artifacts instead of hard-coded name lists, they update automatically on the next rebuild.
 
 ### Ranking contract
 
@@ -125,54 +138,85 @@ The versioned weights and movement rules live in `context/ranking_model.json`. T
 uses every normalized signal in the score:
 
 ```text
-58% multi-source baseline consensus
-15% replacement-distance VORP proxy
-10% opportunity
- 6% team offense
- 4% position-adjusted offensive line
- 3% coaching and continuity
- 2% custom-scoring fit
- 2% position-specific strength of schedule
-- capped 0-5 injury and role risk
+60% custom-scored ensemble value over baseline
+30% multi-source baseline consensus
+ 5% opportunity
+ 2% team offense
+ 2% position-adjusted offensive line
+ 1% position-specific strength of schedule
+- capped 0-5 injury risk
 ```
 
 The order changes only when the adjusted-score difference reaches two points. Ordinary
 movement is capped at 2 spots for ranks 1-24, 4 for 25-72, 8 for 73-144, and 12 after
 rank 144. This keeps context from turning a modest edge into a multi-tier leap.
 
-The current VORP input is intentionally labeled a proxy: it measures positional-rank
-distance from configured replacement levels. It should be replaced with true projected
-custom-scoring points only after two structured projection feeds are available.
+The projected-value input averages ESPN Mike Clay and FFToday raw statistics, scores the
+result from the supplied league rules, simulates RB/WR starter and flex demand, and applies
+the research-backed median-starter correction at QB and TE. The supplied rules do not state
+roster slots, so the 12-team 1QB/2RB/2WR/1TE/1FLEX assumption remains explicit and editable.
+See `context/weighting_strategy_research.md` for the comparison and evidence boundaries.
 
 ### Source and freshness policy
 
 - Baseline: ESPN PPR Top 300, FantasyPros half-PPR expert consensus, and FFToday's
   Underdog/Yahoo half-PPR ADP blend
+- Projected value: simple mean of ESPN Mike Clay and FFToday raw-stat projections,
+  rescored from the league export on each rebuild
 - Opportunity: Sleeper depth order plus ESPN's independent team depth charts
-- Injuries: Sleeper and ESPN for every player, plus dated reviewed overrides where needed
+- Injuries: Sleeper and ESPN for every player; manual overrides are disabled by default
 - OFF, OL, and SOS: a named calculation source plus independent tier/method cross-checks
-- Player-specific role, coaching, bonus-fit, and extra-risk grades:
-  `context/player_signal_overrides.json`
+- OFF and OL are fetched and parsed by the `team-projections` stage on every live refresh.
+- Player-specific role, coaching, bonus-fit, and extra-risk overrides are not ranking inputs.
 
-A player-specific manual grade is ignored unless at least two independent named sources
-support that exact signal. The audit also warns after the configured 14-day freshness
-window. Neutral `50` means the model has no adequately supported individualized evidence;
-it is not fabricated data.
-
-The rebuild also validates that every automated evidence group retains at least two
+The rebuild also validates that every configured evidence group retains at least two
 distinct named providers and URLs. Removing that redundancy makes the rebuild fail instead
 of quietly producing a single-source ranking.
 
 ### Pipeline architecture
 
-The reusable framework in `src/fantasy_football_2026/build_core.py` separates graph
-planning, artifact inspection, manifest persistence, and execution into focused objects.
-The fantasy-specific classes in `pipeline.py` implement `PipelineStage`, while
-`FantasyPipelineFactory` is the composition root that assembles them. Each stage declares
-an explicit name, dependencies, outputs, and metrics. The executor runs the graph in
-topological order and records a manifest even when a stage fails. Its artifact and manifest
-collaborators are injected through small protocols, so tests or future storage backends can
-be substituted without modifying the executor.
+The source and test trees mirror the application's architectural boundaries:
+
+```text
+src/fantasy_football_2026/
+├── application/      # pipeline framework, stage composition, rebuild command
+├── consensus/        # shared publisher ingestion, sleepers, RB handcuffs
+├── domain/           # normalization, unified draft context, ranking model
+├── infrastructure/   # atomic artifact storage and cached HTTP client
+├── presentation/     # column buckets and PDF rendering
+├── sources/          # injuries, depth charts, market, projections, schedule, teams
+├── cli.py            # public PDF command
+├── constants.py      # stable configuration values
+└── errors.py         # application exception hierarchy
+```
+
+`scripts/` contains thin maintenance wrappers, while `context/` contains source inputs and
+generated context, `output/` contains build products, and `tests/` mirrors the package
+layers. The source PDF remains at the repository root because it is the default build input.
+
+The reusable framework in `application/core.py` separates graph planning, artifact
+inspection, manifest persistence, and execution into focused objects. The fantasy-specific
+classes in `application/pipeline.py` implement `PipelineStage`, while
+`FantasyPipelineFactory` is the composition root that assembles them. Each stage declares an
+explicit name, dependencies, outputs, and metrics. The executor runs the graph in topological
+order and records a manifest even when a stage fails. Its artifact and manifest collaborators
+are injected through small protocols, so tests or future storage backends can be substituted
+without modifying the executor.
+
+Stable configuration strings are centralized in the package-root `constants.py`: artifact filenames,
+pipeline stage IDs, source URLs, NFL team/name aliases, cache names, and PDF colors. Domain
+prose, JSON field names, and parser tokens remain beside the behavior that owns them so the
+constants module does not become an untyped dumping ground. `ArtifactStore` provides the
+single atomic JSON/text persistence boundary, while `CachedWebClient` provides consistent
+refresh, offline, current-day, stale-on-error, and payload-validation behavior. Both are
+injectable classes with narrow responsibilities.
+
+Publisher-backed sleeper and handcuff features share the source, article, normalization,
+and cache abstractions in `consensus/common.py`; each builder retains only its own scoring and
+eligibility rules. Generic name and team normalization lives in `domain/normalization.py`,
+and the application exception hierarchy lives in the package-root `errors.py`. This avoids
+importing private helpers from a feature module and keeps dependencies pointed toward
+reusable infrastructure.
 
 `DraftContextBuilder` owns the player-level join. Its immutable `MarketSignals`,
 `OpportunitySignals`, `InjurySignals`, and `DraftPlayerContext` value objects define the
@@ -185,6 +229,18 @@ in `FantasyPipelineFactory`. The executor, graph planner, artifact hashing, and 
 storage remain closed to that change. New normalized fields belong in a typed value object
 and are joined by `DraftContextBuilder`. This keeps fetching, normalization, rendering,
 and validation separate and independently testable.
+
+The package uses Poetry's PEP 517/PEP 621 configuration with a `src/` layout, a typed-package
+marker, a single metadata-derived package version, locked runtime dependencies, and isolated
+development dependencies. The standard local quality gate is:
+
+```bash
+poetry check
+poetry run ruff format --check .
+poetry run ruff check .
+poetry run pytest
+poetry build
+```
 
 To add another signal or provider, update the source adapter, register the provider in
 `context/ranking_model.json`, add a test fixture, and expose its source count in the
@@ -206,7 +262,7 @@ poetry run fantasy-rebuild --refresh
 poetry run fantasy-pdf highlight-rounds NFL26_CS_PPR300.pdf
 ```
 
-This also writes `context/player_depth_charts.md` and
+This also refreshes `context/team_projections.json`, then writes `context/player_depth_charts.md` and
 `context/player_depth_charts.json`, merging the dated team rankings in
 `context/team_projections.json` and the position-specific schedule ranks in
 `context/strength_of_schedule.json`, plus the injury-week labels in
@@ -226,11 +282,12 @@ The default output is:
 output/pdf/NFL26_CS_PPR300-12-team-rounds.pdf
 ```
 
-## Refresh draft market and sleeper context
+## Refresh draft market, sleeper, and handcuff context
 
 ```bash
 poetry run fantasy-market --refresh
 poetry run fantasy-sleepers --refresh
+poetry run fantasy-handcuffs --refresh
 ```
 
 This cross-references ESPN PPR rank, FantasyPros half-PPR expert consensus, and
@@ -241,6 +298,12 @@ boards live in `context/sleeper_consensus.md` and `.json`. Their consensus count
 publisher family once, then applies current price, depth-chart, injury, rookie status,
 and league-scoring adjustments. Individual source failures are recorded, while the build
 fails closed if fewer than the configured minimum number of pages are available.
+
+`context/handcuff_sources.json` maintains the independent handcuff source catalog. Pages
+are cached under `context/cache/handcuff_sources/`, and the builder deduplicates publisher
+families before checking every mentioned player against the automated RB depth and injury
+feeds. Its generated board lives in `context/handcuff_consensus.md` and `.json` and follows
+the same fail-closed source-coverage policy.
 
 To adjust the league size or line color:
 
@@ -264,7 +327,7 @@ players against Sleeper and ESPN, maps reported expected-return dates to each pl
 regular-season schedule, and writes both readable and machine-readable context:
 
 ```bash
-poetry run python update_injury_context.py --refresh
+poetry run python scripts/update_injury_context.py --refresh
 ```
 
 Outputs:
@@ -287,7 +350,7 @@ The daily source cache lives under the ignored `context/cache/` directory. To re
 without network access after at least one successful refresh:
 
 ```bash
-poetry run python update_injury_context.py --offline
+poetry run python scripts/update_injury_context.py --offline
 ```
 
 The risk score describes current reported regular-season availability, not the chance of
@@ -304,10 +367,17 @@ a new future injury:
 Preseason Questionable, Out, PUP, and NFI labels intentionally use broader ranges because
 final roster designations and Week 1 injury reports may not yet exist.
 
-### Human-reviewed overrides
+### Optional manual injury override (not used by `fantasy-rebuild`)
 
-Use `context/injury_overrides.json` when a trusted report is newer or more specific than
-the feeds:
+The default rebuild is automated-only. For a one-off diagnostic, `fantasy-injuries` can
+explicitly opt into `context/injury_overrides.json` when a trusted report is newer or more
+specific than the feeds:
+
+```bash
+poetry run fantasy-injuries --overrides context/injury_overrides.json --refresh
+```
+
+The optional file format is:
 
 ```json
 {
@@ -322,7 +392,7 @@ the feeds:
 }
 ```
 
-Overrides require a games range and a written reason so manual judgment stays auditable.
+Overrides require a games range and a written reason so an opt-in manual run stays auditable.
 Add a `sources` list with `provider`, `url`, `updated_at`, and `note` when the override
 corroborates or replaces a live-feed estimate.
 # draftsheet_generator

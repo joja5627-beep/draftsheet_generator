@@ -1,27 +1,29 @@
 {
-  "model_version": "1.0.0",
-  "description": "Conservative custom-league reranking model. Context reorders players inside bounded neighborhoods rather than replacing projection tiers.",
+  "model_version": "3.0.0",
+  "description": "Projection-first custom-league value model. Aggregated raw-stat projections are scored under league rules and converted to corrected value over baseline; market and live context remain conservative guardrails.",
   "weights": {
-    "baseline_consensus": 0.58,
-    "league_vorp_proxy": 0.15,
-    "opportunity": 0.1,
-    "team_offense": 0.06,
-    "offensive_line_fit": 0.04,
-    "coaching_continuity": 0.03,
-    "custom_scoring_fit": 0.02,
-    "strength_of_schedule": 0.02
+    "custom_projected_value": 0.60,
+    "baseline_consensus": 0.30,
+    "opportunity": 0.05,
+    "team_offense": 0.02,
+    "offensive_line_fit": 0.02,
+    "strength_of_schedule": 0.01
   },
   "risk_penalty_cap": 5.0,
-  "minimum_independent_sources_for_manual_signal": 2,
-  "manual_signal_freshness_days": 14,
   "score_difference_to_reorder": 2.0,
-  "replacement_levels": {
-    "QB": 15,
-    "RB": 42,
-    "WR": 54,
-    "TE": 15,
-    "K": 12,
-    "DST": 12
+  "league_structure": {
+    "starting_slots": {
+      "QB": 1,
+      "RB": 2,
+      "WR": 2,
+      "TE": 1,
+      "K": 1,
+      "DST": 1
+    },
+    "flex_slots": 1,
+    "flex_positions": ["RB", "WR", "TE"],
+    "onesie_baseline_fraction": 0.5,
+    "assumption": "Roster settings were not present in the supplied league rules; use 1 QB, 2 RB, 2 WR, 1 TE, 1 flex, K, and DST until confirmed."
   },
   "offensive_line_position_multiplier": {
     "QB": 1.0,
@@ -38,6 +40,12 @@
     {"minimum_rank": 145, "maximum_rank": 300, "spots": 12}
   ],
   "source_registry": {
+    "custom_projected_value": [
+      {"name": "ESPN Mike Clay 2026 Projection Guide", "role": "complete current raw-stat projection feed", "url": "https://g.espncdn.com/s/ffldraftkit/26/NFLDK2026_CS_ClayProjections2026.pdf"},
+      {"name": "FFToday 2026 player projections", "role": "complete current raw-stat projection feed", "url": "https://www.fftoday.com/rankings/playerproj.php"},
+      {"name": "Fantasy Football Analytics 2014-2025 accuracy study", "role": "historical MAE and aggregation validation", "url": "https://fantasyfootballanalytics.net/which-projections-are-most-accurate"},
+      {"name": "RotoAlpha 2019-2024 oracle baseline backtest", "role": "median-starter QB and TE baseline validation", "url": "https://rotoalpha.com/nfl/articles/fantasy-football-when-to-draft-qb-and-te"}
+    ],
     "baseline_consensus": [
       {"name": "ESPN 2026 PPR Top 300", "role": "projection baseline", "url": "https://g.espncdn.com/s/ffldraftkit/26/NFL26_CS_PPR300.pdf?adddata=2026CS_PPR300"},
       {"name": "FantasyPros half-PPR ECR", "role": "multi-expert consensus", "url": "https://www.fantasypros.com/nfl/rankings/half-point-ppr-cheatsheets.php"},

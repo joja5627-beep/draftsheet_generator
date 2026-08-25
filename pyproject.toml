@@ -7,6 +7,13 @@ authors = [
 ]
 readme = "README.md"
 requires-python = ">=3.11,<4.0"
+keywords = ["fantasy-football", "draft", "rankings", "pdf"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Typing :: Typed",
+]
 dependencies = [
     "pdfplumber>=0.11,<1.0",
     "pymupdf>=1.26,<2",
@@ -16,25 +23,29 @@ dependencies = [
 
 [project.scripts]
 fantasy-pdf = "fantasy_football_2026.cli:main"
-fantasy-injuries = "fantasy_football_2026.injury_context:main"
-fantasy-depth-charts = "fantasy_football_2026.depth_chart_context:main"
-fantasy-schedule = "fantasy_football_2026.schedule_context:main"
-fantasy-market = "fantasy_football_2026.market_context:main"
-fantasy-sleepers = "fantasy_football_2026.sleeper_consensus:main"
-fantasy-rankings = "fantasy_football_2026.ranking_model:main"
-fantasy-rebuild = "fantasy_football_2026.rebuild:main"
+fantasy-injuries = "fantasy_football_2026.sources.injuries:main"
+fantasy-depth-charts = "fantasy_football_2026.sources.depth_charts:main"
+fantasy-team-context = "fantasy_football_2026.sources.teams:main"
+fantasy-schedule = "fantasy_football_2026.sources.schedule:main"
+fantasy-market = "fantasy_football_2026.sources.market:main"
+fantasy-projections = "fantasy_football_2026.sources.projections:main"
+fantasy-sleepers = "fantasy_football_2026.consensus.sleepers:main"
+fantasy-handcuffs = "fantasy_football_2026.consensus.handcuffs:main"
+fantasy-rankings = "fantasy_football_2026.domain.rankings:main"
+fantasy-rebuild = "fantasy_football_2026.application.rebuild:main"
 
 [tool.poetry]
 packages = [
     { include = "fantasy_football_2026", from = "src" },
 ]
+include = ["src/fantasy_football_2026/py.typed"]
 
 [tool.poetry.group.dev.dependencies]
 pytest = ">=8,<10"
 ruff = ">=0.12,<1"
 
 [tool.pytest.ini_options]
-addopts = "-q"
+addopts = "-q --strict-config --strict-markers"
 testpaths = ["tests"]
 
 [tool.ruff]
@@ -43,6 +54,10 @@ target-version = "py311"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
 
 [build-system]
 requires = ["poetry-core>=2.0,<3.0"]

@@ -1,0 +1,5554 @@
+{
+  "metadata": {
+    "baselines": {
+      "QB": 343.55,
+      "RB": 156.75,
+      "TE": 142.2,
+      "WR": 157.65
+    },
+    "generated_at": "2026-08-25T13:37:50+00:00",
+    "inputs": {
+      "market": "/Users/jjackson/dev/fantasy_football_2026/context/market_context.json",
+      "model": "/Users/jjackson/dev/fantasy_football_2026/context/ranking_model.json",
+      "scoring": "/Users/jjackson/dev/fantasy_football_2026/context/broncon24_league_scoring.txt"
+    },
+    "league_structure": {
+      "assumption": "Roster settings were not present in the supplied league rules; use 1 QB, 2 RB, 2 WR, 1 TE, 1 flex, K, and DST until confirmed.",
+      "flex_positions": [
+        "RB",
+        "WR",
+        "TE"
+      ],
+      "flex_slots": 1,
+      "onesie_baseline_fraction": 0.5,
+      "starting_slots": {
+        "DST": 1,
+        "K": 1,
+        "QB": 1,
+        "RB": 2,
+        "TE": 1,
+        "WR": 2
+      }
+    },
+    "matched_skill_players": 260,
+    "maximum_positive_value": 156.4,
+    "method": "The simple mean of ESPN Mike Clay and FFToday raw-stat projections is scored under the league's base rules. RB/WR baselines come from a league-wide starter and flex simulation; one-QB and one-TE baselines use the configured median-starter correction. K/DST receive no projected-value premium because they are streamable and historically difficult to project.",
+    "schema_version": "1.0.0",
+    "scoring": {
+      "fumble_lost": -2.0,
+      "pass_int": -2.0,
+      "pass_td": 4.0,
+      "pass_yds": 0.05,
+      "rec_td": 5.0,
+      "rec_yds": 0.1,
+      "reception": 0.5,
+      "rush_td": 5.0,
+      "rush_yds": 0.1
+    },
+    "scoring_caveat": "Projection feeds do not forecast counts of 300/400-yard games, 100/200-yard games, long touchdowns, two-point conversions, or fumbles lost. Those volatile events are excluded rather than estimated with an unsupported constant. A one-source projection is retained when only one feed lists a player; the Sources column makes that coverage visible.",
+    "sources": {
+      "ESPN Mike Clay": {
+        "from_cache": true,
+        "player_count": 418,
+        "retrieved_at": "2026-08-25T13:22:07+00:00",
+        "url": "https://g.espncdn.com/s/ffldraftkit/26/NFLDK2026_CS_ClayProjections2026.pdf"
+      },
+      "FFToday": {
+        "from_cache": true,
+        "page_count": 9,
+        "player_count": 354,
+        "retrieved_at": "2026-08-25T13:22:24+00:00",
+        "urls": {
+          "QB": "https://www.fftoday.com/rankings/playerproj.php?Season=2026&PosID=10&LeagueID=1",
+          "RB": "https://www.fftoday.com/rankings/playerproj.php?Season=2026&PosID=20&LeagueID=1",
+          "TE": "https://www.fftoday.com/rankings/playerproj.php?Season=2026&PosID=40&LeagueID=1",
+          "WR": "https://www.fftoday.com/rankings/playerproj.php?Season=2026&PosID=30&LeagueID=1"
+        }
+      }
+    },
+    "teams": 12
+  },
+  "players": [
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 313.15,
+      "name": "Jahmyr Gibbs",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 3.5,
+        "rec_yds": 559.0,
+        "receptions": 70.0,
+        "rush_att": 281.0,
+        "rush_td": 13.0,
+        "rush_yds": 1397.5
+      },
+      "projected_value_grade": 100.0,
+      "projected_value_over_baseline": 156.4,
+      "projection_source_count": 2,
+      "source_rank": 1,
+      "team": "DET"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 306.95,
+      "name": "Bijan Robinson",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 3.0,
+        "rec_yds": 707.5,
+        "receptions": 80.0,
+        "rush_att": 283.5,
+        "rush_td": 8.5,
+        "rush_yds": 1387.0
+      },
+      "projected_value_grade": 96.04,
+      "projected_value_over_baseline": 150.2,
+      "projection_source_count": 2,
+      "source_rank": 2,
+      "team": "ATL"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 264.75,
+      "name": "Ja'Marr Chase",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 11.0,
+        "rec_yds": 1491.5,
+        "receptions": 118.0,
+        "rush_att": 3.0,
+        "rush_td": 0.0,
+        "rush_yds": 16.0
+      },
+      "projected_value_grade": 68.48,
+      "projected_value_over_baseline": 107.1,
+      "projection_source_count": 2,
+      "source_rank": 3,
+      "team": "CIN"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 278.7,
+      "name": "Puka Nacua",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 9.5,
+        "rec_yds": 1575.5,
+        "receptions": 119.5,
+        "rush_att": 13.0,
+        "rush_td": 1.0,
+        "rush_yds": 89.0
+      },
+      "projected_value_grade": 77.4,
+      "projected_value_over_baseline": 121.05,
+      "projection_source_count": 2,
+      "source_rank": 4,
+      "team": "LAR"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 255.25,
+      "name": "Jaxon Smith-Njigba",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 8.5,
+        "rec_yds": 1545.0,
+        "receptions": 111.0,
+        "rush_att": 5.0,
+        "rush_td": 0.0,
+        "rush_yds": 27.5
+      },
+      "projected_value_grade": 62.4,
+      "projected_value_over_baseline": 97.6,
+      "projection_source_count": 2,
+      "source_rank": 5,
+      "team": "SEA"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 291.45,
+      "name": "Christian McCaffrey",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 4.5,
+        "rec_yds": 699.5,
+        "receptions": 80.5,
+        "rush_att": 276.5,
+        "rush_td": 9.0,
+        "rush_yds": 1137.5
+      },
+      "projected_value_grade": 86.13,
+      "projected_value_over_baseline": 134.7,
+      "projection_source_count": 2,
+      "source_rank": 6,
+      "team": "SF"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 267.5,
+      "name": "Jonathan Taylor",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 1.0,
+        "rec_yds": 339.5,
+        "receptions": 43.5,
+        "rush_att": 312.0,
+        "rush_td": 12.0,
+        "rush_yds": 1468.0
+      },
+      "projected_value_grade": 70.81,
+      "projected_value_over_baseline": 110.75,
+      "projection_source_count": 2,
+      "source_rank": 7,
+      "team": "IND"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 250.75,
+      "name": "Amon-Ra St. Brown",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 10.0,
+        "rec_yds": 1401.5,
+        "receptions": 118.5,
+        "rush_att": 3.0,
+        "rush_td": 0.0,
+        "rush_yds": 13.5
+      },
+      "projected_value_grade": 59.53,
+      "projected_value_over_baseline": 93.1,
+      "projection_source_count": 2,
+      "source_rank": 8,
+      "team": "DET"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 218.25,
+      "name": "CeeDee Lamb",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 8.5,
+        "rec_yds": 1276.0,
+        "receptions": 95.0,
+        "rush_att": 1.0,
+        "rush_td": 0.0,
+        "rush_yds": 6.5
+      },
+      "projected_value_grade": 38.75,
+      "projected_value_over_baseline": 60.6,
+      "projection_source_count": 2,
+      "source_rank": 9,
+      "team": "DAL"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 242.3,
+      "name": "De'Von Achane",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 3.0,
+        "rec_yds": 461.0,
+        "receptions": 60.5,
+        "rush_att": 243.0,
+        "rush_td": 5.5,
+        "rush_yds": 1234.5
+      },
+      "projected_value_grade": 54.7,
+      "projected_value_over_baseline": 85.55,
+      "projection_source_count": 2,
+      "source_rank": 10,
+      "team": "MIA"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 220.25,
+      "name": "Justin Jefferson",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 7.0,
+        "rec_yds": 1332.0,
+        "receptions": 103.0,
+        "rush_att": 1.0,
+        "rush_td": 0.0,
+        "rush_yds": 5.5
+      },
+      "projected_value_grade": 40.03,
+      "projected_value_over_baseline": 62.6,
+      "projection_source_count": 2,
+      "source_rank": 11,
+      "team": "MIN"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 249.75,
+      "name": "James Cook III",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 2.0,
+        "rec_yds": 288.5,
+        "receptions": 34.0,
+        "rush_att": 287.5,
+        "rush_td": 11.0,
+        "rush_yds": 1389.0
+      },
+      "projected_value_grade": 59.46,
+      "projected_value_over_baseline": 93.0,
+      "projection_source_count": 2,
+      "source_rank": 12,
+      "team": "BUF"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 233.6,
+      "name": "Ashton Jeanty",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 2.0,
+        "rec_yds": 451.0,
+        "receptions": 60.5,
+        "rush_att": 275.0,
+        "rush_td": 7.0,
+        "rush_yds": 1132.5
+      },
+      "projected_value_grade": 49.14,
+      "projected_value_over_baseline": 76.85,
+      "projection_source_count": 2,
+      "source_rank": 13,
+      "team": "LV"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 213.35,
+      "name": "Drake London",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 7.0,
+        "rec_yds": 1281.0,
+        "receptions": 100.5,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 35.61,
+      "projected_value_over_baseline": 55.7,
+      "projection_source_count": 2,
+      "source_rank": 14,
+      "team": "ATL"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 231.0,
+      "name": "Jeremiyah Love",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 2.0,
+        "rec_yds": 452.5,
+        "receptions": 60.5,
+        "rush_att": 250.5,
+        "rush_td": 7.0,
+        "rush_yds": 1105.0
+      },
+      "projected_value_grade": 47.47,
+      "projected_value_over_baseline": 74.25,
+      "projection_source_count": 2,
+      "source_rank": 15,
+      "team": "ARI"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 205.2,
+      "name": "Rashee Rice",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 8.0,
+        "rec_yds": 1125.5,
+        "receptions": 96.0,
+        "rush_att": 4.0,
+        "rush_td": 0.5,
+        "rush_yds": 21.5
+      },
+      "projected_value_grade": 30.4,
+      "projected_value_over_baseline": 47.55,
+      "projection_source_count": 2,
+      "source_rank": 16,
+      "team": "KC"
+    },
+    {
+      "baseline_points": 142.2,
+      "custom_projected_points": 186.6,
+      "name": "Trey McBride",
+      "position": "TE",
+      "projected_stats": {
+        "rec_td": 6.0,
+        "rec_yds": 1036.0,
+        "receptions": 106.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 28.39,
+      "projected_value_over_baseline": 44.4,
+      "projection_source_count": 2,
+      "source_rank": 17,
+      "team": "ARI"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 236.2,
+      "name": "Saquon Barkley",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 2.0,
+        "rec_yds": 339.0,
+        "receptions": 42.5,
+        "rush_att": 290.5,
+        "rush_td": 9.0,
+        "rush_yds": 1260.5
+      },
+      "projected_value_grade": 50.8,
+      "projected_value_over_baseline": 79.45,
+      "projection_source_count": 2,
+      "source_rank": 18,
+      "team": "PHI"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 244.75,
+      "name": "Derrick Henry",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.5,
+        "rec_yds": 177.0,
+        "receptions": 18.5,
+        "rush_att": 319.0,
+        "rush_td": 12.5,
+        "rush_yds": 1528.0
+      },
+      "projected_value_grade": 56.27,
+      "projected_value_over_baseline": 88.0,
+      "projection_source_count": 2,
+      "source_rank": 19,
+      "team": "BAL"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 228.05,
+      "name": "Chase Brown",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 3.5,
+        "rec_yds": 406.0,
+        "receptions": 59.5,
+        "rush_att": 240.0,
+        "rush_td": 7.0,
+        "rush_yds": 1052.0
+      },
+      "projected_value_grade": 45.59,
+      "projected_value_over_baseline": 71.3,
+      "projection_source_count": 2,
+      "source_rank": 20,
+      "team": "CIN"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 225.9,
+      "name": "Kenneth Walker III",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 2.0,
+        "rec_yds": 322.0,
+        "receptions": 42.0,
+        "rush_att": 262.0,
+        "rush_td": 9.0,
+        "rush_yds": 1177.0
+      },
+      "projected_value_grade": 44.21,
+      "projected_value_over_baseline": 69.15,
+      "projection_source_count": 1,
+      "source_rank": 21,
+      "team": "KC"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 228.1,
+      "name": "Omarion Hampton",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 2.0,
+        "rec_yds": 364.5,
+        "receptions": 52.0,
+        "rush_att": 255.5,
+        "rush_td": 9.0,
+        "rush_yds": 1106.5
+      },
+      "projected_value_grade": 45.62,
+      "projected_value_over_baseline": 71.35,
+      "projection_source_count": 2,
+      "source_rank": 22,
+      "team": "LAC"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 228.25,
+      "name": "Breece Hall",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 2.5,
+        "rec_yds": 422.0,
+        "receptions": 49.5,
+        "rush_att": 261.5,
+        "rush_td": 6.5,
+        "rush_yds": 1163.0
+      },
+      "projected_value_grade": 45.72,
+      "projected_value_over_baseline": 71.5,
+      "projection_source_count": 2,
+      "source_rank": 23,
+      "team": "NYJ"
+    },
+    {
+      "baseline_points": 142.2,
+      "custom_projected_points": 191.35,
+      "name": "Brock Bowers",
+      "position": "TE",
+      "projected_stats": {
+        "rec_td": 7.0,
+        "rec_yds": 1043.5,
+        "receptions": 101.0,
+        "rush_att": 4.0,
+        "rush_td": 0.0,
+        "rush_yds": 15.0
+      },
+      "projected_value_grade": 31.43,
+      "projected_value_over_baseline": 49.15,
+      "projection_source_count": 2,
+      "source_rank": 24,
+      "team": "LV"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 196.7,
+      "name": "Nico Collins",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 7.0,
+        "rec_yds": 1196.0,
+        "receptions": 83.0,
+        "rush_att": 1.0,
+        "rush_td": 0.0,
+        "rush_yds": 6.0
+      },
+      "projected_value_grade": 24.97,
+      "projected_value_over_baseline": 39.05,
+      "projection_source_count": 2,
+      "source_rank": 25,
+      "team": "HOU"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 199.25,
+      "name": "Chris Olave",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 7.0,
+        "rec_yds": 1172.5,
+        "receptions": 94.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 26.6,
+      "projected_value_over_baseline": 41.6,
+      "projection_source_count": 2,
+      "source_rank": 26,
+      "team": "NO"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 192.1,
+      "name": "Garrett Wilson",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 5.0,
+        "rec_yds": 1165.5,
+        "receptions": 100.0,
+        "rush_att": 1.0,
+        "rush_td": 0.0,
+        "rush_yds": 5.5
+      },
+      "projected_value_grade": 22.03,
+      "projected_value_over_baseline": 34.45,
+      "projection_source_count": 2,
+      "source_rank": 27,
+      "team": "NYJ"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 196.45,
+      "name": "A.J. Brown",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 7.0,
+        "rec_yds": 1184.5,
+        "receptions": 86.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 24.81,
+      "projected_value_over_baseline": 38.8,
+      "projection_source_count": 2,
+      "source_rank": 28,
+      "team": "NE"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 188.55,
+      "name": "Malik Nabers",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 7.0,
+        "rec_yds": 1106.5,
+        "receptions": 83.5,
+        "rush_att": 2.0,
+        "rush_td": 0.0,
+        "rush_yds": 11.5
+      },
+      "projected_value_grade": 19.76,
+      "projected_value_over_baseline": 30.9,
+      "projection_source_count": 2,
+      "source_rank": 29,
+      "team": "NYG"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 223.05,
+      "name": "Josh Jacobs",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 1.5,
+        "rec_yds": 278.5,
+        "receptions": 35.5,
+        "rush_att": 280.0,
+        "rush_td": 11.0,
+        "rush_yds": 1149.5
+      },
+      "projected_value_grade": 42.39,
+      "projected_value_over_baseline": 66.3,
+      "projection_source_count": 2,
+      "source_rank": 30,
+      "team": "GB"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 218.85,
+      "name": "Javonte Williams",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 1.5,
+        "rec_yds": 217.5,
+        "receptions": 35.0,
+        "rush_att": 267.5,
+        "rush_td": 10.5,
+        "rush_yds": 1196.0
+      },
+      "projected_value_grade": 39.71,
+      "projected_value_over_baseline": 62.1,
+      "projection_source_count": 2,
+      "source_rank": 31,
+      "team": "DAL"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 186.7,
+      "name": "George Pickens",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 7.5,
+        "rec_yds": 1107.0,
+        "receptions": 77.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 18.57,
+      "projected_value_over_baseline": 29.05,
+      "projection_source_count": 2,
+      "source_rank": 32,
+      "team": "DAL"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 183.8,
+      "name": "Tetairoa McMillan",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 6.0,
+        "rec_yds": 1133.0,
+        "receptions": 81.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 16.72,
+      "projected_value_over_baseline": 26.15,
+      "projection_source_count": 2,
+      "source_rank": 33,
+      "team": "CAR"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 190.45,
+      "name": "Zay Flowers",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 6.0,
+        "rec_yds": 1144.0,
+        "receptions": 80.5,
+        "rush_att": 10.0,
+        "rush_td": 0.0,
+        "rush_yds": 58.0
+      },
+      "projected_value_grade": 20.97,
+      "projected_value_over_baseline": 32.8,
+      "projection_source_count": 2,
+      "source_rank": 34,
+      "team": "BAL"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 186.1,
+      "name": "DeVonta Smith",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 6.0,
+        "rec_yds": 1126.0,
+        "receptions": 87.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 18.19,
+      "projected_value_over_baseline": 28.45,
+      "projection_source_count": 2,
+      "source_rank": 35,
+      "team": "PHI"
+    },
+    {
+      "baseline_points": 343.55,
+      "custom_projected_points": 393.68,
+      "name": "Josh Allen",
+      "position": "QB",
+      "projected_stats": {
+        "pass_att": 494.0,
+        "pass_cmp": 333.0,
+        "pass_int": 10.5,
+        "pass_td": 26.0,
+        "pass_yds": 3866.5,
+        "rush_att": 114.5,
+        "rush_td": 12.0,
+        "rush_yds": 573.5
+      },
+      "projected_value_grade": 32.05,
+      "projected_value_over_baseline": 50.12,
+      "projection_source_count": 2,
+      "source_rank": 36,
+      "team": "BUF"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 206.55,
+      "name": "Travis Etienne Jr.",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 2.0,
+        "rec_yds": 356.0,
+        "receptions": 44.5,
+        "rush_att": 254.5,
+        "rush_td": 5.5,
+        "rush_yds": 1112.0
+      },
+      "projected_value_grade": 31.84,
+      "projected_value_over_baseline": 49.8,
+      "projection_source_count": 2,
+      "source_rank": 37,
+      "team": "NO"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 212.3,
+      "name": "Kyren Williams",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 2.0,
+        "rec_yds": 234.5,
+        "receptions": 33.5,
+        "rush_att": 243.0,
+        "rush_td": 10.0,
+        "rush_yds": 1121.0
+      },
+      "projected_value_grade": 35.52,
+      "projected_value_over_baseline": 55.55,
+      "projection_source_count": 2,
+      "source_rank": 38,
+      "team": "LAR"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 193.95,
+      "name": "Quinshon Judkins",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 1.0,
+        "rec_yds": 213.0,
+        "receptions": 31.0,
+        "rush_att": 296.0,
+        "rush_td": 7.0,
+        "rush_yds": 1171.5
+      },
+      "projected_value_grade": 23.79,
+      "projected_value_over_baseline": 37.2,
+      "projection_source_count": 2,
+      "source_rank": 39,
+      "team": "CLE"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 202.35,
+      "name": "Cam Skattebo",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 1.0,
+        "rec_yds": 339.0,
+        "receptions": 44.5,
+        "rush_att": 253.5,
+        "rush_td": 7.5,
+        "rush_yds": 1037.0
+      },
+      "projected_value_grade": 29.16,
+      "projected_value_over_baseline": 45.6,
+      "projection_source_count": 2,
+      "source_rank": 40,
+      "team": "NYG"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 191.25,
+      "name": "Bucky Irving",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 2.0,
+        "rec_yds": 304.5,
+        "receptions": 38.0,
+        "rush_att": 252.5,
+        "rush_td": 6.0,
+        "rush_yds": 1018.0
+      },
+      "projected_value_grade": 22.06,
+      "projected_value_over_baseline": 34.5,
+      "projection_source_count": 2,
+      "source_rank": 41,
+      "team": "TB"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 181.25,
+      "name": "Emeka Egbuka",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 7.0,
+        "rec_yds": 1086.5,
+        "receptions": 74.0,
+        "rush_att": 1.0,
+        "rush_td": 0.0,
+        "rush_yds": 6.0
+      },
+      "projected_value_grade": 15.09,
+      "projected_value_over_baseline": 23.6,
+      "projection_source_count": 2,
+      "source_rank": 42,
+      "team": "TB"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 183.35,
+      "name": "Davante Adams",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 10.5,
+        "rec_yds": 963.5,
+        "receptions": 69.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 16.43,
+      "projected_value_over_baseline": 25.7,
+      "projection_source_count": 2,
+      "source_rank": 43,
+      "team": "LAR"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 168.75,
+      "name": "Ladd McConkey",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 6.0,
+        "rec_yds": 997.5,
+        "receptions": 78.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 7.1,
+      "projected_value_over_baseline": 11.1,
+      "projection_source_count": 2,
+      "source_rank": 44,
+      "team": "LAC"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 165.0,
+      "name": "Terry McLaurin",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 6.0,
+        "rec_yds": 995.0,
+        "receptions": 71.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 4.7,
+      "projected_value_over_baseline": 7.35,
+      "projection_source_count": 2,
+      "source_rank": 45,
+      "team": "WAS"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 167.6,
+      "name": "Tee Higgins",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 8.0,
+        "rec_yds": 931.0,
+        "receptions": 69.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 6.36,
+      "projected_value_over_baseline": 9.95,
+      "projection_source_count": 2,
+      "source_rank": 46,
+      "team": "CIN"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 166.9,
+      "name": "Jaylen Waddle",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 6.0,
+        "rec_yds": 990.5,
+        "receptions": 74.5,
+        "rush_att": 1.0,
+        "rush_td": 0.0,
+        "rush_yds": 6.0
+      },
+      "projected_value_grade": 5.91,
+      "projected_value_over_baseline": 9.25,
+      "projection_source_count": 2,
+      "source_rank": 47,
+      "team": "DEN"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 167.2,
+      "name": "Rome Odunze",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 7.5,
+        "rec_yds": 987.0,
+        "receptions": 62.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 6.11,
+      "projected_value_over_baseline": 9.55,
+      "projection_source_count": 2,
+      "source_rank": 48,
+      "team": "CHI"
+    },
+    {
+      "baseline_points": 142.2,
+      "custom_projected_points": 155.5,
+      "name": "Colston Loveland",
+      "position": "TE",
+      "projected_stats": {
+        "rec_td": 6.0,
+        "rec_yds": 872.5,
+        "receptions": 76.5,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 8.5,
+      "projected_value_over_baseline": 13.3,
+      "projection_source_count": 2,
+      "source_rank": 49,
+      "team": "CHI"
+    },
+    {
+      "baseline_points": 142.2,
+      "custom_projected_points": 156.15,
+      "name": "Tyler Warren",
+      "position": "TE",
+      "projected_stats": {
+        "rec_td": 5.5,
+        "rec_yds": 865.0,
+        "receptions": 81.5,
+        "rush_att": 6.0,
+        "rush_td": 0.0,
+        "rush_yds": 14.0
+      },
+      "projected_value_grade": 8.92,
+      "projected_value_over_baseline": 13.95,
+      "projection_source_count": 2,
+      "source_rank": 50,
+      "team": "IND"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 177.55,
+      "name": "Jameson Williams",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 6.5,
+        "rec_yds": 1057.0,
+        "receptions": 65.0,
+        "rush_att": 7.5,
+        "rush_td": 0.5,
+        "rush_yds": 43.5
+      },
+      "projected_value_grade": 12.72,
+      "projected_value_over_baseline": 19.9,
+      "projection_source_count": 2,
+      "source_rank": 51,
+      "team": "DET"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 166.6,
+      "name": "DJ Moore",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 7.0,
+        "rec_yds": 945.0,
+        "receptions": 67.0,
+        "rush_att": 7.0,
+        "rush_td": 0.0,
+        "rush_yds": 36.0
+      },
+      "projected_value_grade": 5.72,
+      "projected_value_over_baseline": 8.95,
+      "projection_source_count": 1,
+      "source_rank": 52,
+      "team": "BUF"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 161.05,
+      "name": "Luther Burden III",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 5.5,
+        "rec_yds": 931.5,
+        "receptions": 72.5,
+        "rush_att": 7.5,
+        "rush_td": 0.0,
+        "rush_yds": 41.5
+      },
+      "projected_value_grade": 2.17,
+      "projected_value_over_baseline": 3.4,
+      "projection_source_count": 2,
+      "source_rank": 53,
+      "team": "CHI"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 152.05,
+      "name": "Carnell Tate",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 4.5,
+        "rec_yds": 945.5,
+        "receptions": 70.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -5.6,
+      "projection_source_count": 2,
+      "source_rank": 54,
+      "team": "TEN"
+    },
+    {
+      "baseline_points": 343.55,
+      "custom_projected_points": 347.62,
+      "name": "Jayden Daniels",
+      "position": "QB",
+      "projected_stats": {
+        "pass_att": 507.5,
+        "pass_cmp": 337.0,
+        "pass_int": 10.5,
+        "pass_td": 22.5,
+        "pass_yds": 3810.5,
+        "rush_att": 125.0,
+        "rush_td": 4.5,
+        "rush_yds": 656.0
+      },
+      "projected_value_grade": 2.61,
+      "projected_value_over_baseline": 4.07,
+      "projection_source_count": 2,
+      "source_rank": 55,
+      "team": "WAS"
+    },
+    {
+      "baseline_points": 343.55,
+      "custom_projected_points": 359.15,
+      "name": "Lamar Jackson",
+      "position": "QB",
+      "projected_stats": {
+        "pass_att": 471.0,
+        "pass_cmp": 303.5,
+        "pass_int": 9.0,
+        "pass_td": 26.0,
+        "pass_yds": 3796.0,
+        "rush_att": 124.5,
+        "rush_td": 3.5,
+        "rush_yds": 658.5
+      },
+      "projected_value_grade": 9.97,
+      "projected_value_over_baseline": 15.6,
+      "projection_source_count": 2,
+      "source_rank": 56,
+      "team": "BAL"
+    },
+    {
+      "baseline_points": 343.55,
+      "custom_projected_points": 363.65,
+      "name": "Drake Maye",
+      "position": "QB",
+      "projected_stats": {
+        "pass_att": 512.5,
+        "pass_cmp": 351.5,
+        "pass_int": 10.0,
+        "pass_td": 28.0,
+        "pass_yds": 4118.0,
+        "rush_att": 98.5,
+        "rush_td": 3.5,
+        "rush_yds": 482.5
+      },
+      "projected_value_grade": 12.85,
+      "projected_value_over_baseline": 20.1,
+      "projection_source_count": 2,
+      "source_rank": 57,
+      "team": "NE"
+    },
+    {
+      "baseline_points": 343.55,
+      "custom_projected_points": 348.57,
+      "name": "Jalen Hurts",
+      "position": "QB",
+      "projected_stats": {
+        "pass_att": 496.5,
+        "pass_cmp": 324.5,
+        "pass_int": 8.0,
+        "pass_td": 23.5,
+        "pass_yds": 3667.5,
+        "rush_att": 108.5,
+        "rush_td": 8.5,
+        "rush_yds": 447.0
+      },
+      "projected_value_grade": 3.21,
+      "projected_value_over_baseline": 5.02,
+      "projection_source_count": 2,
+      "source_rank": 58,
+      "team": "PHI"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 189.85,
+      "name": "Bhayshul Tuten",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 1.5,
+        "rec_yds": 269.0,
+        "receptions": 36.0,
+        "rush_att": 247.0,
+        "rush_td": 7.0,
+        "rush_yds": 1024.5
+      },
+      "projected_value_grade": 21.16,
+      "projected_value_over_baseline": 33.1,
+      "projection_source_count": 2,
+      "source_rank": 59,
+      "team": "JAC"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 191.15,
+      "name": "D'Andre Swift",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 1.0,
+        "rec_yds": 292.5,
+        "receptions": 34.5,
+        "rush_att": 226.0,
+        "rush_td": 7.5,
+        "rush_yds": 1021.5
+      },
+      "projected_value_grade": 21.99,
+      "projected_value_over_baseline": 34.4,
+      "projection_source_count": 2,
+      "source_rank": 60,
+      "team": "CHI"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 173.55,
+      "name": "David Montgomery",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 1.0,
+        "rec_yds": 237.0,
+        "receptions": 33.0,
+        "rush_att": 216.0,
+        "rush_td": 7.0,
+        "rush_yds": 933.5
+      },
+      "projected_value_grade": 10.74,
+      "projected_value_over_baseline": 16.8,
+      "projection_source_count": 2,
+      "source_rank": 61,
+      "team": "HOU"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 166.85,
+      "name": "Jadarian Price",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 1.0,
+        "rec_yds": 219.0,
+        "receptions": 29.0,
+        "rush_att": 209.0,
+        "rush_td": 7.5,
+        "rush_yds": 879.5
+      },
+      "projected_value_grade": 6.46,
+      "projected_value_over_baseline": 10.1,
+      "projection_source_count": 2,
+      "source_rank": 62,
+      "team": "SEA"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 169.15,
+      "name": "TreVeyon Henderson",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 1.0,
+        "rec_yds": 262.5,
+        "receptions": 36.5,
+        "rush_att": 186.0,
+        "rush_td": 7.0,
+        "rush_yds": 846.5
+      },
+      "projected_value_grade": 7.93,
+      "projected_value_over_baseline": 12.4,
+      "projection_source_count": 2,
+      "source_rank": 63,
+      "team": "NE"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 169.6,
+      "name": "Rhamondre Stevenson",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 1.5,
+        "rec_yds": 326.0,
+        "receptions": 41.5,
+        "rush_att": 168.5,
+        "rush_td": 7.0,
+        "rush_yds": 737.5
+      },
+      "projected_value_grade": 8.22,
+      "projected_value_over_baseline": 12.85,
+      "projection_source_count": 2,
+      "source_rank": 64,
+      "team": "NE"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 157.65,
+      "name": "Courtland Sutton",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 7.5,
+        "rec_yds": 871.5,
+        "receptions": 66.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": 0.0,
+      "projection_source_count": 2,
+      "source_rank": 65,
+      "team": "DEN"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 150.5,
+      "name": "Michael Pittman Jr.",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 4.5,
+        "rec_yds": 870.0,
+        "receptions": 82.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -7.15,
+      "projection_source_count": 2,
+      "source_rank": 66,
+      "team": "PIT"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 155.1,
+      "name": "Marvin Harrison Jr.",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 5.5,
+        "rec_yds": 943.5,
+        "receptions": 66.5,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -2.55,
+      "projection_source_count": 2,
+      "source_rank": 67,
+      "team": "ARI"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 157.4,
+      "name": "DK Metcalf",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 6.0,
+        "rec_yds": 944.0,
+        "receptions": 66.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -0.25,
+      "projection_source_count": 2,
+      "source_rank": 68,
+      "team": "PIT"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 141.7,
+      "name": "Parker Washington",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 5.0,
+        "rec_yds": 832.5,
+        "receptions": 63.0,
+        "rush_att": 4.0,
+        "rush_td": 0.0,
+        "rush_yds": 19.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -15.95,
+      "projection_source_count": 2,
+      "source_rank": 69,
+      "team": "JAC"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 148.5,
+      "name": "Alec Pierce",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 5.0,
+        "rec_yds": 932.5,
+        "receptions": 60.5,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -9.15,
+      "projection_source_count": 2,
+      "source_rank": 70,
+      "team": "IND"
+    },
+    {
+      "baseline_points": 142.2,
+      "custom_projected_points": 142.2,
+      "name": "Kyle Pitts Sr.",
+      "position": "TE",
+      "projected_stats": {
+        "rec_td": 3.5,
+        "rec_yds": 857.0,
+        "receptions": 78.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": 0.0,
+      "projection_source_count": 2,
+      "source_rank": 71,
+      "team": "ATL"
+    },
+    {
+      "baseline_points": 142.2,
+      "custom_projected_points": 143.1,
+      "name": "Harold Fannin Jr.",
+      "position": "TE",
+      "projected_stats": {
+        "rec_td": 4.0,
+        "rec_yds": 810.0,
+        "receptions": 80.0,
+        "rush_att": 9.0,
+        "rush_td": 0.0,
+        "rush_yds": 21.0
+      },
+      "projected_value_grade": 0.58,
+      "projected_value_over_baseline": 0.9,
+      "projection_source_count": 2,
+      "source_rank": 72,
+      "team": "CLE"
+    },
+    {
+      "baseline_points": 142.2,
+      "custom_projected_points": 136.35,
+      "name": "Sam LaPorta",
+      "position": "TE",
+      "projected_stats": {
+        "rec_td": 5.0,
+        "rec_yds": 766.0,
+        "receptions": 69.5,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -5.85,
+      "projection_source_count": 2,
+      "source_rank": 73,
+      "team": "DET"
+    },
+    {
+      "baseline_points": 343.55,
+      "custom_projected_points": 343.55,
+      "name": "Joe Burrow",
+      "position": "QB",
+      "projected_stats": {
+        "pass_att": 576.5,
+        "pass_cmp": 388.5,
+        "pass_int": 10.5,
+        "pass_td": 33.0,
+        "pass_yds": 4130.0,
+        "rush_att": 56.5,
+        "rush_td": 1.5,
+        "rush_yds": 185.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": 0.0,
+      "projection_source_count": 2,
+      "source_rank": 74,
+      "team": "CIN"
+    },
+    {
+      "baseline_points": 343.55,
+      "custom_projected_points": 332.68,
+      "name": "Jaxson Dart",
+      "position": "QB",
+      "projected_stats": {
+        "pass_att": 510.5,
+        "pass_cmp": 329.0,
+        "pass_int": 9.5,
+        "pass_td": 20.5,
+        "pass_yds": 3627.5,
+        "rush_att": 102.0,
+        "rush_td": 6.5,
+        "rush_yds": 558.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -10.88,
+      "projection_source_count": 2,
+      "source_rank": 75,
+      "team": "NYG"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 156.9,
+      "name": "Mike Evans",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 6.5,
+        "rec_yds": 929.0,
+        "receptions": 63.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -0.75,
+      "projection_source_count": 2,
+      "source_rank": 76,
+      "team": "SF"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 158.05,
+      "name": "Christian Watson",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 7.0,
+        "rec_yds": 924.0,
+        "receptions": 60.0,
+        "rush_att": 1.0,
+        "rush_td": 0.0,
+        "rush_yds": 6.5
+      },
+      "projected_value_grade": 0.26,
+      "projected_value_over_baseline": 0.4,
+      "projection_source_count": 2,
+      "source_rank": 77,
+      "team": "GB"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 135.1,
+      "name": "Matthew Golden",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 5.0,
+        "rec_yds": 786.0,
+        "receptions": 60.5,
+        "rush_att": 2.0,
+        "rush_td": 0.0,
+        "rush_yds": 12.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -22.55,
+      "projection_source_count": 2,
+      "source_rank": 78,
+      "team": "GB"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 135.85,
+      "name": "Michael Wilson",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 3.5,
+        "rec_yds": 841.0,
+        "receptions": 68.5,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -21.8,
+      "projection_source_count": 2,
+      "source_rank": 79,
+      "team": "ARI"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 138.05,
+      "name": "Brian Thomas Jr.",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 5.0,
+        "rec_yds": 836.5,
+        "receptions": 56.5,
+        "rush_att": 2.0,
+        "rush_td": 0.0,
+        "rush_yds": 11.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -19.6,
+      "projection_source_count": 2,
+      "source_rank": 80,
+      "team": "JAC"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 139.25,
+      "name": "Jakobi Meyers",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 5.0,
+        "rec_yds": 774.5,
+        "receptions": 68.5,
+        "rush_att": 4.5,
+        "rush_td": 0.0,
+        "rush_yds": 25.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -18.4,
+      "projection_source_count": 2,
+      "source_rank": 81,
+      "team": "JAC"
+    },
+    {
+      "baseline_points": 343.55,
+      "custom_projected_points": 327.32,
+      "name": "Trevor Lawrence",
+      "position": "QB",
+      "projected_stats": {
+        "pass_att": 550.5,
+        "pass_cmp": 341.0,
+        "pass_int": 12.0,
+        "pass_td": 25.0,
+        "pass_yds": 3940.5,
+        "rush_att": 70.0,
+        "rush_td": 4.5,
+        "rush_yds": 318.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -16.23,
+      "projection_source_count": 2,
+      "source_rank": 82,
+      "team": "JAC"
+    },
+    {
+      "baseline_points": 343.55,
+      "custom_projected_points": 333.9,
+      "name": "Dak Prescott",
+      "position": "QB",
+      "projected_stats": {
+        "pass_att": 565.0,
+        "pass_cmp": 375.5,
+        "pass_int": 11.0,
+        "pass_td": 30.0,
+        "pass_yds": 4221.0,
+        "rush_att": 48.0,
+        "rush_td": 1.5,
+        "rush_yds": 173.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -9.65,
+      "projection_source_count": 2,
+      "source_rank": 83,
+      "team": "DAL"
+    },
+    {
+      "baseline_points": 343.55,
+      "custom_projected_points": 334.07,
+      "name": "Bo Nix",
+      "position": "QB",
+      "projected_stats": {
+        "pass_att": 545.5,
+        "pass_cmp": 351.0,
+        "pass_int": 11.5,
+        "pass_td": 27.0,
+        "pass_yds": 3863.5,
+        "rush_att": 82.0,
+        "rush_td": 4.0,
+        "rush_yds": 359.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -9.48,
+      "projection_source_count": 2,
+      "source_rank": 84,
+      "team": "DEN"
+    },
+    {
+      "baseline_points": 343.55,
+      "custom_projected_points": 333.15,
+      "name": "Brock Purdy",
+      "position": "QB",
+      "projected_stats": {
+        "pass_att": 542.5,
+        "pass_cmp": 364.5,
+        "pass_int": 13.5,
+        "pass_td": 26.5,
+        "pass_yds": 4170.0,
+        "rush_att": 65.0,
+        "rush_td": 3.5,
+        "rush_yds": 281.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -10.4,
+      "projection_source_count": 2,
+      "source_rank": 85,
+      "team": "SF"
+    },
+    {
+      "baseline_points": 343.55,
+      "custom_projected_points": 335.65,
+      "name": "Matthew Stafford",
+      "position": "QB",
+      "projected_stats": {
+        "pass_att": 551.0,
+        "pass_cmp": 357.5,
+        "pass_int": 9.5,
+        "pass_td": 34.0,
+        "pass_yds": 4262.0,
+        "rush_att": 22.0,
+        "rush_td": 0.5,
+        "rush_yds": 30.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -7.9,
+      "projection_source_count": 2,
+      "source_rank": 86,
+      "team": "LAR"
+    },
+    {
+      "baseline_points": 343.55,
+      "custom_projected_points": 328.0,
+      "name": "Caleb Williams",
+      "position": "QB",
+      "projected_stats": {
+        "pass_att": 533.0,
+        "pass_cmp": 325.0,
+        "pass_int": 9.0,
+        "pass_td": 26.0,
+        "pass_yds": 3846.0,
+        "rush_att": 79.5,
+        "rush_td": 2.0,
+        "rush_yds": 397.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -15.55,
+      "projection_source_count": 2,
+      "source_rank": 87,
+      "team": "CHI"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 133.6,
+      "name": "Wan'Dale Robinson",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 2.5,
+        "rec_yds": 810.0,
+        "receptions": 78.0,
+        "rush_att": 2.0,
+        "rush_td": 0.0,
+        "rush_yds": 11.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -24.05,
+      "projection_source_count": 2,
+      "source_rank": 88,
+      "team": "TEN"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 132.35,
+      "name": "Jordan Addison",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 5.0,
+        "rec_yds": 769.5,
+        "receptions": 57.5,
+        "rush_att": 2.5,
+        "rush_td": 0.0,
+        "rush_yds": 16.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -25.3,
+      "projection_source_count": 2,
+      "source_rank": 89,
+      "team": "MIN"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 132.7,
+      "name": "Khalil Shakir",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 4.0,
+        "rec_yds": 765.5,
+        "receptions": 71.0,
+        "rush_att": 1.0,
+        "rush_td": 0.0,
+        "rush_yds": 6.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -24.95,
+      "projection_source_count": 2,
+      "source_rank": 90,
+      "team": "BUF"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 138.5,
+      "name": "Jayden Reed",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 4.5,
+        "rec_yds": 771.0,
+        "receptions": 64.5,
+        "rush_att": 10.0,
+        "rush_td": 0.0,
+        "rush_yds": 66.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -19.15,
+      "projection_source_count": 2,
+      "source_rank": 91,
+      "team": "GB"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 139.55,
+      "name": "Xavier Worthy",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 4.5,
+        "rec_yds": 762.0,
+        "receptions": 56.5,
+        "rush_att": 12.0,
+        "rush_td": 1.0,
+        "rush_yds": 76.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -18.1,
+      "projection_source_count": 2,
+      "source_rank": 92,
+      "team": "KC"
+    },
+    {
+      "baseline_points": 343.55,
+      "custom_projected_points": 326.7,
+      "name": "Justin Herbert",
+      "position": "QB",
+      "projected_stats": {
+        "pass_att": 530.5,
+        "pass_cmp": 348.5,
+        "pass_int": 11.0,
+        "pass_td": 25.5,
+        "pass_yds": 3901.0,
+        "rush_att": 76.0,
+        "rush_td": 2.0,
+        "rush_yds": 416.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -16.85,
+      "projection_source_count": 2,
+      "source_rank": 93,
+      "team": "LAC"
+    },
+    {
+      "baseline_points": 343.55,
+      "custom_projected_points": 323.9,
+      "name": "Patrick Mahomes",
+      "position": "QB",
+      "projected_stats": {
+        "pass_att": 549.0,
+        "pass_cmp": 354.0,
+        "pass_int": 11.5,
+        "pass_td": 26.0,
+        "pass_yds": 3916.0,
+        "rush_att": 55.0,
+        "rush_td": 3.0,
+        "rush_yds": 321.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -19.65,
+      "projection_source_count": 2,
+      "source_rank": 94,
+      "team": "KC"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 166.45,
+      "name": "Jaylen Warren",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 1.5,
+        "rec_yds": 324.5,
+        "receptions": 43.5,
+        "rush_att": 185.0,
+        "rush_td": 4.5,
+        "rush_yds": 822.5
+      },
+      "projected_value_grade": 6.2,
+      "projected_value_over_baseline": 9.7,
+      "projection_source_count": 2,
+      "source_rank": 95,
+      "team": "PIT"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 156.75,
+      "name": "Rico Dowdle",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 1.0,
+        "rec_yds": 207.0,
+        "receptions": 29.5,
+        "rush_att": 204.5,
+        "rush_td": 5.5,
+        "rush_yds": 888.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": 0.0,
+      "projection_source_count": 2,
+      "source_rank": 96,
+      "team": "PIT"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 168.95,
+      "name": "Tony Pollard",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.5,
+        "rec_yds": 205.0,
+        "receptions": 31.0,
+        "rush_att": 240.5,
+        "rush_td": 5.0,
+        "rush_yds": 1054.5
+      },
+      "projected_value_grade": 7.8,
+      "projected_value_over_baseline": 12.2,
+      "projection_source_count": 2,
+      "source_rank": 97,
+      "team": "TEN"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 131.1,
+      "name": "Kenny Gainwell",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 2.0,
+        "rec_yds": 308.5,
+        "receptions": 44.5,
+        "rush_att": 109.0,
+        "rush_td": 4.0,
+        "rush_yds": 480.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -25.65,
+      "projection_source_count": 2,
+      "source_rank": 98,
+      "team": "TB"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 137.85,
+      "name": "Jonathon Brooks",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 1.0,
+        "rec_yds": 238.0,
+        "receptions": 32.5,
+        "rush_att": 175.5,
+        "rush_td": 4.0,
+        "rush_yds": 728.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -18.9,
+      "projection_source_count": 2,
+      "source_rank": 99,
+      "team": "CAR"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 150.45,
+      "name": "Chuba Hubbard",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 1.0,
+        "rec_yds": 279.0,
+        "receptions": 37.5,
+        "rush_att": 184.5,
+        "rush_td": 5.0,
+        "rush_yds": 738.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -6.3,
+      "projection_source_count": 2,
+      "source_rank": 100,
+      "team": "CAR"
+    },
+    {
+      "baseline_points": 142.2,
+      "custom_projected_points": 132.4,
+      "name": "Tucker Kraft",
+      "position": "TE",
+      "projected_stats": {
+        "rec_td": 4.5,
+        "rec_yds": 771.0,
+        "receptions": 64.0,
+        "rush_att": 2.0,
+        "rush_td": 0.0,
+        "rush_yds": 8.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -9.8,
+      "projection_source_count": 2,
+      "source_rank": 101,
+      "team": "GB"
+    },
+    {
+      "baseline_points": 142.2,
+      "custom_projected_points": 127.5,
+      "name": "George Kittle",
+      "position": "TE",
+      "projected_stats": {
+        "rec_td": 5.0,
+        "rec_yds": 707.5,
+        "receptions": 63.5,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -14.7,
+      "projection_source_count": 2,
+      "source_rank": 102,
+      "team": "SF"
+    },
+    {
+      "baseline_points": 142.2,
+      "custom_projected_points": 129.8,
+      "name": "Dallas Goedert",
+      "position": "TE",
+      "projected_stats": {
+        "rec_td": 6.0,
+        "rec_yds": 675.5,
+        "receptions": 64.5,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -12.4,
+      "projection_source_count": 2,
+      "source_rank": 103,
+      "team": "PHI"
+    },
+    {
+      "baseline_points": 142.2,
+      "custom_projected_points": 136.35,
+      "name": "Travis Kelce",
+      "position": "TE",
+      "projected_stats": {
+        "rec_td": 4.5,
+        "rec_yds": 771.0,
+        "receptions": 73.5,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -5.85,
+      "projection_source_count": 2,
+      "source_rank": 104,
+      "team": "KC"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 158.35,
+      "name": "J.K. Dobbins",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 1.0,
+        "rec_yds": 118.0,
+        "receptions": 18.5,
+        "rush_att": 205.5,
+        "rush_td": 7.0,
+        "rush_yds": 973.0
+      },
+      "projected_value_grade": 1.02,
+      "projected_value_over_baseline": 1.6,
+      "projection_source_count": 2,
+      "source_rank": 105,
+      "team": "DEN"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 137.85,
+      "name": "Kyle Monangai",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.5,
+        "rec_yds": 188.5,
+        "receptions": 23.0,
+        "rush_att": 184.0,
+        "rush_td": 5.0,
+        "rush_yds": 800.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -18.9,
+      "projection_source_count": 2,
+      "source_rank": 106,
+      "team": "CHI"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 136.45,
+      "name": "Jacory Croskey-Merritt",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.5,
+        "rec_yds": 101.5,
+        "receptions": 14.0,
+        "rush_att": 187.5,
+        "rush_td": 7.0,
+        "rush_yds": 818.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -20.3,
+      "projection_source_count": 2,
+      "source_rank": 107,
+      "team": "WAS"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 139.7,
+      "name": "Rachaad White",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 2.0,
+        "rec_yds": 288.5,
+        "receptions": 41.0,
+        "rush_att": 133.0,
+        "rush_td": 5.0,
+        "rush_yds": 553.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -17.05,
+      "projection_source_count": 2,
+      "source_rank": 108,
+      "team": "WAS"
+    },
+    {
+      "baseline_points": 142.2,
+      "custom_projected_points": 122.65,
+      "name": "Jake Ferguson",
+      "position": "TE",
+      "projected_stats": {
+        "rec_td": 5.5,
+        "rec_yds": 591.5,
+        "receptions": 72.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -19.55,
+      "projection_source_count": 2,
+      "source_rank": 109,
+      "team": "DAL"
+    },
+    {
+      "baseline_points": 142.2,
+      "custom_projected_points": 133.9,
+      "name": "Mark Andrews",
+      "position": "TE",
+      "projected_stats": {
+        "rec_td": 6.5,
+        "rec_yds": 631.5,
+        "receptions": 59.5,
+        "rush_att": 10.0,
+        "rush_td": 1.0,
+        "rush_yds": 35.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -8.3,
+      "projection_source_count": 2,
+      "source_rank": 110,
+      "team": "BAL"
+    },
+    {
+      "baseline_points": 142.2,
+      "custom_projected_points": 109.6,
+      "name": "T.J. Hockenson",
+      "position": "TE",
+      "projected_stats": {
+        "rec_td": 3.0,
+        "rec_yds": 603.5,
+        "receptions": 68.5,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -32.6,
+      "projection_source_count": 2,
+      "source_rank": 111,
+      "team": "MIN"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 130.55,
+      "name": "Quentin Johnston",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 6.0,
+        "rec_yds": 742.5,
+        "receptions": 51.5,
+        "rush_att": 1.0,
+        "rush_td": 0.0,
+        "rush_yds": 5.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -27.1,
+      "projection_source_count": 2,
+      "source_rank": 112,
+      "team": "LAC"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 122.75,
+      "name": "Josh Downs",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 3.5,
+        "rec_yds": 702.0,
+        "receptions": 69.0,
+        "rush_att": 1.0,
+        "rush_td": 0.0,
+        "rush_yds": 5.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -34.9,
+      "projection_source_count": 2,
+      "source_rank": 113,
+      "team": "IND"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 116.75,
+      "name": "Deebo Samuel Sr.",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 3.5,
+        "rec_yds": 609.0,
+        "receptions": 49.0,
+        "rush_att": 18.0,
+        "rush_td": 1.0,
+        "rush_yds": 88.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -40.9,
+      "projection_source_count": 2,
+      "source_rank": 114,
+      "team": "SF"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 136.8,
+      "name": "Aaron Jones Sr.",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 1.5,
+        "rec_yds": 306.0,
+        "receptions": 42.0,
+        "rush_att": 146.5,
+        "rush_td": 3.0,
+        "rush_yds": 627.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -19.95,
+      "projection_source_count": 2,
+      "source_rank": 115,
+      "team": "MIN"
+    },
+    {
+      "baseline_points": 142.2,
+      "custom_projected_points": 116.75,
+      "name": "Isaiah Likely",
+      "position": "TE",
+      "projected_stats": {
+        "rec_td": 4.0,
+        "rec_yds": 670.0,
+        "receptions": 59.5,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -25.45,
+      "projection_source_count": 2,
+      "source_rank": 116,
+      "team": "NYG"
+    },
+    {
+      "baseline_points": 142.2,
+      "custom_projected_points": 117.35,
+      "name": "Dalton Kincaid",
+      "position": "TE",
+      "projected_stats": {
+        "rec_td": 4.5,
+        "rec_yds": 671.0,
+        "receptions": 55.5,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -24.85,
+      "projection_source_count": 2,
+      "source_rank": 117,
+      "team": "BUF"
+    },
+    {
+      "baseline_points": 142.2,
+      "custom_projected_points": 96.1,
+      "name": "Kenyon Sadiq",
+      "position": "TE",
+      "projected_stats": {
+        "rec_td": 3.0,
+        "rec_yds": 556.0,
+        "receptions": 51.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -46.1,
+      "projection_source_count": 2,
+      "source_rank": 118,
+      "team": "NYJ"
+    },
+    {
+      "baseline_points": 142.2,
+      "custom_projected_points": 115.35,
+      "name": "Hunter Henry",
+      "position": "TE",
+      "projected_stats": {
+        "rec_td": 5.0,
+        "rec_yds": 626.0,
+        "receptions": 55.5,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -26.85,
+      "projection_source_count": 2,
+      "source_rank": 119,
+      "team": "NE"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 127.5,
+      "name": "Jordan Mason",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.0,
+        "rec_yds": 72.5,
+        "receptions": 12.5,
+        "rush_att": 191.5,
+        "rush_td": 5.5,
+        "rush_yds": 865.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -29.25,
+      "projection_source_count": 2,
+      "source_rank": 120,
+      "team": "MIN"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 131.9,
+      "name": "Blake Corum",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.5,
+        "rec_yds": 103.0,
+        "receptions": 15.0,
+        "rush_att": 170.5,
+        "rush_td": 6.5,
+        "rush_yds": 791.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -24.85,
+      "projection_source_count": 2,
+      "source_rank": 121,
+      "team": "LAR"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 122.35,
+      "name": "RJ Harvey",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 3.0,
+        "rec_yds": 346.5,
+        "receptions": 46.5,
+        "rush_att": 87.0,
+        "rush_td": 3.0,
+        "rush_yds": 344.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -34.4,
+      "projection_source_count": 2,
+      "source_rank": 122,
+      "team": "DEN"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 106.35,
+      "name": "Woody Marks",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 1.0,
+        "rec_yds": 207.0,
+        "receptions": 25.5,
+        "rush_att": 139.0,
+        "rush_td": 2.5,
+        "rush_yds": 554.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -50.4,
+      "projection_source_count": 2,
+      "source_rank": 123,
+      "team": "HOU"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 127.85,
+      "name": "Stefon Diggs",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 4.0,
+        "rec_yds": 746.0,
+        "receptions": 66.5,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -29.8,
+      "projection_source_count": 2,
+      "source_rank": 124,
+      "team": "WAS"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 120.65,
+      "name": "Makai Lemon",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 4.5,
+        "rec_yds": 699.5,
+        "receptions": 54.5,
+        "rush_att": 2.0,
+        "rush_td": 0.0,
+        "rush_yds": 9.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -37.0,
+      "projection_source_count": 2,
+      "source_rank": 125,
+      "team": "PHI"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 120.9,
+      "name": "KC Concepcion",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 3.0,
+        "rec_yds": 739.5,
+        "receptions": 58.0,
+        "rush_att": 5.5,
+        "rush_td": 0.0,
+        "rush_yds": 29.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -36.75,
+      "projection_source_count": 2,
+      "source_rank": 126,
+      "team": "CLE"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 131.0,
+      "name": "Chris Godwin Jr.",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 5.0,
+        "rec_yds": 740.0,
+        "receptions": 64.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -26.65,
+      "projection_source_count": 2,
+      "source_rank": 127,
+      "team": "TB"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 124.0,
+      "name": "Romeo Doubs",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 5.0,
+        "rec_yds": 712.5,
+        "receptions": 55.5,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -33.65,
+      "projection_source_count": 2,
+      "source_rank": 128,
+      "team": "NE"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 110.9,
+      "name": "De'Zhaun Stribling",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 4.0,
+        "rec_yds": 661.5,
+        "receptions": 49.5,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -46.75,
+      "projection_source_count": 2,
+      "source_rank": 129,
+      "team": "SF"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 89.55,
+      "name": "Tank Dell",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 3.0,
+        "rec_yds": 513.0,
+        "receptions": 42.0,
+        "rush_att": 4.0,
+        "rush_td": 0.0,
+        "rush_yds": 22.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -68.1,
+      "projection_source_count": 2,
+      "source_rank": 130,
+      "team": "HOU"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 108.25,
+      "name": "Jalen Coker",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 3.0,
+        "rec_yds": 655.0,
+        "receptions": 55.5,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -49.4,
+      "projection_source_count": 2,
+      "source_rank": 131,
+      "team": "CAR"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 114.9,
+      "name": "Rashid Shaheed",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 3.5,
+        "rec_yds": 653.0,
+        "receptions": 46.0,
+        "rush_att": 10.5,
+        "rush_td": 0.5,
+        "rush_yds": 66.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -42.75,
+      "projection_source_count": 2,
+      "source_rank": 132,
+      "team": "SEA"
+    },
+    {
+      "baseline_points": 343.55,
+      "custom_projected_points": 299.38,
+      "name": "Kyler Murray",
+      "position": "QB",
+      "projected_stats": {
+        "pass_att": 507.5,
+        "pass_cmp": 338.5,
+        "pass_int": 11.0,
+        "pass_td": 21.0,
+        "pass_yds": 3509.5,
+        "rush_att": 78.0,
+        "rush_td": 3.0,
+        "rush_yds": 469.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -44.18,
+      "projection_source_count": 2,
+      "source_rank": 133,
+      "team": "MIN"
+    },
+    {
+      "baseline_points": 343.55,
+      "custom_projected_points": 314.07,
+      "name": "Tyler Shough",
+      "position": "QB",
+      "projected_stats": {
+        "pass_att": 547.0,
+        "pass_cmp": 358.5,
+        "pass_int": 10.5,
+        "pass_td": 21.5,
+        "pass_yds": 3918.5,
+        "rush_att": 80.0,
+        "rush_td": 4.0,
+        "rush_yds": 331.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -29.48,
+      "projection_source_count": 2,
+      "source_rank": 134,
+      "team": "NO"
+    },
+    {
+      "baseline_points": 343.55,
+      "custom_projected_points": 326.32,
+      "name": "Jared Goff",
+      "position": "QB",
+      "projected_stats": {
+        "pass_att": 558.0,
+        "pass_cmp": 377.0,
+        "pass_int": 10.0,
+        "pass_td": 30.5,
+        "pass_yds": 4337.5,
+        "rush_att": 25.0,
+        "rush_td": 0.5,
+        "rush_yds": 49.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -17.23,
+      "projection_source_count": 2,
+      "source_rank": 135,
+      "team": "DET"
+    },
+    {
+      "baseline_points": 343.55,
+      "custom_projected_points": 296.73,
+      "name": "Daniel Jones",
+      "position": "QB",
+      "projected_stats": {
+        "pass_att": 510.5,
+        "pass_cmp": 339.5,
+        "pass_int": 11.5,
+        "pass_td": 20.5,
+        "pass_yds": 3719.5,
+        "rush_att": 73.0,
+        "rush_td": 4.5,
+        "rush_yds": 292.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -46.82,
+      "projection_source_count": 2,
+      "source_rank": 136,
+      "team": "IND"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 105.85,
+      "name": "Zach Charbonnet",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.5,
+        "rec_yds": 140.0,
+        "receptions": 19.5,
+        "rush_att": 132.5,
+        "rush_td": 5.0,
+        "rush_yds": 546.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -50.9,
+      "projection_source_count": 2,
+      "source_rank": 137,
+      "team": "SEA"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 101.05,
+      "name": "Alvin Kamara",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 1.5,
+        "rec_yds": 228.5,
+        "receptions": 33.5,
+        "rush_att": 112.5,
+        "rush_td": 2.0,
+        "rush_yds": 439.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -55.7,
+      "projection_source_count": 2,
+      "source_rank": 138,
+      "team": "NO"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 111.1,
+      "name": "Tyjae Spears",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 1.5,
+        "rec_yds": 295.5,
+        "receptions": 44.0,
+        "rush_att": 96.0,
+        "rush_td": 2.5,
+        "rush_yds": 395.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -45.65,
+      "projection_source_count": 2,
+      "source_rank": 139,
+      "team": "TEN"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 75.65,
+      "name": "Chris Rodriguez Jr.",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.0,
+        "rec_yds": 52.5,
+        "receptions": 7.0,
+        "rush_att": 114.5,
+        "rush_td": 3.5,
+        "rush_yds": 494.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -81.1,
+      "projection_source_count": 2,
+      "source_rank": 140,
+      "team": "JAC"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 81.45,
+      "name": "Brian Robinson Jr.",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.0,
+        "rec_yds": 58.5,
+        "receptions": 9.0,
+        "rush_att": 121.0,
+        "rush_td": 4.0,
+        "rush_yds": 511.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -75.3,
+      "projection_source_count": 2,
+      "source_rank": 141,
+      "team": "ATL"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 75.3,
+      "name": "Tyler Allgeier",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.0,
+        "rec_yds": 125.0,
+        "receptions": 18.0,
+        "rush_att": 97.5,
+        "rush_td": 3.0,
+        "rush_yds": 388.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -81.45,
+      "projection_source_count": 2,
+      "source_rank": 142,
+      "team": "ARI"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 96.7,
+      "name": "Denzel Boston",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 2.5,
+        "rec_yds": 604.5,
+        "receptions": 47.5,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -60.95,
+      "projection_source_count": 2,
+      "source_rank": 143,
+      "team": "CLE"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 108.25,
+      "name": "Jerry Jeudy",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 3.0,
+        "rec_yds": 677.5,
+        "receptions": 51.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -49.4,
+      "projection_source_count": 2,
+      "source_rank": 144,
+      "team": "CLE"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 99.95,
+      "name": "Jalen McMillan",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 4.0,
+        "rec_yds": 572.0,
+        "receptions": 43.0,
+        "rush_att": 2.0,
+        "rush_td": 0.0,
+        "rush_yds": 12.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -57.7,
+      "projection_source_count": 2,
+      "source_rank": 145,
+      "team": "TB"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 99.4,
+      "name": "Calvin Ridley",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 3.0,
+        "rec_yds": 623.0,
+        "receptions": 41.0,
+        "rush_att": 3.0,
+        "rush_td": 0.0,
+        "rush_yds": 16.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -58.25,
+      "projection_source_count": 2,
+      "source_rank": 146,
+      "team": "TEN"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 86.85,
+      "name": "Caleb Douglas",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 2.0,
+        "rec_yds": 553.5,
+        "receptions": 43.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -70.8,
+      "projection_source_count": 2,
+      "source_rank": 147,
+      "team": "MIA"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 94.8,
+      "name": "Adonai Mitchell",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 4.0,
+        "rec_yds": 550.0,
+        "receptions": 38.5,
+        "rush_att": 1.0,
+        "rush_td": 0.0,
+        "rush_yds": 5.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -62.85,
+      "projection_source_count": 2,
+      "source_rank": 148,
+      "team": "NYJ"
+    },
+    {
+      "baseline_points": 343.55,
+      "custom_projected_points": 302.77,
+      "name": "Baker Mayfield",
+      "position": "QB",
+      "projected_stats": {
+        "pass_att": 535.0,
+        "pass_cmp": 345.5,
+        "pass_int": 12.0,
+        "pass_td": 24.5,
+        "pass_yds": 3786.5,
+        "rush_att": 57.0,
+        "rush_td": 1.0,
+        "rush_yds": 344.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -40.78,
+      "projection_source_count": 2,
+      "source_rank": 149,
+      "team": "TB"
+    },
+    {
+      "baseline_points": 343.55,
+      "custom_projected_points": 288.9,
+      "name": "Malik Willis",
+      "position": "QB",
+      "projected_stats": {
+        "pass_att": 510.0,
+        "pass_cmp": 321.0,
+        "pass_int": 10.0,
+        "pass_td": 14.0,
+        "pass_yds": 3505.0,
+        "rush_att": 115.0,
+        "rush_td": 3.5,
+        "rush_yds": 601.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -54.65,
+      "projection_source_count": 2,
+      "source_rank": 150,
+      "team": "MIA"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 76.45,
+      "name": "Travis Hunter",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 2.5,
+        "rec_yds": 444.0,
+        "receptions": 38.0,
+        "rush_att": 1.0,
+        "rush_td": 0.0,
+        "rush_yds": 5.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -81.2,
+      "projection_source_count": 2,
+      "source_rank": 151,
+      "team": "JAC"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 94.6,
+      "name": "Jordyn Tyson",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 3.5,
+        "rec_yds": 558.5,
+        "receptions": 42.5,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -63.05,
+      "projection_source_count": 2,
+      "source_rank": 152,
+      "team": "NO"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 108.5,
+      "name": "Tre Tucker",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 3.0,
+        "rec_yds": 656.5,
+        "receptions": 50.0,
+        "rush_att": 5.0,
+        "rush_td": 0.0,
+        "rush_yds": 28.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -49.15,
+      "projection_source_count": 2,
+      "source_rank": 153,
+      "team": "LV"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 69.3,
+      "name": "Keaton Mitchell",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 1.0,
+        "rec_yds": 152.0,
+        "receptions": 19.5,
+        "rush_att": 61.0,
+        "rush_td": 2.0,
+        "rush_yds": 293.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -87.45,
+      "projection_source_count": 2,
+      "source_rank": 154,
+      "team": "LAC"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 100.8,
+      "name": "Isiah Pacheco",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.5,
+        "rec_yds": 126.5,
+        "receptions": 18.5,
+        "rush_att": 135.0,
+        "rush_td": 4.0,
+        "rush_yds": 564.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -55.95,
+      "projection_source_count": 2,
+      "source_rank": 155,
+      "team": "DET"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 56.7,
+      "name": "Jonah Coleman",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.5,
+        "rec_yds": 97.5,
+        "receptions": 14.0,
+        "rush_att": 66.0,
+        "rush_td": 2.0,
+        "rush_yds": 274.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -100.05,
+      "projection_source_count": 2,
+      "source_rank": 156,
+      "team": "DEN"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 57.65,
+      "name": "Tank Bigsby",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.0,
+        "rec_yds": 30.0,
+        "receptions": 4.5,
+        "rush_att": 85.0,
+        "rush_td": 3.0,
+        "rush_yds": 374.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -99.1,
+      "projection_source_count": 2,
+      "source_rank": 157,
+      "team": "PHI"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 43.65,
+      "name": "Ray Davis",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.5,
+        "rec_yds": 77.0,
+        "receptions": 10.0,
+        "rush_att": 47.0,
+        "rush_td": 1.5,
+        "rush_yds": 209.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -113.1,
+      "projection_source_count": 2,
+      "source_rank": 158,
+      "team": "BUF"
+    },
+    {
+      "baseline_points": 142.2,
+      "custom_projected_points": 99.0,
+      "name": "Terrance Ferguson",
+      "position": "TE",
+      "projected_stats": {
+        "rec_td": 5.0,
+        "rec_yds": 525.0,
+        "receptions": 43.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -43.2,
+      "projection_source_count": 2,
+      "source_rank": 159,
+      "team": "LAR"
+    },
+    {
+      "baseline_points": 142.2,
+      "custom_projected_points": 111.8,
+      "name": "Juwan Johnson",
+      "position": "TE",
+      "projected_stats": {
+        "rec_td": 3.0,
+        "rec_yds": 660.5,
+        "receptions": 61.5,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -30.4,
+      "projection_source_count": 2,
+      "source_rank": 160,
+      "team": "NO"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 94.25,
+      "name": "Jalen Nailor",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 2.5,
+        "rec_yds": 592.0,
+        "receptions": 44.0,
+        "rush_att": 1.0,
+        "rush_td": 0.0,
+        "rush_yds": 5.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -63.4,
+      "projection_source_count": 2,
+      "source_rank": 161,
+      "team": "LV"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 97.75,
+      "name": "Keenan Allen",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 3.0,
+        "rec_yds": 552.5,
+        "receptions": 55.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -59.9,
+      "projection_source_count": 2,
+      "source_rank": 162,
+      "team": "IND"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 99.8,
+      "name": "Rashod Bateman",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 4.0,
+        "rec_yds": 593.0,
+        "receptions": 41.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -57.85,
+      "projection_source_count": 2,
+      "source_rank": 163,
+      "team": "BAL"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 73.7,
+      "name": "Dontayvion Wicks",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 2.5,
+        "rec_yds": 442.0,
+        "receptions": 34.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -83.95,
+      "projection_source_count": 2,
+      "source_rank": 164,
+      "team": "PHI"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 79.8,
+      "name": "Jaylin Noel",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 3.0,
+        "rec_yds": 444.5,
+        "receptions": 38.5,
+        "rush_att": 2.0,
+        "rush_td": 0.0,
+        "rush_yds": 11.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -77.85,
+      "projection_source_count": 2,
+      "source_rank": 165,
+      "team": "HOU"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 79.8,
+      "name": "Dylan Sampson",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 1.5,
+        "rec_yds": 261.5,
+        "receptions": 35.0,
+        "rush_att": 58.0,
+        "rush_td": 1.0,
+        "rush_yds": 236.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -76.95,
+      "projection_source_count": 2,
+      "source_rank": 166,
+      "team": "CLE"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 54.15,
+      "name": "Mike Washington Jr.",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.0,
+        "rec_yds": 53.5,
+        "receptions": 7.5,
+        "rush_att": 86.5,
+        "rush_td": 2.0,
+        "rush_yds": 350.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -102.6,
+      "projection_source_count": 2,
+      "source_rank": 167,
+      "team": "LV"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 74.2,
+      "name": "Tyrone Tracy Jr.",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 1.0,
+        "rec_yds": 166.0,
+        "receptions": 22.0,
+        "rush_att": 80.5,
+        "rush_td": 1.5,
+        "rush_yds": 341.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -82.55,
+      "projection_source_count": 2,
+      "source_rank": 168,
+      "team": "NYG"
+    },
+    {
+      "baseline_points": null,
+      "custom_projected_points": null,
+      "name": "Texans D/ST",
+      "position": "DST",
+      "projected_stats": {},
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": null,
+      "projection_source_count": 0,
+      "source_rank": 169,
+      "team": "HOU"
+    },
+    {
+      "baseline_points": null,
+      "custom_projected_points": null,
+      "name": "Broncos D/ST",
+      "position": "DST",
+      "projected_stats": {},
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": null,
+      "projection_source_count": 0,
+      "source_rank": 170,
+      "team": "DEN"
+    },
+    {
+      "baseline_points": null,
+      "custom_projected_points": null,
+      "name": "Steelers D/ST",
+      "position": "DST",
+      "projected_stats": {},
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": null,
+      "projection_source_count": 0,
+      "source_rank": 171,
+      "team": "PIT"
+    },
+    {
+      "baseline_points": null,
+      "custom_projected_points": null,
+      "name": "Seahawks D/ST",
+      "position": "DST",
+      "projected_stats": {},
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": null,
+      "projection_source_count": 0,
+      "source_rank": 172,
+      "team": "SEA"
+    },
+    {
+      "baseline_points": null,
+      "custom_projected_points": null,
+      "name": "Rams D/ST",
+      "position": "DST",
+      "projected_stats": {},
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": null,
+      "projection_source_count": 0,
+      "source_rank": 173,
+      "team": "LAR"
+    },
+    {
+      "baseline_points": null,
+      "custom_projected_points": null,
+      "name": "Ravens D/ST",
+      "position": "DST",
+      "projected_stats": {},
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": null,
+      "projection_source_count": 0,
+      "source_rank": 174,
+      "team": "BAL"
+    },
+    {
+      "baseline_points": null,
+      "custom_projected_points": null,
+      "name": "Eagles D/ST",
+      "position": "DST",
+      "projected_stats": {},
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": null,
+      "projection_source_count": 0,
+      "source_rank": 175,
+      "team": "PHI"
+    },
+    {
+      "baseline_points": null,
+      "custom_projected_points": null,
+      "name": "Browns D/ST",
+      "position": "DST",
+      "projected_stats": {},
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": null,
+      "projection_source_count": 0,
+      "source_rank": 176,
+      "team": "CLE"
+    },
+    {
+      "baseline_points": null,
+      "custom_projected_points": null,
+      "name": "Patriots D/ST",
+      "position": "DST",
+      "projected_stats": {},
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": null,
+      "projection_source_count": 0,
+      "source_rank": 177,
+      "team": "NE"
+    },
+    {
+      "baseline_points": null,
+      "custom_projected_points": null,
+      "name": "Lions D/ST",
+      "position": "DST",
+      "projected_stats": {},
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": null,
+      "projection_source_count": 0,
+      "source_rank": 178,
+      "team": "DET"
+    },
+    {
+      "baseline_points": null,
+      "custom_projected_points": null,
+      "name": "Chiefs D/ST",
+      "position": "DST",
+      "projected_stats": {},
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": null,
+      "projection_source_count": 0,
+      "source_rank": 179,
+      "team": "KC"
+    },
+    {
+      "baseline_points": null,
+      "custom_projected_points": null,
+      "name": "Chargers D/ST",
+      "position": "DST",
+      "projected_stats": {},
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": null,
+      "projection_source_count": 0,
+      "source_rank": 180,
+      "team": "LAC"
+    },
+    {
+      "baseline_points": null,
+      "custom_projected_points": null,
+      "name": "Brandon Aubrey",
+      "position": "K",
+      "projected_stats": {},
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": null,
+      "projection_source_count": 0,
+      "source_rank": 181,
+      "team": "DAL"
+    },
+    {
+      "baseline_points": null,
+      "custom_projected_points": null,
+      "name": "Cameron Dicker",
+      "position": "K",
+      "projected_stats": {},
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": null,
+      "projection_source_count": 0,
+      "source_rank": 182,
+      "team": "LAC"
+    },
+    {
+      "baseline_points": null,
+      "custom_projected_points": null,
+      "name": "Jason Myers",
+      "position": "K",
+      "projected_stats": {},
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": null,
+      "projection_source_count": 0,
+      "source_rank": 183,
+      "team": "SEA"
+    },
+    {
+      "baseline_points": null,
+      "custom_projected_points": null,
+      "name": "Harrison Mevis",
+      "position": "K",
+      "projected_stats": {},
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": null,
+      "projection_source_count": 0,
+      "source_rank": 184,
+      "team": "LAR"
+    },
+    {
+      "baseline_points": null,
+      "custom_projected_points": null,
+      "name": "Ka'imi Fairbairn",
+      "position": "K",
+      "projected_stats": {},
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": null,
+      "projection_source_count": 0,
+      "source_rank": 185,
+      "team": "HOU"
+    },
+    {
+      "baseline_points": null,
+      "custom_projected_points": null,
+      "name": "Eddy Pineiro",
+      "position": "K",
+      "projected_stats": {},
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": null,
+      "projection_source_count": 0,
+      "source_rank": 186,
+      "team": "SF"
+    },
+    {
+      "baseline_points": null,
+      "custom_projected_points": null,
+      "name": "Harrison Butker",
+      "position": "K",
+      "projected_stats": {},
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": null,
+      "projection_source_count": 0,
+      "source_rank": 187,
+      "team": "KC"
+    },
+    {
+      "baseline_points": null,
+      "custom_projected_points": null,
+      "name": "Cam Little",
+      "position": "K",
+      "projected_stats": {},
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": null,
+      "projection_source_count": 0,
+      "source_rank": 188,
+      "team": "JAC"
+    },
+    {
+      "baseline_points": null,
+      "custom_projected_points": null,
+      "name": "Jake Bates",
+      "position": "K",
+      "projected_stats": {},
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": null,
+      "projection_source_count": 0,
+      "source_rank": 189,
+      "team": "DET"
+    },
+    {
+      "baseline_points": null,
+      "custom_projected_points": null,
+      "name": "Tyler Loop",
+      "position": "K",
+      "projected_stats": {},
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": null,
+      "projection_source_count": 0,
+      "source_rank": 190,
+      "team": "BAL"
+    },
+    {
+      "baseline_points": null,
+      "custom_projected_points": null,
+      "name": "Cairo Santos",
+      "position": "K",
+      "projected_stats": {},
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": null,
+      "projection_source_count": 0,
+      "source_rank": 191,
+      "team": "CHI"
+    },
+    {
+      "baseline_points": null,
+      "custom_projected_points": null,
+      "name": "Will Reichard",
+      "position": "K",
+      "projected_stats": {},
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": null,
+      "projection_source_count": 0,
+      "source_rank": 192,
+      "team": "MIN"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 65.3,
+      "name": "Braelon Allen",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.0,
+        "rec_yds": 85.5,
+        "receptions": 11.5,
+        "rush_att": 87.0,
+        "rush_td": 3.0,
+        "rush_yds": 360.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -91.45,
+      "projection_source_count": 2,
+      "source_rank": 193,
+      "team": "NYJ"
+    },
+    {
+      "baseline_points": 142.2,
+      "custom_projected_points": 106.0,
+      "name": "Brenton Strange",
+      "position": "TE",
+      "projected_stats": {
+        "rec_td": 4.0,
+        "rec_yds": 585.0,
+        "receptions": 55.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -36.2,
+      "projection_source_count": 2,
+      "source_rank": 194,
+      "team": "JAC"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 83.45,
+      "name": "Justice Hill",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 1.5,
+        "rec_yds": 285.0,
+        "receptions": 33.5,
+        "rush_att": 50.0,
+        "rush_td": 1.5,
+        "rush_yds": 232.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -73.3,
+      "projection_source_count": 2,
+      "source_rank": 195,
+      "team": "BAL"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 71.5,
+      "name": "MarShawn Lloyd",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.5,
+        "rec_yds": 93.0,
+        "receptions": 13.0,
+        "rush_att": 89.5,
+        "rush_td": 3.0,
+        "rush_yds": 382.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -85.25,
+      "projection_source_count": 2,
+      "source_rank": 196,
+      "team": "GB"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 73.45,
+      "name": "Ja'Kobi Lane",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 3.0,
+        "rec_yds": 429.5,
+        "receptions": 31.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -84.2,
+      "projection_source_count": 2,
+      "source_rank": 197,
+      "team": "BAL"
+    },
+    {
+      "baseline_points": 343.55,
+      "custom_projected_points": 302.07,
+      "name": "Jordan Love",
+      "position": "QB",
+      "projected_stats": {
+        "pass_att": 529.5,
+        "pass_cmp": 342.5,
+        "pass_int": 10.5,
+        "pass_td": 25.5,
+        "pass_yds": 3923.5,
+        "rush_att": 46.5,
+        "rush_td": 1.0,
+        "rush_yds": 199.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -41.48,
+      "projection_source_count": 2,
+      "source_rank": 198,
+      "team": "GB"
+    },
+    {
+      "baseline_points": 343.55,
+      "custom_projected_points": 285.07,
+      "name": "C.J. Stroud",
+      "position": "QB",
+      "projected_stats": {
+        "pass_att": 540.0,
+        "pass_cmp": 345.0,
+        "pass_int": 11.0,
+        "pass_td": 21.5,
+        "pass_yds": 3854.5,
+        "rush_att": 54.0,
+        "rush_td": 1.0,
+        "rush_yds": 233.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -58.48,
+      "projection_source_count": 2,
+      "source_rank": 199,
+      "team": "HOU"
+    },
+    {
+      "baseline_points": 343.55,
+      "custom_projected_points": 296.12,
+      "name": "Sam Darnold",
+      "position": "QB",
+      "projected_stats": {
+        "pass_att": 511.5,
+        "pass_cmp": 336.0,
+        "pass_int": 12.5,
+        "pass_td": 25.0,
+        "pass_yds": 4071.5,
+        "rush_att": 42.0,
+        "rush_td": 1.0,
+        "rush_yds": 125.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -47.43,
+      "projection_source_count": 2,
+      "source_rank": 200,
+      "team": "SEA"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 86.4,
+      "name": "Devaughn Vele",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 3.0,
+        "rec_yds": 494.0,
+        "receptions": 44.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -71.25,
+      "projection_source_count": 2,
+      "source_rank": 201,
+      "team": "NO"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 88.65,
+      "name": "Germie Bernard",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 3.0,
+        "rec_yds": 513.5,
+        "receptions": 41.5,
+        "rush_att": 3.0,
+        "rush_td": 0.0,
+        "rush_yds": 15.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -69.0,
+      "projection_source_count": 2,
+      "source_rank": 202,
+      "team": "PIT"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 83.35,
+      "name": "Jauan Jennings",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 3.0,
+        "rec_yds": 476.0,
+        "receptions": 41.5,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -74.3,
+      "projection_source_count": 2,
+      "source_rank": 203,
+      "team": "MIN"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 68.05,
+      "name": "Tre Harris",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 2.0,
+        "rec_yds": 413.0,
+        "receptions": 33.5,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -89.6,
+      "projection_source_count": 2,
+      "source_rank": 204,
+      "team": "LAC"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 75.6,
+      "name": "Ryan Flournoy",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 3.5,
+        "rec_yds": 400.0,
+        "receptions": 35.0,
+        "rush_att": 1.0,
+        "rush_td": 0.0,
+        "rush_yds": 6.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -82.05,
+      "projection_source_count": 2,
+      "source_rank": 205,
+      "team": "DAL"
+    },
+    {
+      "baseline_points": 142.2,
+      "custom_projected_points": 106.7,
+      "name": "Pat Freiermuth",
+      "position": "TE",
+      "projected_stats": {
+        "rec_td": 4.0,
+        "rec_yds": 584.5,
+        "receptions": 56.5,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -35.5,
+      "projection_source_count": 2,
+      "source_rank": 206,
+      "team": "PIT"
+    },
+    {
+      "baseline_points": 142.2,
+      "custom_projected_points": 106.7,
+      "name": "Dalton Schultz",
+      "position": "TE",
+      "projected_stats": {
+        "rec_td": 3.0,
+        "rec_yds": 599.5,
+        "receptions": 63.5,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -35.5,
+      "projection_source_count": 2,
+      "source_rank": 207,
+      "team": "HOU"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 49.45,
+      "name": "Zachariah Branch",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 1.5,
+        "rec_yds": 297.0,
+        "receptions": 24.5,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -108.2,
+      "projection_source_count": 2,
+      "source_rank": 208,
+      "team": "ATL"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 59.15,
+      "name": "Omar Cooper Jr.",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 2.5,
+        "rec_yds": 328.0,
+        "receptions": 26.5,
+        "rush_att": 1.0,
+        "rush_td": 0.0,
+        "rush_yds": 6.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -98.5,
+      "projection_source_count": 2,
+      "source_rank": 209,
+      "team": "NYJ"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 63.7,
+      "name": "Kayshon Boutte",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 3.0,
+        "rec_yds": 359.5,
+        "receptions": 25.5,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -93.95,
+      "projection_source_count": 2,
+      "source_rank": 210,
+      "team": "NE"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 87.4,
+      "name": "Malik Washington",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 2.5,
+        "rec_yds": 467.0,
+        "receptions": 44.0,
+        "rush_att": 10.5,
+        "rush_td": 0.0,
+        "rush_yds": 62.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -70.25,
+      "projection_source_count": 2,
+      "source_rank": 211,
+      "team": "MIA"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 32.15,
+      "name": "Jordan James",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.0,
+        "rec_yds": 39.0,
+        "receptions": 5.5,
+        "rush_att": 47.0,
+        "rush_td": 1.0,
+        "rush_yds": 205.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -124.6,
+      "projection_source_count": 2,
+      "source_rank": 212,
+      "team": "SF"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 35.2,
+      "name": "Kaelon Black",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.0,
+        "rec_yds": 39.5,
+        "receptions": 5.0,
+        "rush_att": 51.5,
+        "rush_td": 1.5,
+        "rush_yds": 212.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -121.55,
+      "projection_source_count": 2,
+      "source_rank": 213,
+      "team": "SF"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 40.15,
+      "name": "Kimani Vidal",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.0,
+        "rec_yds": 75.0,
+        "receptions": 9.5,
+        "rush_att": 49.5,
+        "rush_td": 1.5,
+        "rush_yds": 204.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -116.6,
+      "projection_source_count": 2,
+      "source_rank": 214,
+      "team": "LAC"
+    },
+    {
+      "baseline_points": 142.2,
+      "custom_projected_points": 88.45,
+      "name": "Gunnar Helm",
+      "position": "TE",
+      "projected_stats": {
+        "rec_td": 3.0,
+        "rec_yds": 477.0,
+        "receptions": 51.5,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -53.75,
+      "projection_source_count": 2,
+      "source_rank": 215,
+      "team": "TEN"
+    },
+    {
+      "baseline_points": 142.2,
+      "custom_projected_points": 92.7,
+      "name": "Chig Okonkwo",
+      "position": "TE",
+      "projected_stats": {
+        "rec_td": 2.5,
+        "rec_yds": 539.5,
+        "receptions": 52.5,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -49.5,
+      "projection_source_count": 2,
+      "source_rank": 216,
+      "team": "WAS"
+    },
+    {
+      "baseline_points": 142.2,
+      "custom_projected_points": 97.4,
+      "name": "AJ Barner",
+      "position": "TE",
+      "projected_stats": {
+        "rec_td": 4.0,
+        "rec_yds": 504.0,
+        "receptions": 54.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -44.8,
+      "projection_source_count": 1,
+      "source_rank": 217,
+      "team": "SEA"
+    },
+    {
+      "baseline_points": 343.55,
+      "custom_projected_points": 274.43,
+      "name": "Bryce Young",
+      "position": "QB",
+      "projected_stats": {
+        "pass_att": 532.0,
+        "pass_cmp": 336.0,
+        "pass_int": 11.0,
+        "pass_td": 21.0,
+        "pass_yds": 3497.5,
+        "rush_att": 56.5,
+        "rush_td": 2.5,
+        "rush_yds": 250.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -69.12,
+      "projection_source_count": 2,
+      "source_rank": 218,
+      "team": "CAR"
+    },
+    {
+      "baseline_points": 343.55,
+      "custom_projected_points": 262.8,
+      "name": "Cam Ward",
+      "position": "QB",
+      "projected_stats": {
+        "pass_att": 572.0,
+        "pass_cmp": 349.0,
+        "pass_int": 11.0,
+        "pass_td": 19.0,
+        "pass_yds": 3662.0,
+        "rush_att": 49.0,
+        "rush_td": 1.0,
+        "rush_yds": 207.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -80.75,
+      "projection_source_count": 1,
+      "source_rank": 219,
+      "team": "TEN"
+    },
+    {
+      "baseline_points": 343.55,
+      "custom_projected_points": 248.4,
+      "name": "Jacoby Brissett",
+      "position": "QB",
+      "projected_stats": {
+        "pass_att": 519.0,
+        "pass_cmp": 332.5,
+        "pass_int": 9.5,
+        "pass_td": 17.0,
+        "pass_yds": 3500.0,
+        "rush_att": 45.0,
+        "rush_td": 1.0,
+        "rush_yds": 194.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -95.15,
+      "projection_source_count": 2,
+      "source_rank": 220,
+      "team": "ARI"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 42.35,
+      "name": "Jaylen Wright",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.0,
+        "rec_yds": 63.5,
+        "receptions": 8.0,
+        "rush_att": 58.5,
+        "rush_td": 1.5,
+        "rush_yds": 245.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -114.4,
+      "projection_source_count": 2,
+      "source_rank": 221,
+      "team": "MIA"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 31.0,
+      "name": "Ollie Gordon II",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.0,
+        "rec_yds": 38.0,
+        "receptions": 6.0,
+        "rush_att": 47.5,
+        "rush_td": 1.0,
+        "rush_yds": 192.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -125.75,
+      "projection_source_count": 2,
+      "source_rank": 222,
+      "team": "MIA"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 75.35,
+      "name": "Samaje Perine",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 1.0,
+        "rec_yds": 118.5,
+        "receptions": 17.5,
+        "rush_att": 86.5,
+        "rush_td": 2.5,
+        "rush_yds": 372.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -81.4,
+      "projection_source_count": 2,
+      "source_rank": 223,
+      "team": "CIN"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 79.35,
+      "name": "Cooper Kupp",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 3.0,
+        "rec_yds": 458.5,
+        "receptions": 37.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -78.3,
+      "projection_source_count": 2,
+      "source_rank": 224,
+      "team": "SEA"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 73.2,
+      "name": "Ty Johnson",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 1.5,
+        "rec_yds": 239.0,
+        "receptions": 25.5,
+        "rush_att": 51.5,
+        "rush_td": 1.5,
+        "rush_yds": 215.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -83.55,
+      "projection_source_count": 2,
+      "source_rank": 225,
+      "team": "BUF"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 38.05,
+      "name": "Isaiah Davis",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.0,
+        "rec_yds": 101.5,
+        "receptions": 13.5,
+        "rush_att": 37.5,
+        "rush_td": 1.0,
+        "rush_yds": 161.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -118.7,
+      "projection_source_count": 2,
+      "source_rank": 226,
+      "team": "NYJ"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 76.3,
+      "name": "Xavier Legette",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 3.0,
+        "rec_yds": 422.5,
+        "receptions": 37.0,
+        "rush_att": 1.0,
+        "rush_td": 0.0,
+        "rush_yds": 5.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -81.35,
+      "projection_source_count": 2,
+      "source_rank": 227,
+      "team": "CAR"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 57.6,
+      "name": "Jahan Dotson",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 2.0,
+        "rec_yds": 343.5,
+        "receptions": 26.5,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -100.05,
+      "projection_source_count": 2,
+      "source_rank": 228,
+      "team": "ATL"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 71.9,
+      "name": "Darius Slayton",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 2.5,
+        "rec_yds": 433.0,
+        "receptions": 31.0,
+        "rush_att": 1.0,
+        "rush_td": 0.0,
+        "rush_yds": 6.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -85.75,
+      "projection_source_count": 2,
+      "source_rank": 229,
+      "team": "NYG"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 67.8,
+      "name": "Jalen Tolbert",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 1.5,
+        "rec_yds": 433.0,
+        "receptions": 34.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -89.85,
+      "projection_source_count": 2,
+      "source_rank": 230,
+      "team": "MIA"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 48.0,
+      "name": "Chris Bell",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 1.0,
+        "rec_yds": 310.0,
+        "receptions": 24.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -109.65,
+      "projection_source_count": 1,
+      "source_rank": 231,
+      "team": "MIA"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 63.45,
+      "name": "Antonio Williams",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 2.5,
+        "rec_yds": 366.0,
+        "receptions": 26.5,
+        "rush_att": 2.0,
+        "rush_td": 0.0,
+        "rush_yds": 11.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -94.2,
+      "projection_source_count": 2,
+      "source_rank": 232,
+      "team": "WAS"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 61.95,
+      "name": "Tyquan Thornton",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 3.0,
+        "rec_yds": 357.0,
+        "receptions": 22.5,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -95.7,
+      "projection_source_count": 2,
+      "source_rank": 233,
+      "team": "KC"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 56.0,
+      "name": "Keon Coleman",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 2.5,
+        "rec_yds": 322.5,
+        "receptions": 22.5,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -101.65,
+      "projection_source_count": 2,
+      "source_rank": 234,
+      "team": "BUF"
+    },
+    {
+      "baseline_points": null,
+      "custom_projected_points": null,
+      "name": "Buccaneers D/ST",
+      "position": "DST",
+      "projected_stats": {},
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": null,
+      "projection_source_count": 0,
+      "source_rank": 235,
+      "team": "TB"
+    },
+    {
+      "baseline_points": null,
+      "custom_projected_points": null,
+      "name": "Packers D/ST",
+      "position": "DST",
+      "projected_stats": {},
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": null,
+      "projection_source_count": 0,
+      "source_rank": 236,
+      "team": "GB"
+    },
+    {
+      "baseline_points": null,
+      "custom_projected_points": null,
+      "name": "Chris Boswell",
+      "position": "K",
+      "projected_stats": {},
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": null,
+      "projection_source_count": 0,
+      "source_rank": 237,
+      "team": "PIT"
+    },
+    {
+      "baseline_points": null,
+      "custom_projected_points": null,
+      "name": "Chase McLaughlin",
+      "position": "K",
+      "projected_stats": {},
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": null,
+      "projection_source_count": 0,
+      "source_rank": 238,
+      "team": "TB"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 43.5,
+      "name": "Jaydon Blue",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.0,
+        "rec_yds": 66.5,
+        "receptions": 10.0,
+        "rush_att": 61.5,
+        "rush_td": 1.5,
+        "rush_yds": 243.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -113.25,
+      "projection_source_count": 2,
+      "source_rank": 239,
+      "team": "DAL"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 18.9,
+      "name": "Kaytron Allen",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.0,
+        "rec_yds": 37.0,
+        "receptions": 5.5,
+        "rush_att": 24.5,
+        "rush_td": 0.5,
+        "rush_yds": 99.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -137.85,
+      "projection_source_count": 2,
+      "source_rank": 240,
+      "team": "WAS"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 13.45,
+      "name": "Nicholas Singleton",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.0,
+        "rec_yds": 20.5,
+        "receptions": 3.0,
+        "rush_att": 18.0,
+        "rush_td": 0.5,
+        "rush_yds": 74.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -143.3,
+      "projection_source_count": 2,
+      "source_rank": 241,
+      "team": "TEN"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 17.85,
+      "name": "Demond Claiborne",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.0,
+        "rec_yds": 29.0,
+        "receptions": 4.5,
+        "rush_att": 25.0,
+        "rush_td": 0.5,
+        "rush_yds": 102.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -138.9,
+      "projection_source_count": 2,
+      "source_rank": 242,
+      "team": "MIN"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 22.0,
+      "name": "Adam Randall",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.0,
+        "rec_yds": 29.0,
+        "receptions": 4.0,
+        "rush_att": 29.0,
+        "rush_td": 1.0,
+        "rush_yds": 121.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -134.75,
+      "projection_source_count": 1,
+      "source_rank": 243,
+      "team": "BAL"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 38.65,
+      "name": "Emmett Johnson",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.0,
+        "rec_yds": 68.0,
+        "receptions": 9.5,
+        "rush_att": 49.0,
+        "rush_td": 1.5,
+        "rush_yds": 196.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -118.1,
+      "projection_source_count": 2,
+      "source_rank": 244,
+      "team": "KC"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 35.45,
+      "name": "LeQuint Allen",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 1.0,
+        "rec_yds": 141.5,
+        "receptions": 21.0,
+        "rush_att": 14.5,
+        "rush_td": 0.0,
+        "rush_yds": 58.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -121.3,
+      "projection_source_count": 2,
+      "source_rank": 245,
+      "team": "JAC"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 41.6,
+      "name": "George Holani",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.0,
+        "rec_yds": 70.0,
+        "receptions": 9.5,
+        "rush_att": 48.5,
+        "rush_td": 2.0,
+        "rush_yds": 198.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -115.15,
+      "projection_source_count": 2,
+      "source_rank": 246,
+      "team": "SEA"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 41.75,
+      "name": "Sean Tucker",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.0,
+        "rec_yds": 40.5,
+        "receptions": 5.5,
+        "rush_att": 57.0,
+        "rush_td": 2.5,
+        "rush_yds": 224.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -115.0,
+      "projection_source_count": 2,
+      "source_rank": 247,
+      "team": "TB"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 30.0,
+      "name": "James Conner",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.0,
+        "rec_yds": 68.0,
+        "receptions": 8.0,
+        "rush_att": 36.0,
+        "rush_td": 1.0,
+        "rush_yds": 142.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -126.75,
+      "projection_source_count": 1,
+      "source_rank": 248,
+      "team": "ARI"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 52.95,
+      "name": "Emari Demercado",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.5,
+        "rec_yds": 121.5,
+        "receptions": 17.5,
+        "rush_att": 52.5,
+        "rush_td": 1.0,
+        "rush_yds": 245.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -103.8,
+      "projection_source_count": 2,
+      "source_rank": 249,
+      "team": "KC"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 25.0,
+      "name": "Chris Brooks",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.0,
+        "rec_yds": 63.5,
+        "receptions": 9.0,
+        "rush_att": 21.5,
+        "rush_td": 1.0,
+        "rush_yds": 91.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -131.75,
+      "projection_source_count": 2,
+      "source_rank": 250,
+      "team": "GB"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 25.65,
+      "name": "DJ Giddens",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.0,
+        "rec_yds": 37.5,
+        "receptions": 5.0,
+        "rush_att": 35.5,
+        "rush_td": 1.0,
+        "rush_yds": 144.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -131.1,
+      "projection_source_count": 2,
+      "source_rank": 251,
+      "team": "IND"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 65.3,
+      "name": "Isaac TeSlaa",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 3.5,
+        "rec_yds": 343.0,
+        "receptions": 27.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -92.35,
+      "projection_source_count": 2,
+      "source_rank": 252,
+      "team": "DET"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 60.05,
+      "name": "Pat Bryant",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 2.0,
+        "rec_yds": 353.0,
+        "receptions": 29.5,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -97.6,
+      "projection_source_count": 2,
+      "source_rank": 253,
+      "team": "DEN"
+    },
+    {
+      "baseline_points": null,
+      "custom_projected_points": null,
+      "name": "Jaguars D/ST",
+      "position": "DST",
+      "projected_stats": {},
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": null,
+      "projection_source_count": 0,
+      "source_rank": 254,
+      "team": "JAC"
+    },
+    {
+      "baseline_points": null,
+      "custom_projected_points": null,
+      "name": "Colts D/ST",
+      "position": "DST",
+      "projected_stats": {},
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": null,
+      "projection_source_count": 0,
+      "source_rank": 255,
+      "team": "IND"
+    },
+    {
+      "baseline_points": null,
+      "custom_projected_points": null,
+      "name": "Evan McPherson",
+      "position": "K",
+      "projected_stats": {},
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": null,
+      "projection_source_count": 0,
+      "source_rank": 256,
+      "team": "CIN"
+    },
+    {
+      "baseline_points": null,
+      "custom_projected_points": null,
+      "name": "Nick Folk",
+      "position": "K",
+      "projected_stats": {},
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": null,
+      "projection_source_count": 0,
+      "source_rank": 257,
+      "team": "ATL"
+    },
+    {
+      "baseline_points": 142.2,
+      "custom_projected_points": 100.8,
+      "name": "Greg Dulcich",
+      "position": "TE",
+      "projected_stats": {
+        "rec_td": 3.0,
+        "rec_yds": 593.0,
+        "receptions": 53.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -41.4,
+      "projection_source_count": 2,
+      "source_rank": 258,
+      "team": "MIA"
+    },
+    {
+      "baseline_points": 142.2,
+      "custom_projected_points": 80.0,
+      "name": "Darren Waller",
+      "position": "TE",
+      "projected_stats": {
+        "rec_td": 4.0,
+        "rec_yds": 405.0,
+        "receptions": 39.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -62.2,
+      "projection_source_count": 2,
+      "source_rank": 259,
+      "team": "CAR"
+    },
+    {
+      "baseline_points": 142.2,
+      "custom_projected_points": 85.25,
+      "name": "Cade Otton",
+      "position": "TE",
+      "projected_stats": {
+        "rec_td": 2.5,
+        "rec_yds": 482.5,
+        "receptions": 49.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -56.95,
+      "projection_source_count": 2,
+      "source_rank": 260,
+      "team": "TB"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 53.8,
+      "name": "Marvin Mims Jr.",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 2.0,
+        "rec_yds": 273.0,
+        "receptions": 24.0,
+        "rush_att": 8.0,
+        "rush_td": 0.0,
+        "rush_yds": 45.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -103.85,
+      "projection_source_count": 1,
+      "source_rank": 261,
+      "team": "DEN"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 59.25,
+      "name": "KaVontae Turpin",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 2.0,
+        "rec_yds": 292.0,
+        "receptions": 20.5,
+        "rush_att": 17.0,
+        "rush_td": 0.0,
+        "rush_yds": 98.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -98.4,
+      "projection_source_count": 2,
+      "source_rank": 262,
+      "team": "DAL"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 65.45,
+      "name": "Xavier Hutchinson",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 2.0,
+        "rec_yds": 391.0,
+        "receptions": 31.5,
+        "rush_att": 1.0,
+        "rush_td": 0.0,
+        "rush_yds": 6.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -92.2,
+      "projection_source_count": 2,
+      "source_rank": 263,
+      "team": "HOU"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 58.05,
+      "name": "Jack Bech",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 1.5,
+        "rec_yds": 350.5,
+        "receptions": 31.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -99.6,
+      "projection_source_count": 2,
+      "source_rank": 264,
+      "team": "LV"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 8.2,
+      "name": "Emanuel Wilson",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.0,
+        "rec_yds": 13.5,
+        "receptions": 1.5,
+        "rush_att": 15.0,
+        "rush_td": 0.0,
+        "rush_yds": 61.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -148.55,
+      "projection_source_count": 2,
+      "source_rank": 265,
+      "team": "SEA"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 24.9,
+      "name": "Will Shipley",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.0,
+        "rec_yds": 81.5,
+        "receptions": 11.0,
+        "rush_att": 21.5,
+        "rush_td": 0.5,
+        "rush_yds": 87.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -131.85,
+      "projection_source_count": 2,
+      "source_rank": 266,
+      "team": "PHI"
+    },
+    {
+      "baseline_points": 343.55,
+      "custom_projected_points": 263.7,
+      "name": "Geno Smith",
+      "position": "QB",
+      "projected_stats": {
+        "pass_att": 535.5,
+        "pass_cmp": 356.0,
+        "pass_int": 14.0,
+        "pass_td": 20.5,
+        "pass_yds": 3717.0,
+        "rush_att": 57.0,
+        "rush_td": 1.0,
+        "rush_yds": 188.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -79.85,
+      "projection_source_count": 2,
+      "source_rank": 267,
+      "team": "NYJ"
+    },
+    {
+      "baseline_points": 343.55,
+      "custom_projected_points": 217.6,
+      "name": "Fernando Mendoza",
+      "position": "QB",
+      "projected_stats": {
+        "pass_att": 438.0,
+        "pass_cmp": 274.5,
+        "pass_int": 10.5,
+        "pass_td": 14.5,
+        "pass_yds": 3019.0,
+        "rush_att": 50.0,
+        "rush_td": 1.5,
+        "rush_yds": 221.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -125.95,
+      "projection_source_count": 2,
+      "source_rank": 268,
+      "team": "LV"
+    },
+    {
+      "baseline_points": 343.55,
+      "custom_projected_points": 264.02,
+      "name": "Aaron Rodgers",
+      "position": "QB",
+      "projected_stats": {
+        "pass_att": 552.5,
+        "pass_cmp": 358.5,
+        "pass_int": 9.5,
+        "pass_td": 21.5,
+        "pass_yds": 3710.5,
+        "rush_att": 28.5,
+        "rush_td": 0.5,
+        "rush_yds": 90.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -79.53,
+      "projection_source_count": 2,
+      "source_rank": 269,
+      "team": "PIT"
+    },
+    {
+      "baseline_points": 343.55,
+      "custom_projected_points": 149.12,
+      "name": "Deshaun Watson",
+      "position": "QB",
+      "projected_stats": {
+        "pass_att": 299.5,
+        "pass_cmp": 187.5,
+        "pass_int": 7.0,
+        "pass_td": 9.0,
+        "pass_yds": 2042.5,
+        "rush_att": 44.5,
+        "rush_td": 1.0,
+        "rush_yds": 200.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -194.43,
+      "projection_source_count": 2,
+      "source_rank": 270,
+      "team": "CLE"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 47.2,
+      "name": "Tory Horton",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 2.0,
+        "rec_yds": 272.0,
+        "receptions": 20.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -110.45,
+      "projection_source_count": 2,
+      "source_rank": 271,
+      "team": "SEA"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 51.0,
+      "name": "Ted Hurst",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 2.0,
+        "rec_yds": 295.0,
+        "receptions": 23.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -106.65,
+      "projection_source_count": 1,
+      "source_rank": 272,
+      "team": "TB"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 53.65,
+      "name": "Darnell Mooney",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 2.0,
+        "rec_yds": 318.0,
+        "receptions": 22.5,
+        "rush_att": 1.0,
+        "rush_td": 0.0,
+        "rush_yds": 6.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -104.0,
+      "projection_source_count": 2,
+      "source_rank": 273,
+      "team": "NYG"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 45.1,
+      "name": "DeMario Douglas",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 1.5,
+        "rec_yds": 258.0,
+        "receptions": 21.5,
+        "rush_att": 2.0,
+        "rush_td": 0.0,
+        "rush_yds": 10.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -112.55,
+      "projection_source_count": 2,
+      "source_rank": 274,
+      "team": "NE"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 37.6,
+      "name": "Savion Williams",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 1.5,
+        "rec_yds": 195.0,
+        "receptions": 16.5,
+        "rush_att": 4.5,
+        "rush_td": 0.0,
+        "rush_yds": 23.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -120.05,
+      "projection_source_count": 2,
+      "source_rank": 275,
+      "team": "GB"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 23.3,
+      "name": "Phil Mafah",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.0,
+        "rec_yds": 31.0,
+        "receptions": 4.0,
+        "rush_att": 31.0,
+        "rush_td": 1.0,
+        "rush_yds": 132.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -133.45,
+      "projection_source_count": 1,
+      "source_rank": 276,
+      "team": "DAL"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 40.45,
+      "name": "Najee Harris",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.0,
+        "rec_yds": 46.0,
+        "receptions": 6.5,
+        "rush_att": 62.5,
+        "rush_td": 1.5,
+        "rush_yds": 251.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -116.3,
+      "projection_source_count": 2,
+      "source_rank": 277,
+      "team": "NYG"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 13.6,
+      "name": "Tahj Brooks",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.0,
+        "rec_yds": 3.5,
+        "receptions": 0.5,
+        "rush_att": 25.5,
+        "rush_td": 0.5,
+        "rush_yds": 105.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -143.15,
+      "projection_source_count": 2,
+      "source_rank": 278,
+      "team": "CIN"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 11.4,
+      "name": "Trevor Etienne",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.0,
+        "rec_yds": 27.0,
+        "receptions": 4.0,
+        "rush_att": 15.0,
+        "rush_td": 0.0,
+        "rush_yds": 67.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -145.35,
+      "projection_source_count": 2,
+      "source_rank": 279,
+      "team": "CAR"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 22.6,
+      "name": "Seth McGowan",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.0,
+        "rec_yds": 53.5,
+        "receptions": 7.5,
+        "rush_att": 27.0,
+        "rush_td": 0.5,
+        "rush_yds": 110.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -134.15,
+      "projection_source_count": 2,
+      "source_rank": 280,
+      "team": "IND"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 10.4,
+      "name": "Kendre Miller",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.0,
+        "rec_yds": 11.5,
+        "receptions": 2.0,
+        "rush_att": 20.5,
+        "rush_td": 0.0,
+        "rush_yds": 82.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -146.35,
+      "projection_source_count": 2,
+      "source_rank": 281,
+      "team": "NO"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 8.7,
+      "name": "Jawhar Jordan",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.0,
+        "rec_yds": 8.5,
+        "receptions": 1.5,
+        "rush_att": 17.0,
+        "rush_td": 0.0,
+        "rush_yds": 71.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -148.05,
+      "projection_source_count": 2,
+      "source_rank": 282,
+      "team": "HOU"
+    },
+    {
+      "baseline_points": 156.75,
+      "custom_projected_points": 8.5,
+      "name": "Kaleb Johnson",
+      "position": "RB",
+      "projected_stats": {
+        "rec_td": 0.0,
+        "rec_yds": 6.5,
+        "receptions": 1.0,
+        "rush_att": 19.0,
+        "rush_td": 0.0,
+        "rush_yds": 73.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -148.25,
+      "projection_source_count": 2,
+      "source_rank": 283,
+      "team": "PIT"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 35.5,
+      "name": "Malachi Fields",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 1.5,
+        "rec_yds": 197.5,
+        "receptions": 16.5,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -122.15,
+      "projection_source_count": 2,
+      "source_rank": 284,
+      "team": "NYG"
+    },
+    {
+      "baseline_points": null,
+      "custom_projected_points": null,
+      "name": "Bengals D/ST",
+      "position": "DST",
+      "projected_stats": {},
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": null,
+      "projection_source_count": 0,
+      "source_rank": 285,
+      "team": "CIN"
+    },
+    {
+      "baseline_points": null,
+      "custom_projected_points": null,
+      "name": "Bears D/ST",
+      "position": "DST",
+      "projected_stats": {},
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": null,
+      "projection_source_count": 0,
+      "source_rank": 286,
+      "team": "CHI"
+    },
+    {
+      "baseline_points": null,
+      "custom_projected_points": null,
+      "name": "Trey Smack",
+      "position": "K",
+      "projected_stats": {},
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": null,
+      "projection_source_count": 0,
+      "source_rank": 287,
+      "team": "GB"
+    },
+    {
+      "baseline_points": null,
+      "custom_projected_points": null,
+      "name": "Jake Elliott",
+      "position": "K",
+      "projected_stats": {},
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": null,
+      "projection_source_count": 0,
+      "source_rank": 288,
+      "team": "PHI"
+    },
+    {
+      "baseline_points": 142.2,
+      "custom_projected_points": 85.95,
+      "name": "Evan Engram",
+      "position": "TE",
+      "projected_stats": {
+        "rec_td": 2.5,
+        "rec_yds": 474.5,
+        "receptions": 52.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -56.25,
+      "projection_source_count": 2,
+      "source_rank": 289,
+      "team": "DEN"
+    },
+    {
+      "baseline_points": 142.2,
+      "custom_projected_points": 78.05,
+      "name": "David Njoku",
+      "position": "TE",
+      "projected_stats": {
+        "rec_td": 3.5,
+        "rec_yds": 393.0,
+        "receptions": 42.5,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -64.15,
+      "projection_source_count": 2,
+      "source_rank": 290,
+      "team": "LAC"
+    },
+    {
+      "baseline_points": 142.2,
+      "custom_projected_points": 67.8,
+      "name": "Oronde Gadsden",
+      "position": "TE",
+      "projected_stats": {
+        "rec_td": 3.0,
+        "rec_yds": 368.0,
+        "receptions": 32.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -74.4,
+      "projection_source_count": 2,
+      "source_rank": 291,
+      "team": "LAC"
+    },
+    {
+      "baseline_points": 142.2,
+      "custom_projected_points": 76.9,
+      "name": "Mike Gesicki",
+      "position": "TE",
+      "projected_stats": {
+        "rec_td": 4.0,
+        "rec_yds": 381.5,
+        "receptions": 37.5,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -65.3,
+      "projection_source_count": 2,
+      "source_rank": 292,
+      "team": "CIN"
+    },
+    {
+      "baseline_points": 142.2,
+      "custom_projected_points": 69.2,
+      "name": "Michael Mayer",
+      "position": "TE",
+      "projected_stats": {
+        "rec_td": 2.0,
+        "rec_yds": 392.0,
+        "receptions": 40.0,
+        "rush_att": 0.0,
+        "rush_td": 0.0,
+        "rush_yds": 0.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -73.0,
+      "projection_source_count": 2,
+      "source_rank": 293,
+      "team": "LV"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 51.85,
+      "name": "Andrei Iosivas",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 2.0,
+        "rec_yds": 293.0,
+        "receptions": 24.0,
+        "rush_att": 1.0,
+        "rush_td": 0.0,
+        "rush_yds": 5.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -105.8,
+      "projection_source_count": 2,
+      "source_rank": 294,
+      "team": "CIN"
+    },
+    {
+      "baseline_points": 157.65,
+      "custom_projected_points": 48.2,
+      "name": "Tutu Atwell",
+      "position": "WR",
+      "projected_stats": {
+        "rec_td": 1.0,
+        "rec_yds": 314.0,
+        "receptions": 22.5,
+        "rush_att": 1.0,
+        "rush_td": 0.0,
+        "rush_yds": 5.5
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -109.45,
+      "projection_source_count": 2,
+      "source_rank": 295,
+      "team": "MIA"
+    },
+    {
+      "baseline_points": 343.55,
+      "custom_projected_points": 153.18,
+      "name": "Tua Tagovailoa",
+      "position": "QB",
+      "projected_stats": {
+        "pass_att": 335.5,
+        "pass_cmp": 223.5,
+        "pass_int": 7.5,
+        "pass_td": 11.5,
+        "pass_yds": 2357.5,
+        "rush_att": 17.0,
+        "rush_td": 0.0,
+        "rush_yds": 43.0
+      },
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": -190.38,
+      "projection_source_count": 2,
+      "source_rank": 296,
+      "team": "ATL"
+    },
+    {
+      "baseline_points": null,
+      "custom_projected_points": null,
+      "name": "49ers D/ST",
+      "position": "DST",
+      "projected_stats": {},
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": null,
+      "projection_source_count": 0,
+      "source_rank": 297,
+      "team": "SF"
+    },
+    {
+      "baseline_points": null,
+      "custom_projected_points": null,
+      "name": "Jets D/ST",
+      "position": "DST",
+      "projected_stats": {},
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": null,
+      "projection_source_count": 0,
+      "source_rank": 298,
+      "team": "NYJ"
+    },
+    {
+      "baseline_points": null,
+      "custom_projected_points": null,
+      "name": "Saints D/ST",
+      "position": "DST",
+      "projected_stats": {},
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": null,
+      "projection_source_count": 0,
+      "source_rank": 299,
+      "team": "NO"
+    },
+    {
+      "baseline_points": null,
+      "custom_projected_points": null,
+      "name": "Vikings D/ST",
+      "position": "DST",
+      "projected_stats": {},
+      "projected_value_grade": 0.0,
+      "projected_value_over_baseline": null,
+      "projection_source_count": 0,
+      "source_rank": 300,
+      "team": "MIN"
+    }
+  ]
+}

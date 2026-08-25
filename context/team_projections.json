@@ -1,52 +1,218 @@
 {
   "metadata": {
-    "effective_date": "2026-08-21",
-    "offense_method": "Rank by season-long average implied points from First Down Studio's Vegas-based 2026 projection, updated 2026-08-20.",
+    "automation_policy": "Ranks are parsed on every live refresh; no hand-entered team ranks are used.",
+    "effective_date": "2026-08-24",
+    "generated_at": "2026-08-25T13:37:21+00:00",
+    "offense_method": "Rank by season-long average implied points from Vegas lines.",
     "offense_source": "https://www.firstdown.studio/implied-totals/season",
-    "offensive_line_method": "Sharp Football Analysis forward-looking 2026 staff ranking; published ties are preserved.",
+    "offensive_line_method": "Sharp Football forward-looking staff ranking.",
     "offensive_line_source": "https://www.sharpfootballanalysis.com/analysis/best-nfl-offensive-line-rankings/",
-    "cross_checks": [
-      "https://g.espncdn.com/s/ffldraftkit/26/NFLDK2026_CS_ClayProjections2026.pdf",
-      "https://www.4for4.com/2026/preseason/2026-projected-offensive-line-rankings"
-    ],
-    "column_validation": "context/column_validation.json",
-    "cross_reference_summary": {
-      "offense": "24 of 32 teams share the same green/yellow/red tier as ESPN's August 19 projected offense rank; Spearman rank correlation 0.924.",
-      "offensive_line": "18 of 32 teams share the same tier as 4for4's expected-personnel/PFF model, and 21 of 32 share the same tier as ESPN's OL unit grade. Method disagreement is retained rather than averaged."
+    "source_retrieval": {
+      "offense": {
+        "fetch_url": "https://www.firstdown.studio/implied-totals/season",
+        "from_cache": true,
+        "retrieved_at": "2026-08-25T13:21:50+00:00"
+      },
+      "offensive_line": {
+        "canonical_url": "https://www.sharpfootballanalysis.com/analysis/best-nfl-offensive-line-rankings/",
+        "fetch_url": "https://r.jina.ai/http://www.sharpfootballanalysis.com/analysis/best-nfl-offensive-line-rankings/",
+        "from_cache": true,
+        "retrieved_at": "2026-08-25T13:21:56+00:00"
+      }
     }
   },
   "teams": {
-    "ARI": {"offense_rank": 32, "offensive_line_rank": 26},
-    "ATL": {"offense_rank": 25, "offensive_line_rank": 10},
-    "BAL": {"offense_rank": 5, "offensive_line_rank": 24},
-    "BUF": {"offense_rank": 2, "offensive_line_rank": 3},
-    "CAR": {"offense_rank": 26, "offensive_line_rank": 12},
-    "CHI": {"offense_rank": 10, "offensive_line_rank": 6},
-    "CIN": {"offense_rank": 4, "offensive_line_rank": 28},
-    "CLE": {"offense_rank": 30, "offensive_line_rank": 32},
-    "DAL": {"offense_rank": 6, "offensive_line_rank": 17},
-    "DEN": {"offense_rank": 21, "offensive_line_rank": 1},
-    "DET": {"offense_rank": 3, "offensive_line_rank": 14},
-    "GB": {"offense_rank": 9, "offensive_line_rank": 27},
-    "HOU": {"offense_rank": 20, "offensive_line_rank": 31},
-    "IND": {"offense_rank": 17, "offensive_line_rank": 10},
-    "JAC": {"offense_rank": 16, "offensive_line_rank": 17},
-    "KC": {"offense_rank": 11, "offensive_line_rank": 23},
-    "LAC": {"offense_rank": 14, "offensive_line_rank": 8},
-    "LAR": {"offense_rank": 1, "offensive_line_rank": 5},
-    "LV": {"offense_rank": 28, "offensive_line_rank": 25},
-    "MIA": {"offense_rank": 29, "offensive_line_rank": 29},
-    "MIN": {"offense_rank": 19, "offensive_line_rank": 12},
-    "NE": {"offense_rank": 13, "offensive_line_rank": 15},
-    "NO": {"offense_rank": 23, "offensive_line_rank": 16},
-    "NYG": {"offense_rank": 22, "offensive_line_rank": 20},
-    "NYJ": {"offense_rank": 31, "offensive_line_rank": 19},
-    "PHI": {"offense_rank": 12, "offensive_line_rank": 2},
-    "PIT": {"offense_rank": 24, "offensive_line_rank": 21},
-    "SEA": {"offense_rank": 8, "offensive_line_rank": 9},
-    "SF": {"offense_rank": 7, "offensive_line_rank": 7},
-    "TB": {"offense_rank": 18, "offensive_line_rank": 4},
-    "TEN": {"offense_rank": 27, "offensive_line_rank": 30},
-    "WAS": {"offense_rank": 15, "offensive_line_rank": 22}
+    "ARI": {
+      "offense_average_points": 18.4,
+      "offense_rank": 32,
+      "offensive_line_rank": 26,
+      "offensive_line_score": 28
+    },
+    "ATL": {
+      "offense_average_points": 21.2,
+      "offense_rank": 25,
+      "offensive_line_rank": 10,
+      "offensive_line_score": 64
+    },
+    "BAL": {
+      "offense_average_points": 25.9,
+      "offense_rank": 5,
+      "offensive_line_rank": 24,
+      "offensive_line_score": 32
+    },
+    "BUF": {
+      "offense_average_points": 26.1,
+      "offense_rank": 2,
+      "offensive_line_rank": 3,
+      "offensive_line_score": 87
+    },
+    "CAR": {
+      "offense_average_points": 20.8,
+      "offense_rank": 26,
+      "offensive_line_rank": 12,
+      "offensive_line_score": 58
+    },
+    "CHI": {
+      "offense_average_points": 24.6,
+      "offense_rank": 10,
+      "offensive_line_rank": 6,
+      "offensive_line_score": 82
+    },
+    "CIN": {
+      "offense_average_points": 26.0,
+      "offense_rank": 4,
+      "offensive_line_rank": 28,
+      "offensive_line_score": 16
+    },
+    "CLE": {
+      "offense_average_points": 18.7,
+      "offense_rank": 30,
+      "offensive_line_rank": 32,
+      "offensive_line_score": 5
+    },
+    "DAL": {
+      "offense_average_points": 25.7,
+      "offense_rank": 6,
+      "offensive_line_rank": 17,
+      "offensive_line_score": 48
+    },
+    "DEN": {
+      "offense_average_points": 22.3,
+      "offense_rank": 21,
+      "offensive_line_rank": 1,
+      "offensive_line_score": 100
+    },
+    "DET": {
+      "offense_average_points": 26.1,
+      "offense_rank": 3,
+      "offensive_line_rank": 14,
+      "offensive_line_score": 56
+    },
+    "GB": {
+      "offense_average_points": 24.7,
+      "offense_rank": 9,
+      "offensive_line_rank": 27,
+      "offensive_line_score": 18
+    },
+    "HOU": {
+      "offense_average_points": 22.5,
+      "offense_rank": 20,
+      "offensive_line_rank": 31,
+      "offensive_line_score": 6
+    },
+    "IND": {
+      "offense_average_points": 23.4,
+      "offense_rank": 17,
+      "offensive_line_rank": 10,
+      "offensive_line_score": 60
+    },
+    "JAC": {
+      "offense_average_points": 23.4,
+      "offense_rank": 16,
+      "offensive_line_rank": 17,
+      "offensive_line_score": 51
+    },
+    "KC": {
+      "offense_average_points": 24.1,
+      "offense_rank": 11,
+      "offensive_line_rank": 23,
+      "offensive_line_score": 38
+    },
+    "LAC": {
+      "offense_average_points": 23.7,
+      "offense_rank": 14,
+      "offensive_line_rank": 8,
+      "offensive_line_score": 73
+    },
+    "LAR": {
+      "offense_average_points": 26.6,
+      "offense_rank": 1,
+      "offensive_line_rank": 5,
+      "offensive_line_score": 84
+    },
+    "LV": {
+      "offense_average_points": 19.2,
+      "offense_rank": 28,
+      "offensive_line_rank": 25,
+      "offensive_line_score": 31
+    },
+    "MIA": {
+      "offense_average_points": 19.0,
+      "offense_rank": 29,
+      "offensive_line_rank": 29,
+      "offensive_line_score": 10
+    },
+    "MIN": {
+      "offense_average_points": 22.5,
+      "offense_rank": 19,
+      "offensive_line_rank": 12,
+      "offensive_line_score": 57
+    },
+    "NE": {
+      "offense_average_points": 23.8,
+      "offense_rank": 13,
+      "offensive_line_rank": 15,
+      "offensive_line_score": 53
+    },
+    "NO": {
+      "offense_average_points": 21.5,
+      "offense_rank": 23,
+      "offensive_line_rank": 16,
+      "offensive_line_score": 52
+    },
+    "NYG": {
+      "offense_average_points": 22.1,
+      "offense_rank": 22,
+      "offensive_line_rank": 20,
+      "offensive_line_score": 46
+    },
+    "NYJ": {
+      "offense_average_points": 18.5,
+      "offense_rank": 31,
+      "offensive_line_rank": 19,
+      "offensive_line_score": 47
+    },
+    "PHI": {
+      "offense_average_points": 23.8,
+      "offense_rank": 12,
+      "offensive_line_rank": 2,
+      "offensive_line_score": 91
+    },
+    "PIT": {
+      "offense_average_points": 21.4,
+      "offense_rank": 24,
+      "offensive_line_rank": 21,
+      "offensive_line_score": 45
+    },
+    "SEA": {
+      "offense_average_points": 24.8,
+      "offense_rank": 8,
+      "offensive_line_rank": 9,
+      "offensive_line_score": 65
+    },
+    "SF": {
+      "offense_average_points": 25.0,
+      "offense_rank": 7,
+      "offensive_line_rank": 7,
+      "offensive_line_score": 78
+    },
+    "TB": {
+      "offense_average_points": 23.3,
+      "offense_rank": 18,
+      "offensive_line_rank": 4,
+      "offensive_line_score": 86
+    },
+    "TEN": {
+      "offense_average_points": 20.6,
+      "offense_rank": 27,
+      "offensive_line_rank": 30,
+      "offensive_line_score": 8
+    },
+    "WAS": {
+      "offense_average_points": 23.5,
+      "offense_rank": 15,
+      "offensive_line_rank": 22,
+      "offensive_line_score": 43
+    }
   }
 }

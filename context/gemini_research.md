@@ -49,10 +49,10 @@
 
 | Decision layer | Draft-day rule |
 |---|---|
-| Baseline + custom VORP + opportunity | **83% of the score**; this should determine the tier |
-| Team offense + line + coaching | **13% of the score**; use to order similar players |
-| Custom bonus fit | **2% of the score**; favor repeatable yardage before rare long TDs |
-| Opposing defenses | **2% of the score**; position/archetype tiebreaker only in preseason |
+| Custom-scored projection value | **60% of the score**; ESPN Mike Clay + FFToday raw-stat mean above a corrected replacement baseline |
+| Baseline consensus | **30% of the score**; ESPN rank + FantasyPros ECR + FFToday market price |
+| Opportunity + team offense + line | **9% of the score**; order players with similar projected value and price |
+| Opposing defenses | **1% of the score**; position/archetype tiebreaker only in preseason |
 | Risk | Use the live injury context plus role/suspension uncertainty; subtract 0-5 total points only for risk not already reflected in projections |
 | Movement cap | Never move more than one tier; top 24 move at most two spots ordinarily |
 
@@ -176,45 +176,39 @@ an elite-or-late approach rather than forcing a mid-round selection.
 - For kickers, prefer accuracy, job security, and offenses that cross midfield.
 - The modest long-field-goal premium does not justify an early kicker.
 
-## Conservative player-ranking model
+## Projection-first player-ranking model
 
-Use this model to make **small changes inside an existing half-PPR tier**, not to
-replace projections or move a player several tiers. Every component is graded from
-0 to 100. Subtract a separate total risk penalty of 0-5 points after calculating
-the weighted score. Injury is one input to that cap, not an additional penalty
-outside it.
+The automated model now starts with projected league value rather than an ordinal VORP
+proxy. It averages ESPN Mike Clay and FFToday raw statistics, scores the result under the
+league export, and derives replacement baselines from assumed starter and flex demand.
+Every component is graded from 0 to 100. Subtract a separate total risk penalty of 0-5
+points after calculating the weighted score.
 
 ```text
 Adjusted player score =
-  58% current half-PPR baseline
-+ 15% league-specific VORP
-+ 10% player opportunity
-+  6% team offense environment
-+  4% position-specific offensive-line fit
-+  3% coaching and continuity
-+  2% custom-scoring and bonus fit
-+  2% projected opponent-defense schedule
+  60% custom-scored projection value over baseline
++ 30% multi-source baseline consensus
++  5% player opportunity
++  2% team offense environment
++  2% position-specific offensive-line fit
++  1% projected opponent-defense schedule
 -  0-5 point risk penalty
 ```
 
-If the starting projection already incorporates updated team, line, and schedule
-information, cut those context weights in half and return the difference to the
-baseline. Otherwise the same information is counted twice. Value-based drafting
-still begins with league-specific projections and replacement levels; context is a
-small refinement rather than a substitute for them.
-[Footballguys VBD](https://www.footballguys.com/article/2026-value-based-drafting-one-strategy-behind-every-strategy)
+The evidence review and limitations for this change are in
+[weighting_strategy_research.md](./weighting_strategy_research.md). The exact outer weights
+are a conservative implementation choice rather than a claimed league-specific backtest;
+the empirically supported pieces are projection averaging and corrected replacement value.
 
 ### Component definitions
 
 | Component | What receives a high grade | What should not drive it |
 |---|---|---|
-| Half-PPR baseline | Current median projection or consensus rank converted to a 0-100 score | One analyst's unsupported rank |
-| League VORP | Projected custom-scoring points above a realistic replacement player at the same position | Raw points without positional scarcity |
+| Projected value | Mean ESPN/FFToday raw-stat projection scored under league rules, above the configured position baseline | A provider's default fantasy-point total |
+| Baseline consensus | ESPN rank, FantasyPros ECR, and FFToday market price converted to a 0-100 grade | One analyst's unsupported rank |
 | Opportunity | Carries, routes, targets, high-value touches, goal-line share, and role durability | Last year's touchdowns by themselves |
 | Team offense | Scoring opportunities, plays, pace, scheme fit, supporting cast, and QB quality | Team wins alone |
 | Offensive-line fit | The blocking traits that matter to this player's role | Sacks allowed or rushing yards alone |
-| Coaching/continuity | Stable play caller, QB, system, and relevant starters; demonstrated role usage | Generic coach reputation |
-| Scoring/bonus fit | Repeatable yardage volume plus realistic milestone and explosive-play paths | Chasing rare long touchdowns |
 | Opponent schedule | Projected, position-specific matchup ease with uncertainty applied | Prior-year opponent record or raw fantasy points allowed alone |
 | Risk penalty | Current injury tier/games range, suspension, role fragility, age/workload, or major projection uncertainty | Any missed games or uncertainty already incorporated in the baseline projection |
 
@@ -559,7 +553,7 @@ elite-or-late roster construction.
 
 ## Current injury and role watchlist
 
-The generated block below is refreshed by `update_injury_context.py` and is the
+The generated block below is refreshed by `scripts/update_injury_context.py` and is the
 source of truth for injury reweighting. The editorial table that follows is an
 August 20 research snapshot for recovery and role context; when it conflicts with
 the generated block, use the newer generated evidence.
@@ -567,7 +561,8 @@ the generated block, use the newer generated evidence.
 <!-- BEGIN GENERATED INJURY REWEIGHTING -->
 ### Live injury reweighting snapshot
 
-**Effective date:** 2026-08-21  
+**Effective date:** 2026-08-25
+
 **Source:** [generated player injury context](./player_injuries.md)
 **Evidence policy:** Sleeper and ESPN are checked for every player; active signals are corroborated with dated team or specialist reports when a feed is incomplete.
 
@@ -590,24 +585,25 @@ Apply injury information through the existing **0-5 total risk penalty**, not as
 
 Multiply the fallback penalty by confidence: **high 1.0**, **medium 0.85**, **low 0.60**. Injury plus suspension, role, and other uncertainty remains capped at the guide's existing five-point total risk penalty.
 
-Current player tiers: **SEASON 0**, **VERY HIGH 0**, **HIGH 1**, **MEDIUM 0**, **SHORT 0**, **WATCH 50**, **CLEAR 227**.
+Current player tiers: **SEASON 0**, **VERY HIGH 0**, **HIGH 1**, **MEDIUM 0**, **SHORT 0**, **WATCH 53**, **CLEAR 224**.
 
 #### Players with possible regular-season availability impact
 
 | Rank | Player | Tier | Weeks | Availability factor | Fallback penalty | Confidence | Sources | Signal |
 |---:|---|---|---:|---:|---:|---|---:|---|
-| 152 | Jordyn Tyson | HIGH | 5-6 | 0.68 | 3.4 | medium | 4 | Sleeper Doubtful Strain; ESPN Doubtful Hamstring return 2026-10-18 |
+| 152 | Jordyn Tyson | HIGH | 5-6 | 0.68 | 3.4 | medium | 2 | Sleeper Doubtful Strain; ESPN Doubtful Hamstring return 2026-10-18 |
+| 15 | Jeremiyah Love | WATCH | 0-1 | 0.97 | 0.4 | medium | 2 | Sleeper Questionable; ESPN Questionable Ankle return 2026-09-13 |
 | 53 | Luther Burden III | WATCH | 0-1 | 0.97 | 0.4 | medium | 2 | Sleeper Questionable; ESPN Questionable Groin return 2026-09-13 |
 | 100 | Chuba Hubbard | WATCH | 0-1 | 0.97 | 0.4 | medium | 2 | Sleeper Questionable; ESPN Questionable Hamstring return 2026-09-13 |
 | 106 | Kyle Monangai | WATCH | 0-1 | 0.97 | 0.4 | medium | 2 | Sleeper Questionable; ESPN Questionable Knee return 2026-09-13 |
+| 130 | Tank Dell | WATCH | 0-1 | 0.97 | 0.3 | low | 1 | Sleeper Questionable Surgery |
 | 138 | Alvin Kamara | WATCH | 0-1 | 0.97 | 0.4 | medium | 2 | Sleeper Questionable; ESPN Questionable Knee - MCL return 2026-09-13 |
 | 155 | Isiah Pacheco | WATCH | 0-1 | 0.97 | 0.4 | medium | 2 | Sleeper Questionable; ESPN Questionable Knee - MCL return 2026-09-13 |
 | 165 | Jaylin Noel | WATCH | 0-1 | 0.97 | 0.4 | medium | 2 | Sleeper Questionable; ESPN Questionable Hamstring return 2026-09-13 |
-| 212 | Jordan James | WATCH | 0-1 | 0.97 | 0.3 | low | 3 | Sleeper Questionable Fracture |
 
 #### Watchlist with no regular-season games currently projected
 
-Puka Nacua (#4), Christian McCaffrey (#6), Jeremiyah Love (#15), Breece Hall (#23), Malik Nabers (#29), Josh Jacobs (#30), DeVonta Smith (#35), Quinshon Judkins (#39), Emeka Egbuka (#42), Tyler Warren (#50), Carnell Tate (#54), Michael Pittman Jr. (#66), DK Metcalf (#68), Parker Washington (#69), Alec Pierce (#70), Sam LaPorta (#73), Mike Evans (#76), Khalil Shakir (#90), Xavier Worthy (#92), Patrick Mahomes (#94), Tucker Kraft (#101), George Kittle (#102), Rachaad White (#108), Quentin Johnston (#112), Kenyon Sadiq (#118), Makai Lemon (#125), Tank Dell (#130), Zach Charbonnet (#137), Jalen McMillan (#145), Ty Johnson (#225), Isaiah Davis (#226), Chris Bell (#231), Keon Coleman (#234), Jaydon Blue (#239), LeQuint Allen (#245), James Conner (#248), DJ Giddens (#251), Cade Otton (#260), Marvin Mims Jr. (#261), Emanuel Wilson (#265), Tory Horton (#271), Phil Mafah (#276), Jawhar Jordan (#282)
+Puka Nacua (#4), Christian McCaffrey (#6), Ashton Jeanty (#13), Breece Hall (#23), Malik Nabers (#29), Josh Jacobs (#30), Quinshon Judkins (#39), Emeka Egbuka (#42), Tyler Warren (#50), TreVeyon Henderson (#63), Michael Pittman Jr. (#66), DK Metcalf (#68), Parker Washington (#69), Alec Pierce (#70), Sam LaPorta (#73), Mike Evans (#76), Jakobi Meyers (#81), Khalil Shakir (#90), Xavier Worthy (#92), Patrick Mahomes (#94), Tucker Kraft (#101), George Kittle (#102), Jacory Croskey-Merritt (#107), Rachaad White (#108), Quentin Johnston (#112), Kenyon Sadiq (#118), De'Zhaun Stribling (#129), Zach Charbonnet (#137), Jalen McMillan (#145), Tre Harris (#204), Jordan James (#212), Ollie Gordon II (#222), Ty Johnson (#225), Isaiah Davis (#226), Xavier Legette (#227), Keon Coleman (#234), Adam Randall (#243), LeQuint Allen (#245), James Conner (#248), DJ Giddens (#251), Cade Otton (#260), Emanuel Wilson (#265), Tory Horton (#271), Phil Mafah (#276), Jawhar Jordan (#282)
 
 Treat this snapshot as time-sensitive. The full context includes evidence dates, source links, confidence, and rationale for every ranked player. A CLEAR result means no current designation was found; it is not a forecast of future health.
 <!-- END GENERATED INJURY REWEIGHTING -->

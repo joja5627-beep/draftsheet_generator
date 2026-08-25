@@ -1,48 +1,44 @@
-# 2026 NFL Team Offense and Offensive-Line Projections
+# Automated 2026 team projections
 
-**Effective date:** August 21, 2026
+**Generated:** `2026-08-25T13:37:21+00:00`
+**Effective date:** `2026-08-24`
 
-## Method
+Ranks are parsed on every live refresh; no hand-entered team ranks are used.
 
-- `OFF` ranks teams 1-32 by season-long average implied points from First Down
-  Studio's Vegas-based projection, updated August 20, 2026. This is a scoring-
-  environment projection rather than a prediction of wins.
-  [First Down Studio](https://www.firstdown.studio/implied-totals/season)
-- `OL` uses Sharp Football Analysis's forward-looking June 30 ranking, which averages
-  staff evaluations using film, prior performance, personnel, and projections. Sharp's
-  published ties are preserved.
-  [Sharp Football Analysis](https://www.sharpfootballanalysis.com/analysis/best-nfl-offensive-line-rankings/)
-- Mike Clay's 2026 team projections and 4for4's personnel/PFF-grade model were used as
-  independent cross-checks, not averaged into the displayed ranks. The sources use
-  meaningfully different methods, so a false-precision consensus would be misleading.
-  [ESPN Mike Clay projection guide](https://g.espncdn.com/s/ffldraftkit/26/NFLDK2026_CS_ClayProjections2026.pdf),
-  [4for4 projected line rankings](https://www.4for4.com/2026/preseason/2026-projected-offensive-line-rankings)
+OFF: [Rank by season-long average implied points from Vegas lines.](https://www.firstdown.studio/implied-totals/season)
+OL: [Sharp Football forward-looking staff ranking.](https://www.sharpfootballanalysis.com/analysis/best-nfl-offensive-line-rankings/)
 
-These are team-level context signals. They do not replace player volume, role, injury,
-or position-specific blocking analysis. Training-camp injuries and lineup changes can
-move offensive-line projections quickly.
-
-The exact cross-source tier agreement and disagreements are preserved in the
-[column validation audit](./column_validation.md). The displayed primary ranks are not
-silently averaged with sources that use a different method.
-
-## Team table
-
-| Team | OFF | OL | Team | OFF | OL |
-| :---: | ---: | ---: | :---: | ---: | ---: |
-| ARI | 32 | 26 | ATL | 25 | 10 |
-| BAL | 5 | 24 | BUF | 2 | 3 |
-| CAR | 26 | 12 | CHI | 10 | 6 |
-| CIN | 4 | 28 | CLE | 30 | 32 |
-| DAL | 6 | 17 | DEN | 21 | 1 |
-| DET | 3 | 14 | GB | 9 | 27 |
-| HOU | 20 | 31 | IND | 17 | 10 |
-| JAC | 16 | 17 | KC | 11 | 23 |
-| LAC | 14 | 8 | LAR | 1 | 5 |
-| LV | 28 | 25 | MIA | 29 | 29 |
-| MIN | 19 | 12 | NE | 13 | 15 |
-| NO | 23 | 16 | NYG | 22 | 20 |
-| NYJ | 31 | 19 | PHI | 12 | 2 |
-| PIT | 24 | 21 | SEA | 8 | 9 |
-| SF | 7 | 7 | TB | 18 | 4 |
-| TEN | 27 | 30 | WAS | 15 | 22 |
+| Team | OFF rank | Avg pts | OL rank | OL score |
+|---|---:|---:|---:|---:|
+| LAR | 1 | 26.6 | 5 | 84 |
+| BUF | 2 | 26.1 | 3 | 87 |
+| DET | 3 | 26.1 | 14 | 56 |
+| CIN | 4 | 26.0 | 28 | 16 |
+| BAL | 5 | 25.9 | 24 | 32 |
+| DAL | 6 | 25.7 | 17 | 48 |
+| SF | 7 | 25.0 | 7 | 78 |
+| SEA | 8 | 24.8 | 9 | 65 |
+| GB | 9 | 24.7 | 27 | 18 |
+| CHI | 10 | 24.6 | 6 | 82 |
+| KC | 11 | 24.1 | 23 | 38 |
+| PHI | 12 | 23.8 | 2 | 91 |
+| NE | 13 | 23.8 | 15 | 53 |
+| LAC | 14 | 23.7 | 8 | 73 |
+| WAS | 15 | 23.5 | 22 | 43 |
+| JAC | 16 | 23.4 | 17 | 51 |
+| IND | 17 | 23.4 | 10 | 60 |
+| TB | 18 | 23.3 | 4 | 86 |
+| MIN | 19 | 22.5 | 12 | 57 |
+| HOU | 20 | 22.5 | 31 | 6 |
+| DEN | 21 | 22.3 | 1 | 100 |
+| NYG | 22 | 22.1 | 20 | 46 |
+| NO | 23 | 21.5 | 16 | 52 |
+| PIT | 24 | 21.4 | 21 | 45 |
+| ATL | 25 | 21.2 | 10 | 64 |
+| CAR | 26 | 20.8 | 12 | 58 |
+| TEN | 27 | 20.6 | 30 | 8 |
+| LV | 28 | 19.2 | 25 | 31 |
+| MIA | 29 | 19.0 | 29 | 10 |
+| CLE | 30 | 18.7 | 32 | 5 |
+| NYJ | 31 | 18.5 | 19 | 47 |
+| ARI | 32 | 18.4 | 26 | 28 |
