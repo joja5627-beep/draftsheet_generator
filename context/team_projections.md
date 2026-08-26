@@ -1,6 +1,6 @@
 # Automated 2026 team projections
 
-**Generated:** `2026-08-25T15:53:41+00:00`
+**Generated:** `2026-08-26T14:32:14+00:00`
 **Effective date:** `2026-08-25`
 
 Ranks are parsed on every live refresh; no hand-entered team ranks are used.

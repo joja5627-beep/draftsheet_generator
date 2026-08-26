@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import re
 from collections import defaultdict
-from collections.abc import Iterable, Mapping
+from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass, replace
 from io import BytesIO
 from pathlib import Path
@@ -13,6 +13,7 @@ import pdfplumber
 import pymupdf
 from pypdf import PdfReader, PdfWriter
 from reportlab.lib.colors import Color, HexColor
+from reportlab.lib.utils import ImageReader
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen.canvas import Canvas
@@ -27,6 +28,23 @@ CONTEXT_VALUE_FONT_SIZE = 4.1
 CONTEXT_RANGE_FONT_SIZE = 3.9
 CONTEXT_HEADER_FONT_SIZE = 2.6
 CONTEXT_LANE_LEFT_PADDING = 15.0
+TEMPLATE_ROWS_PER_COLUMN = 75
+TEMPLATE_COLUMNS_PER_PAGE = 2
+TEMPLATE_ROW_HEIGHT = 8.7
+TEMPLATE_ROUND_GAP = 3.5
+TEMPLATE_MARGIN = 12.0
+TEMPLATE_COLUMN_GAP = 6.0
+TEMPLATE_INNER_PADDING = 2.0
+TEMPLATE_RANK_LANE_WIDTH = 40.0
+TEMPLATE_MOVEMENT_LANE_WIDTH = 24.0
+TEMPLATE_CONTEXT_LANE_WIDTH = 139.0
+TEMPLATE_TABLE_FONT_SIZE = 6.1
+TEMPLATE_PLAYER_MIN_FONT_SIZE = 4.7
+TEMPLATE_MOVEMENT_FONT_SIZE = 5.8
+TEMPLATE_CONTEXT_FONT_SIZE = 5.8
+TEMPLATE_CONTEXT_RANGE_FONT_SIZE = 5.3
+TEMPLATE_HEADER_FONT_SIZE = 4.1
+TEMPLATE_MOVEMENT_NEUTRAL_COLOR = "#6889A6"
 
 
 @dataclass(frozen=True, slots=True)
@@ -121,6 +139,33 @@ class HighlightResult:
     bye_week_values_replaced: int
 
 
+@dataclass(frozen=True, slots=True)
+class TemplateColumnGeometry:
+    """Contiguous horizontal lanes for one two-page template ranking column."""
+
+    inner_left: float
+    player_left: float
+    movement_left: float
+    context_left: float
+    inner_right: float
+
+    @property
+    def rank_width(self) -> float:
+        return self.player_left - self.inner_left
+
+    @property
+    def player_width(self) -> float:
+        return self.movement_left - self.player_left
+
+    @property
+    def movement_width(self) -> float:
+        return self.context_left - self.movement_left
+
+    @property
+    def context_width(self) -> float:
+        return self.inner_right - self.context_left
+
+
 def draft_round_for_rank(rank: int, teams: int = 12) -> int:
     """Return the projected round containing an overall rank."""
 
@@ -131,14 +176,345 @@ def draft_round_for_rank(rank: int, teams: int = 12) -> int:
     return ((rank - 1) // teams) + 1
 
 
+def render_reweighted_template_pdf(
+    input_path: str | Path,
+    output_path: str | Path,
+    *,
+    players: Sequence[Mapping[str, object]],
+    row_highlight_colors: Mapping[int, str],
+    teams: int = 12,
+) -> HighlightResult:
+    """Render the custom Top 300 as a readable two-page ESPN-template chart."""
+    if teams < 2:
+        raise DraftSheetError(f"teams must be at least 2, got {teams}.")
+    source = Path(input_path).expanduser().resolve()
+    destination = Path(output_path).expanduser().resolve()
+    if source == destination:
+        raise DraftSheetError("Output must differ from the source PDF.")
+    inspections = inspect_draft_sheet(source)
+    if len(inspections) != 1 or len(inspections[0].rows) != 300:
+        raise DraftSheetError("ESPN-template rendering requires one complete 300-row source page.")
+    ordered = tuple(sorted(players, key=lambda player: int(player["final_rank"])))
+    if [int(player["final_rank"]) for player in ordered] != list(range(1, 301)):
+        raise DraftSheetError("Reweighted template players must contain final ranks 1-300.")
+
+    inspection = inspections[0]
+    header_bottom = min(row.top for row in inspection.rows) - 10.0
+    source_document = pymupdf.open(source)
+    try:
+        pixmap = source_document[0].get_pixmap(
+            matrix=pymupdf.Matrix(4, 4),
+            clip=pymupdf.Rect(0, 0, inspection.width, header_bottom),
+            alpha=False,
+        )
+        header_image = ImageReader(BytesIO(pixmap.tobytes("png")))
+    finally:
+        source_document.close()
+
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    temporary = destination.with_name(f".{destination.name}.tmp")
+    try:
+        canvas = Canvas(
+            str(temporary),
+            pagesize=(inspection.width, inspection.height),
+            pageCompression=1,
+        )
+        canvas.setTitle("2026 Custom-League Reweighted Top 300")
+        canvas.setSubject(
+            "Two-page ESPN-template board with custom ranks, movement, live context, and highlights"
+        )
+        canvas.setAuthor("fantasy-football-2026 reproducible ranking pipeline")
+        rows_per_page = TEMPLATE_ROWS_PER_COLUMN * TEMPLATE_COLUMNS_PER_PAGE
+        page_count = (len(ordered) + rows_per_page - 1) // rows_per_page
+        for page_index, page_start in enumerate(range(0, len(ordered), rows_per_page)):
+            _draw_reweighted_template_page(
+                canvas,
+                inspection=inspection,
+                header_image=header_image,
+                header_bottom=header_bottom,
+                players=ordered[page_start : page_start + rows_per_page],
+                page_number=page_index + 1,
+                page_count=page_count,
+                row_highlight_colors=row_highlight_colors,
+                teams=teams,
+            )
+            canvas.showPage()
+        canvas.save()
+        temporary.replace(destination)
+    finally:
+        temporary.unlink(missing_ok=True)
+    return HighlightResult(
+        output_path=destination,
+        ranks_found=tuple(range(1, 301)),
+        rounds_found=tuple(range(1, draft_round_for_rank(300, teams) + 1)),
+        page_count=page_count,
+        color="#75AADB",
+        salary_values_removed=300,
+        bye_week_values_replaced=300,
+    )
+
+
+def _draw_reweighted_template_page(
+    canvas: Canvas,
+    *,
+    inspection: PageInspection,
+    header_image: ImageReader,
+    header_bottom: float,
+    players: Sequence[Mapping[str, object]],
+    page_number: int,
+    page_count: int,
+    row_highlight_colors: Mapping[int, str],
+    teams: int,
+) -> None:
+    width = inspection.width
+    height = inspection.height
+    canvas.drawImage(
+        header_image,
+        0,
+        height - header_bottom,
+        width=width,
+        height=header_bottom,
+        preserveAspectRatio=True,
+        mask="auto",
+    )
+    column_width = (width - (2 * TEMPLATE_MARGIN) - TEMPLATE_COLUMN_GAP) / TEMPLATE_COLUMNS_PER_PAGE
+    for column_index in range(TEMPLATE_COLUMNS_PER_PAGE):
+        start = column_index * TEMPLATE_ROWS_PER_COLUMN
+        subset = players[start : start + TEMPLATE_ROWS_PER_COLUMN]
+        x = TEMPLATE_MARGIN + column_index * (column_width + TEMPLATE_COLUMN_GAP)
+        _draw_reweighted_template_column(
+            canvas,
+            players=subset,
+            x=x,
+            width=column_width,
+            top=height - header_bottom - 2.0,
+            row_highlight_colors=row_highlight_colors,
+            teams=teams,
+        )
+    _draw_reweighted_template_footer(
+        canvas,
+        width=width,
+        page_number=page_number,
+        page_count=page_count,
+    )
+
+
+def _draw_reweighted_template_column(
+    canvas: Canvas,
+    *,
+    players: Sequence[Mapping[str, object]],
+    x: float,
+    width: float,
+    top: float,
+    row_highlight_colors: Mapping[int, str],
+    teams: int,
+) -> None:
+    if not players:
+        return
+    blue = HexColor("#000080")
+    divider = HexColor("#75AADB")
+    metric_font = _register_metric_font()
+    table_font = _register_table_font()
+    geometry = _template_column_geometry(x, width)
+    metric_centers = _context_column_centers(geometry.context_left, geometry.inner_right)
+    movement_center = geometry.movement_left + (geometry.movement_width / 2)
+    canvas.setFillColor(blue)
+    canvas.rect(x, top - 9.5, width, 9.5, stroke=0, fill=1)
+    canvas.setFillColorRGB(1, 1, 1)
+    canvas.setFont("Helvetica-Bold", 6.0)
+    first_rank = int(players[0]["final_rank"])
+    last_rank = int(players[-1]["final_rank"])
+    canvas.drawCentredString(
+        (geometry.inner_left + geometry.movement_left) / 2,
+        top - 7.0,
+        f"RANKINGS {first_rank}-{last_rank}",
+    )
+    canvas.setFont(metric_font, TEMPLATE_HEADER_FONT_SIZE)
+    canvas.drawCentredString(movement_center, top - 6.8, "MOV")
+    for header, center in zip(("DC", "OFF", "OL", "SOS", "INJ"), metric_centers, strict=True):
+        canvas.drawCentredString(center, top - 6.8, header)
+
+    y = top - 10.6
+    for player in players:
+        rank = int(player["final_rank"])
+        if rank > 1 and (rank - 1) % teams == 0:
+            y -= TEMPLATE_ROUND_GAP
+            _draw_template_round_divider(
+                canvas,
+                x=x,
+                width=width,
+                y=y + 1.2,
+                round_number=draft_round_for_rank(rank, teams),
+                color=divider,
+            )
+        y -= TEMPLATE_ROW_HEIGHT
+        highlight = row_highlight_colors.get(rank)
+        if highlight:
+            canvas.setFillColor(_hex_color(highlight))
+            canvas.rect(x, y - 0.35, width, TEMPLATE_ROW_HEIGHT, stroke=0, fill=1)
+
+        baseline = y + 2.1
+        canvas.setFillColorRGB(0, 0, 0)
+        canvas.setFont(table_font, TEMPLATE_TABLE_FONT_SIZE)
+        canvas.drawString(
+            geometry.inner_left,
+            baseline,
+            f"{rank}. ({player['position_rank']})",
+        )
+        player_label = f"{player['name']}, {player['team']}"
+        player_x = geometry.player_left + 1.0
+        player_width = geometry.player_width - 2.0
+        name_size = _font_size_to_fit(
+            player_label,
+            font=table_font,
+            preferred=TEMPLATE_TABLE_FONT_SIZE,
+            minimum=TEMPLATE_PLAYER_MIN_FONT_SIZE,
+            maximum_width=player_width,
+        )
+        canvas.setFont(table_font, name_size)
+        canvas.drawString(player_x, baseline, player_label)
+
+        movement = int(player.get("rank_delta") or 0)
+        canvas.setFillColor(_movement_color(movement))
+        canvas.setFont(metric_font, TEMPLATE_MOVEMENT_FONT_SIZE)
+        canvas.drawCentredString(movement_center, baseline, _movement_label(movement))
+
+        context = (
+            str(player.get("depth_chart_label") or "--"),
+            str(player.get("offense_rank") or "--"),
+            str(player.get("offensive_line_rank") or "--"),
+            str(player.get("strength_of_schedule_rank") or "--"),
+            str(player.get("injury_weeks") or "--"),
+        )
+        for header, label, center in zip(
+            ("DC", "OFF", "OL", "SOS", "INJ"), context, metric_centers, strict=True
+        ):
+            normalized = label.upper()
+            size = (
+                TEMPLATE_CONTEXT_RANGE_FONT_SIZE
+                if header == "INJ" and len(normalized) > 2
+                else TEMPLATE_CONTEXT_FONT_SIZE
+            )
+            canvas.setFillColor(HexColor(BUCKET_COLORS[context_bucket(header, normalized)]))
+            canvas.setFont(metric_font, size)
+            canvas.drawCentredString(center, baseline, normalized)
+
+
+def _draw_template_round_divider(
+    canvas: Canvas,
+    *,
+    x: float,
+    width: float,
+    y: float,
+    round_number: int,
+    color: Color,
+) -> None:
+    center = x + (width / 2)
+    canvas.setStrokeColor(color)
+    canvas.setLineWidth(0.65)
+    canvas.line(x + 2.0, y, center - 11.0, y)
+    canvas.line(center + 11.0, y, x + width - 2.0, y)
+    canvas.setFillColor(color)
+    canvas.setFont("Helvetica-Bold", 3.3)
+    canvas.drawCentredString(center, y - 1.1, f"R{round_number}")
+
+
+def _draw_reweighted_template_footer(
+    canvas: Canvas,
+    *,
+    width: float,
+    page_number: int,
+    page_count: int,
+) -> None:
+    y = 22.0
+    canvas.setFillColor(HexColor("#000080"))
+    canvas.rect(TEMPLATE_MARGIN, 8.0, width - (2 * TEMPLATE_MARGIN), 3.0, stroke=0, fill=1)
+    canvas.setFont("Helvetica-Bold", 3.8)
+    metric_items = (
+        (BUCKET_COLORS["green"], "favorable / DC1 / INJ0"),
+        (BUCKET_COLORS["yellow"], "middle / DC2 / INJ1-2"),
+        (BUCKET_COLORS["red"], "concern / DC3+ / INJ3+"),
+    )
+    item_x = TEMPLATE_MARGIN
+    for color, label in metric_items:
+        canvas.setFillColor(HexColor(color))
+        canvas.circle(item_x + 1.2, y + 3.0, 1.15, stroke=0, fill=1)
+        canvas.drawString(item_x + 4.2, y + 1.7, label)
+        item_x += 77.0
+    canvas.setFillColor(HexColor("#000080"))
+    canvas.drawString(item_x, y + 1.7, "MOV: + up / - down vs 7-source anchor")
+    target_x = width - 215.0
+    canvas.setFillColor(HexColor("#FFF1A8"))
+    canvas.rect(target_x, y + 1.0, 6.0, 4.0, stroke=0, fill=1)
+    canvas.setFillColor(HexColor("#000080"))
+    canvas.drawString(target_x + 8.0, y + 1.7, "sleeper / rookie / round value")
+    target_x += 99.0
+    canvas.setFillColor(HexColor("#E5D8F5"))
+    canvas.rect(target_x, y + 1.0, 6.0, 4.0, stroke=0, fill=1)
+    canvas.setFillColor(HexColor("#000080"))
+    canvas.drawString(target_x + 8.0, y + 1.7, "RB handcuff")
+    canvas.drawRightString(
+        width - TEMPLATE_MARGIN,
+        y + 10.0,
+        f"PAGE {page_number} / {page_count}",
+    )
+
+
+def _template_column_geometry(x: float, width: float) -> TemplateColumnGeometry:
+    inner_left = x + TEMPLATE_INNER_PADDING
+    inner_right = x + width - TEMPLATE_INNER_PADDING
+    player_left = inner_left + TEMPLATE_RANK_LANE_WIDTH
+    context_left = inner_right - TEMPLATE_CONTEXT_LANE_WIDTH
+    movement_left = context_left - TEMPLATE_MOVEMENT_LANE_WIDTH
+    if movement_left <= player_left:
+        raise DraftSheetError("Template column is too narrow for the configured lanes.")
+    return TemplateColumnGeometry(
+        inner_left=inner_left,
+        player_left=player_left,
+        movement_left=movement_left,
+        context_left=context_left,
+        inner_right=inner_right,
+    )
+
+
+def _movement_label(movement: int) -> str:
+    return f"{movement:+d}" if movement else "0"
+
+
+def _movement_color(movement: int) -> Color:
+    if movement > 0:
+        return HexColor(BUCKET_COLORS["green"])
+    if movement < 0:
+        return HexColor(BUCKET_COLORS["red"])
+    return HexColor(TEMPLATE_MOVEMENT_NEUTRAL_COLOR)
+
+
+def _font_size_to_fit(
+    value: str,
+    *,
+    font: str,
+    preferred: float,
+    minimum: float,
+    maximum_width: float,
+) -> float:
+    size = preferred
+    while size > minimum and pdfmetrics.stringWidth(value, font, size) > maximum_width:
+        size -= 0.1
+    return max(minimum, size)
+
+
 def reflow_draft_sheet(
     input_path: str | Path,
     output_path: str | Path,
     *,
     teams: int = 12,
     bottom_margin: float = 10.0,
+    rank_mapping: Mapping[int, int] | None = None,
+    position_rank_labels: Mapping[int, str] | None = None,
+    row_highlight_colors: Mapping[int, str] | None = None,
+    title: str | None = None,
 ) -> Path:
-    """Remove footer content and redistribute ranking rows with larger round gaps."""
+    """Reuse the source design while redistributing and optionally reordering ranking rows."""
 
     source = Path(input_path).expanduser().resolve()
     destination = Path(output_path).expanduser().resolve()
@@ -147,6 +523,7 @@ def reflow_draft_sheet(
     inspections = inspect_draft_sheet(source)
     if sum(len(inspection.rows) for inspection in inspections) != 300:
         raise DraftSheetError("Expanded layout requires the complete 300-row draft sheet.")
+    _validate_rank_mapping(rank_mapping)
 
     source_document = pymupdf.open(source)
     header_document = pymupdf.open()
@@ -187,6 +564,10 @@ def reflow_draft_sheet(
                     words,
                     teams=teams,
                     bottom_margin=bottom_margin,
+                    rank_mapping=rank_mapping,
+                    position_rank_labels=position_rank_labels,
+                    row_highlight_colors=row_highlight_colors,
+                    title=title,
                 )
             ).pages[0]
             page.merge_page(overlay, over=True)
@@ -198,6 +579,8 @@ def reflow_draft_sheet(
     }
     metadata["/Subject"] = "Footer-free expanded PPR Top 300 layout"
     metadata["/Producer"] = "fantasy-football-2026 PDF layout reflow"
+    if title:
+        metadata["/Title"] = title
     writer.add_metadata(
         {
             key if key.startswith("/") else f"/{key.title()}": value
@@ -222,20 +605,60 @@ def _make_reflow_overlay(
     *,
     teams: int,
     bottom_margin: float,
+    rank_mapping: Mapping[int, int] | None,
+    position_rank_labels: Mapping[int, str] | None,
+    row_highlight_colors: Mapping[int, str] | None,
+    title: str | None,
 ) -> BytesIO:
     buffer = BytesIO()
     canvas = Canvas(buffer, pagesize=(inspection.width, inspection.height), pageCompression=1)
     font_name = _register_table_font()
-    for column in inspection.columns:
-        destination_centers = _reflowed_row_centers(
+    columns = {column.index: column for column in inspection.columns}
+    target_rows = {row.rank: row for row in inspection.rows}
+    destination_centers = {
+        column.index: _reflowed_row_centers(
             column,
             inspection.height,
             teams=teams,
             bottom_margin=bottom_margin,
         )
+        for column in inspection.columns
+    }
+    if title:
+        title_center = 364.0
+        canvas.saveState()
+        canvas.setFillColorRGB(1, 1, 1)
+        canvas.rect(245.0, inspection.height - 53.5, 238.0, 14.5, stroke=0, fill=1)
+        canvas.setFillColorRGB(0.0, 0.0, 0.502)
+        canvas.setFont("Helvetica", 10.8)
+        canvas.drawCentredString(title_center, inspection.height - 49.5, title)
+        canvas.restoreState()
+    if row_highlight_colors:
+        canvas.saveState()
+        for target_rank, color in row_highlight_colors.items():
+            target_row = target_rows.get(target_rank)
+            if target_row is None:
+                continue
+            target_column = columns[target_row.column]
+            destination_center = destination_centers[target_column.index][target_rank]
+            row_height = target_row.bottom - target_row.top
+            canvas.setFillColor(_hex_color(color))
+            canvas.rect(
+                target_column.x_start,
+                inspection.height - destination_center - (row_height / 2) - 0.55,
+                target_column.x_end - target_column.x_start,
+                row_height + 1.1,
+                stroke=0,
+                fill=1,
+            )
+        canvas.restoreState()
+    for column in inspection.columns:
         for row in column.rows:
+            target_rank = rank_mapping.get(row.rank, row.rank) if rank_mapping else row.rank
+            target_row = target_rows[target_rank]
+            target_column = columns[target_row.column]
             source_center = (row.top + row.bottom) / 2
-            destination_center = destination_centers[row.rank]
+            destination_center = destination_centers[target_column.index][target_rank]
             row_words = sorted(
                 (
                     word
@@ -256,8 +679,47 @@ def _make_reflow_overlay(
             )
             if salary_index is None or salary_index < 3:
                 raise DraftSheetError(f"Could not reflow ranking row {row.rank}.")
+            target_center = (target_row.top + target_row.bottom) / 2
+            target_row_words = sorted(
+                (
+                    word
+                    for word in words
+                    if target_column.x_start <= float(word["x0"]) <= target_column.x_end
+                    and abs(((float(word["top"]) + float(word["bottom"])) / 2) - target_center)
+                    <= 1.5
+                ),
+                key=lambda word: float(word["x0"]),
+            )
+            target_salary_index = next(
+                (
+                    index
+                    for index, word in enumerate(target_row_words)
+                    if SALARY_TOKEN.fullmatch(str(word["text"]))
+                ),
+                None,
+            )
+            if target_salary_index is None or target_salary_index < 3:
+                raise DraftSheetError(f"Could not determine target layout for rank {target_rank}.")
 
             for index, word in enumerate(row_words):
+                if index < 2:
+                    target_index = index
+                elif index < salary_index:
+                    target_index = 2
+                else:
+                    target_index = target_salary_index + (index - salary_index)
+                word_x = (
+                    float(target_row_words[target_index]["x0"])
+                    if target_index < len(target_row_words)
+                    else float(word["x0"]) + (target_column.x_start - column.x_start)
+                )
+                word_text = str(word["text"])
+                rank_token = index == 0 and RANK_TOKEN.fullmatch(word_text.strip())
+                if rank_token:
+                    word_text = f"{target_rank}."
+                position_rank_token = index == 1 and word_text.startswith("(")
+                if position_rank_token and position_rank_labels is not None:
+                    word_text = f"({position_rank_labels[target_rank]})"
                 if index == 2:
                     name = " ".join(
                         str(name_word["text"]) for name_word in row_words[2:salary_index]
@@ -266,7 +728,7 @@ def _make_reflow_overlay(
                     baseline = inspection.height - new_bottom + (PLAYER_NAME_FONT_SIZE * 0.185)
                     canvas.setFillColorRGB(0, 0, 0)
                     canvas.setFont(font_name, PLAYER_NAME_FONT_SIZE)
-                    canvas.drawString(float(word["x0"]), baseline, name)
+                    canvas.drawString(word_x, baseline, name)
                     continue
                 if 2 < index < salary_index:
                     continue
@@ -275,7 +737,10 @@ def _make_reflow_overlay(
                 baseline = inspection.height - new_bottom + (font_size * 0.185)
                 canvas.setFillColorRGB(0, 0, 0)
                 canvas.setFont(font_name, font_size)
-                canvas.drawString(float(word["x0"]), baseline, str(word["text"]))
+                if rank_token:
+                    canvas.drawRightString(target_row.x1, baseline, word_text)
+                else:
+                    canvas.drawString(word_x, baseline, word_text)
 
     canvas.setFillColorRGB(0.0, 0.0, 0.502)
     canvas.rect(
@@ -290,6 +755,14 @@ def _make_reflow_overlay(
     canvas.save()
     buffer.seek(0)
     return buffer
+
+
+def _validate_rank_mapping(rank_mapping: Mapping[int, int] | None) -> None:
+    if rank_mapping is None:
+        return
+    expected = set(range(1, 301))
+    if set(rank_mapping) != expected or set(rank_mapping.values()) != expected:
+        raise DraftSheetError("Rank mapping must be a one-to-one mapping of ranks 1-300.")
 
 
 def _reflowed_row_centers(
@@ -439,6 +912,7 @@ def highlight_draft_rounds(
     allow_missing: bool = False,
     remove_dollar_column: bool = True,
     draft_context_labels: Mapping[int, tuple[str, str, str, str, str]] | None = None,
+    row_highlight_colors: Mapping[int, str] | None = None,
 ) -> HighlightResult:
     """Add alternating translucent bands for projected draft rounds."""
 
@@ -487,6 +961,7 @@ def highlight_draft_rounds(
             style=chosen_style,
             remove_dollar_column=remove_dollar_column,
             draft_context_labels=draft_context_labels,
+            row_highlight_colors=row_highlight_colors,
         )
         overlay = PdfReader(overlay_stream).pages[0]
         page.merge_page(overlay, over=True)
@@ -724,6 +1199,7 @@ def _make_overlay(
     style: HighlightStyle,
     remove_dollar_column: bool,
     draft_context_labels: Mapping[int, tuple[str, str, str, str, str]] | None,
+    row_highlight_colors: Mapping[int, str] | None,
 ) -> BytesIO:
     buffer = BytesIO()
     canvas = Canvas(buffer, pagesize=(inspection.width, inspection.height), pageCompression=1)
@@ -747,7 +1223,11 @@ def _make_overlay(
 
     if draft_context_labels is not None:
         _draw_draft_context(canvas, inspection, draft_context_labels)
-        _draw_bucket_legend(canvas, inspection)
+        _draw_bucket_legend(
+            canvas,
+            inspection,
+            show_target_highlights=bool(row_highlight_colors),
+        )
 
     for column in inspection.columns:
         by_round: dict[int, list[RankRow]] = defaultdict(list)
@@ -919,7 +1399,12 @@ def _draw_draft_context(
         canvas.restoreState()
 
 
-def _draw_bucket_legend(canvas: Canvas, inspection: PageInspection) -> None:
+def _draw_bucket_legend(
+    canvas: Canvas,
+    inspection: PageInspection,
+    *,
+    show_target_highlights: bool = False,
+) -> None:
     """Draw a compact top-page index for rank and depth-chart color buckets."""
 
     x = 18.0
@@ -934,13 +1419,30 @@ def _draw_bucket_legend(canvas: Canvas, inspection: PageInspection) -> None:
         ("yellow", "YELLOW 11-22 / DC2 / INJ1-2"),
         ("red", "RED 23-32 / DC3+ / INJ3+"),
     )
-    canvas.setFont("Helvetica-Bold", 3.5)
+    canvas.setFont("Helvetica-Bold", 3.2)
     for index, (bucket, label) in enumerate(items):
-        item_y = heading_y - 6.0 - (index * 6.0)
+        item_y = heading_y - 5.0 - (index * 4.7)
         color = HexColor(BUCKET_COLORS[bucket])
         canvas.setFillColor(color)
-        canvas.circle(x + 1.5, item_y + 1.2, 1.25, stroke=0, fill=1)
+        canvas.circle(x + 1.3, item_y + 1.0, 1.05, stroke=0, fill=1)
         canvas.drawString(x + 4.5, item_y, label)
+    if show_target_highlights:
+        target_x = 83.0
+        canvas.setFillColorRGB(0.05, 0.05, 0.45)
+        canvas.setFont("Helvetica-Bold", 3.2)
+        canvas.drawString(target_x, heading_y, "TARGET ROWS")
+        canvas.setFont("Helvetica-Bold", 2.8)
+        for index, (color, label) in enumerate(
+            (
+                ("#F9E7A1", "YELLOW sleeper/rookie/value"),
+                ("#E5D8F5", "LAVENDER RB handcuff"),
+            )
+        ):
+            item_y = heading_y - 5.0 - (index * 4.7)
+            canvas.setFillColor(HexColor(color))
+            canvas.rect(target_x, item_y, 3.8, 3.1, stroke=0, fill=1)
+            canvas.setFillColorRGB(0.05, 0.05, 0.45)
+            canvas.drawString(target_x + 5.5, item_y, label)
     canvas.restoreState()
 
 

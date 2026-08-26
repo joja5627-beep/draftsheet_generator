@@ -2,7 +2,7 @@
   "metadata": {
     "automation_policy": "Ranks are parsed on every live refresh; no hand-entered team ranks are used.",
     "effective_date": "2026-08-25",
-    "generated_at": "2026-08-25T15:53:41+00:00",
+    "generated_at": "2026-08-26T14:32:14+00:00",
     "offense_method": "Rank by season-long average implied points from Vegas lines.",
     "offense_source": "https://www.firstdown.studio/implied-totals/season",
     "offensive_line_method": "Sharp Football forward-looking staff ranking.",
@@ -11,13 +11,13 @@
       "offense": {
         "fetch_url": "https://www.firstdown.studio/implied-totals/season",
         "from_cache": true,
-        "retrieved_at": "2026-08-25T15:03:14+00:00"
+        "retrieved_at": "2026-08-26T12:50:12+00:00"
       },
       "offensive_line": {
         "canonical_url": "https://www.sharpfootballanalysis.com/analysis/best-nfl-offensive-line-rankings/",
         "fetch_url": "https://r.jina.ai/http://www.sharpfootballanalysis.com/analysis/best-nfl-offensive-line-rankings/",
         "from_cache": true,
-        "retrieved_at": "2026-08-25T15:03:19+00:00"
+        "retrieved_at": "2026-08-26T12:50:16+00:00"
       }
     }
   },

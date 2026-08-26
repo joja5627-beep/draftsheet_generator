@@ -1,23 +1,21 @@
 import json
+from dataclasses import replace
 from pathlib import Path
 
 import pytest
-from pypdf import PdfReader
 
 from fantasy_football_2026.domain.rankings import (
-    HANDCUFF_HIGHLIGHT_COLOR,
-    SLEEPER_HIGHLIGHT_COLOR,
     ReweightedPlayer,
     _annotate_round_value_picks,
     _apply_major_injury_displacement_allowance,
     _apply_same_team_depth_chart_tiebreaker,
     _bounded_reorder,
+    _build_consensus_anomaly_audit,
     _injury_adjustment,
     _load_handcuff_players,
     _load_highlighted_players,
     _movement_is_allowed,
-    _row_highlight_color,
-    render_pdf,
+    _refresh_position_ranks,
 )
 
 REWEIGHTED_CONTEXT = Path("context/reweighted_cheat_sheet.json")
@@ -184,6 +182,36 @@ def test_same_team_depth_chart_tiebreaker_promotes_higher_scoring_starter() -> N
     assert all(_movement_is_allowed(player, player.final_rank) for player in reordered)
 
 
+def test_same_team_depth_chart_tiebreaker_promotes_starter_on_tied_score() -> None:
+    players = (
+        _player(
+            rank=1,
+            score=50.0,
+            cap=2,
+            name="Backup",
+            team="CAR",
+            depth_chart_label="RB2",
+        ),
+        _player(
+            rank=2,
+            score=50.0,
+            cap=2,
+            name="Starter",
+            team="CAR",
+            depth_chart_label="RB1",
+        ),
+    )
+
+    reordered, corrections = _apply_same_team_depth_chart_tiebreaker(
+        players,
+        positions=frozenset({"QB", "RB", "TE"}),
+        minimum_score_advantage=0.0,
+    )
+
+    assert [player.name for player in reordered] == ["Starter", "Backup"]
+    assert corrections[0].score_advantage == 0.0
+
+
 def test_same_team_depth_chart_tiebreaker_requires_better_score_and_role() -> None:
     players = (
         _player(
@@ -212,6 +240,55 @@ def test_same_team_depth_chart_tiebreaker_requires_better_score_and_role() -> No
 
     assert [player.name for player in reordered] == ["Valuable Backup", "Starter"]
     assert corrections == ()
+
+
+def test_position_ranks_are_recalculated_from_final_overall_order() -> None:
+    players = (
+        _player(rank=1, score=60.0, cap=2, position="WR", name="First Receiver"),
+        _player(rank=2, score=55.0, cap=2, position="RB", name="First Back"),
+        _player(rank=3, score=50.0, cap=2, position="WR", name="Second Receiver"),
+    )
+
+    refreshed = _refresh_position_ranks(players)
+
+    assert [player.position_rank for player in refreshed] == ["WR1", "RB1", "WR2"]
+
+
+def test_consensus_anomaly_guardrail_allows_only_supported_injury_exception() -> None:
+    policy = {
+        "consensus_anomaly_guardrail": {
+            "minimum_sources": 5,
+            "rank_band_tolerances": [{"minimum_rank": 1, "maximum_rank": 300, "spots": 20}],
+        },
+        "same_team_depth_chart_tiebreaker": {
+            "positions": ["QB", "RB", "TE"],
+            "minimum_score_advantage": 0.0,
+        },
+    }
+    market = [
+        {
+            "source_rank": 100,
+            "source_count": 5,
+            "consensus_median": 100.0,
+            "consensus_rank": 102.0,
+            "consensus_range": 30.0,
+        }
+    ]
+    unexplained = replace(
+        _player(rank=100, score=50.0, cap=8, source_rank=100),
+        final_rank=140,
+    )
+    injured = replace(unexplained, injury_movement_bonus=50)
+
+    failed = _build_consensus_anomaly_audit(
+        players=(unexplained,), market_players=market, model=policy
+    )
+    passed = _build_consensus_anomaly_audit(players=(injured,), market_players=market, model=policy)
+
+    assert failed["status"] == "FAIL"
+    assert failed["unresolved_count"] == 1
+    assert passed["status"] == "PASS"
+    assert passed["explained_count"] == 1
 
 
 @requires_reweighted_context
@@ -245,6 +322,7 @@ def test_source_audit_accounts_for_every_weighted_signal() -> None:
     assert set(model["weights"]) <= set(audit["modeled_signal_lineage"])
     assert "injury_and_role_risk" in audit["modeled_signal_lineage"]
     assert all(item["source_count"] >= 2 for item in audit["signal_sources"].values())
+    assert audit["ranking_anomalies"]["unresolved_count"] == 0
 
 
 def test_pdf_highlights_are_driven_by_sleeper_and_rookie_context(tmp_path: Path) -> None:
@@ -285,41 +363,6 @@ def test_pdf_handcuffs_only_include_eligible_generated_candidates(tmp_path: Path
     assert _load_handcuff_players(context_path) == {"blake corum"}
 
 
-def test_handcuff_color_is_distinct_and_wins_on_overlap() -> None:
-    sleepers = frozenset({"blake corum", "denzel boston"})
-    round_values = frozenset({"aj barner", "blake corum"})
-    handcuffs = frozenset({"blake corum"})
-
-    assert HANDCUFF_HIGHLIGHT_COLOR != SLEEPER_HIGHLIGHT_COLOR
-    assert (
-        _row_highlight_color(
-            "Blake Corum",
-            sleeper_players=sleepers,
-            round_value_players=round_values,
-            handcuff_players=handcuffs,
-        )
-        == HANDCUFF_HIGHLIGHT_COLOR
-    )
-    assert (
-        _row_highlight_color(
-            "Denzel Boston",
-            sleeper_players=sleepers,
-            round_value_players=round_values,
-            handcuff_players=handcuffs,
-        )
-        == SLEEPER_HIGHLIGHT_COLOR
-    )
-    assert (
-        _row_highlight_color(
-            "AJ Barner",
-            sleeper_players=sleepers,
-            round_value_players=round_values,
-            handcuff_players=handcuffs,
-        )
-        == SLEEPER_HIGHLIGHT_COLOR
-    )
-
-
 def test_round_value_picks_select_one_model_discount_per_round() -> None:
     players = (
         _player(rank=1, score=100.0, cap=2, name="Round One Favorite"),
@@ -340,28 +383,6 @@ def test_round_value_picks_select_one_model_discount_per_round() -> None:
     assert [(player.draft_round, player.name) for player in picks] == [(2, "Round Two Value")]
     assert picks[0].score_supported_rank == 2
     assert picks[0].unconstrained_value_delta == 1
-
-
-def test_reweighted_pdf_labels_each_new_round(tmp_path: Path) -> None:
-    output = tmp_path / "round-labels.pdf"
-    players = tuple(_player(rank=rank, score=50.0, cap=2) for rank in range(1, 38))
-
-    render_pdf(
-        output,
-        players,
-        generated_at="2026-08-21T00:00:00+00:00",
-        teams=12,
-        highlighted_players=frozenset(),
-        round_value_players=frozenset(),
-        handcuff_players=frozenset(),
-    )
-
-    text = "\n".join(page.extract_text() or "" for page in PdfReader(output).pages)
-    assert "R2" in text
-    assert "R3" in text
-    assert "R4" in text
-    assert "Sleeper, rookie or round value" in text
-    assert "RB handcuff" in text
 
 
 def _player(

@@ -11,11 +11,13 @@ from fantasy_football_2026.application.pipeline import (
     PipelineStage,
     ProjectPaths,
     StageResult,
+    _template_pdf_contract,
 )
 from fantasy_football_2026.consensus.sleepers import (
     ArticleCandidateExtractor,
     SleeperSource,
 )
+from fantasy_football_2026.constants import HANDCUFF_HIGHLIGHT_COLOR, SLEEPER_HIGHLIGHT_COLOR
 from fantasy_football_2026.domain.draft import DraftContextBuilder, DraftContextInputs
 
 GENERATED_CONTEXT = (
@@ -54,6 +56,41 @@ class _CapturingManifest:
 
     def save(self, payload: dict[str, Any]) -> None:
         self.payload = payload
+
+
+def test_template_pdf_contract_reorders_rows_and_applies_highlight_precedence() -> None:
+    players = [
+        {
+            "source_rank": rank,
+            "final_rank": 301 - rank,
+            "position_rank": f"RB{rank}",
+            "name": f"Player {rank}",
+            "depth_chart_label": "RB2",
+            "offense_rank": 3,
+            "offensive_line_rank": 14,
+            "strength_of_schedule_rank": 22,
+            "injury_weeks": "0",
+            "round_value_pick": rank == 3,
+        }
+        for rank in range(1, 301)
+    ]
+
+    rank_mapping, position_labels, labels, colors = _template_pdf_contract(
+        rankings={"players": players},
+        sleepers={
+            "sleepers": [{"player": "Player 1"}],
+            "rookie_breakout_candidates": [{"player": "Player 2"}],
+        },
+        handcuffs={"candidates": [{"player": "Player 1", "highlighted": True}]},
+    )
+
+    assert rank_mapping[1] == 300
+    assert rank_mapping[300] == 1
+    assert position_labels[300] == "RB1"
+    assert labels[300] == ("RB2", "3", "14", "22", "0")
+    assert colors[300] == HANDCUFF_HIGHLIGHT_COLOR
+    assert colors[299] == SLEEPER_HIGHLIGHT_COLOR
+    assert colors[298] == SLEEPER_HIGHLIGHT_COLOR
 
 
 def test_pipeline_orders_dependencies_and_hashes_outputs(tmp_path: Path) -> None:

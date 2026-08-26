@@ -13,13 +13,18 @@ from fantasy_football_2026.presentation.pdf import (
     PLAYER_NAME_FONT_SIZE,
     DraftSheetError,
     HighlightStyle,
+    PageInspection,
+    RankRow,
     _context_column_centers,
     _context_lane_bounds,
+    _movement_label,
     _register_metric_font,
+    _template_column_geometry,
     draft_round_for_rank,
     highlight_draft_rounds,
     inspect_draft_sheet,
     reflow_draft_sheet,
+    render_reweighted_template_pdf,
 )
 
 SOURCE_PDF = Path("NFL26_CS_PPR300.pdf")
@@ -138,6 +143,137 @@ def test_fixed_context_grid_has_gutters_for_widest_values() -> None:
     assert all(
         current[1] + 0.5 < following[0]
         for current, following in zip(boxes, boxes[1:], strict=False)
+    )
+
+
+@requires_source_pdf
+def test_reflow_real_sheet_can_apply_reweighted_order(tmp_path: Path) -> None:
+    mapping = {rank: rank for rank in range(1, 301)}
+    mapping[1], mapping[2] = 2, 1
+    position_labels = {rank: f"RB{rank}" for rank in range(1, 301)}
+    position_labels[1] = "WR1"
+
+    with pdfplumber.open(SOURCE_PDF) as source:
+        source_words = source.pages[0].extract_words()
+        source_inspection = inspect_draft_sheet(SOURCE_PDF)[0]
+        first_row = next(row for row in source_inspection.rows if row.rank == 1)
+        second_row = next(row for row in source_inspection.rows if row.rank == 2)
+        first_name = _row_words(source_words, first_row, source_inspection)[2]["text"]
+        second_name = _row_words(source_words, second_row, source_inspection)[2]["text"]
+
+    output = tmp_path / "test-reweighted-template.pdf"
+    try:
+        reflow_draft_sheet(
+            SOURCE_PDF,
+            output,
+            rank_mapping=mapping,
+            position_rank_labels=position_labels,
+            title="2026 Custom-League Reweighted Top 300",
+        )
+        inspection = inspect_draft_sheet(output)[0]
+        reader = PdfReader(output)
+        assert reader.metadata is not None
+        assert reader.metadata.title == "2026 Custom-League Reweighted Top 300"
+        with pdfplumber.open(output) as document:
+            words = document.pages[0].extract_words()
+            text = document.pages[0].extract_text() or ""
+        output_first = next(row for row in inspection.rows if row.rank == 1)
+        output_second = next(row for row in inspection.rows if row.rank == 2)
+
+        assert second_name in {word["text"] for word in _row_words(words, output_first, inspection)}
+        assert first_name in {word["text"] for word in _row_words(words, output_second, inspection)}
+        assert any(
+            "(WR1)" in str(word["text"]) for word in _row_words(words, output_first, inspection)
+        )
+        assert "2026 Custom-League Reweighted Top 300" in text
+    finally:
+        output.unlink(missing_ok=True)
+
+
+@requires_source_pdf
+def test_two_sided_template_uses_two_wider_columns_per_page(tmp_path: Path) -> None:
+    output = tmp_path / "two-sided.pdf"
+    players = [
+        {
+            "final_rank": rank,
+            "position_rank": f"RB{rank}",
+            "name": f"Player {rank}",
+            "team": "DET",
+            "depth_chart_label": "RB1",
+            "offense_rank": 3,
+            "offensive_line_rank": 14,
+            "strength_of_schedule_rank": 2,
+            "injury_weeks": "0",
+            "rank_delta": 2 if rank == 1 else -3 if rank == 2 else 0,
+        }
+        for rank in range(1, 301)
+    ]
+
+    render_reweighted_template_pdf(
+        SOURCE_PDF,
+        output,
+        players=players,
+        row_highlight_colors={1: "#FFF1A8", 151: "#E5D8F5"},
+    )
+
+    reader = PdfReader(output)
+    assert len(reader.pages) == 2
+    with pdfplumber.open(output) as document:
+        first_text = document.pages[0].extract_text() or ""
+        second_text = document.pages[1].extract_text() or ""
+        first_words = document.pages[0].extract_words(extra_attrs=["size"])
+    assert "RANKINGS 1-75" in first_text
+    assert "RANKINGS 76-150" in first_text
+    assert "RANKINGS 151-225" in second_text
+    assert "RANKINGS 226-300" in second_text
+    assert "1. (RB1)" in first_text
+    assert "300. (RB300)" in second_text
+    assert "MOV" in first_text
+    assert "+2" in first_text
+    assert "-3" in first_text
+    assert "MOV: + up / - down vs 7-source anchor" in first_text
+    player_word = next(word for word in first_words if word["text"] == "Player")
+    movement_word = next(word for word in first_words if word["text"] == "+2")
+    context_word = next(word for word in first_words if word["text"] == "RB1")
+    assert float(player_word["size"]) > PLAYER_NAME_FONT_SIZE
+    assert float(movement_word["size"]) >= 5.8
+    assert float(context_word["size"]) >= 5.8
+
+
+def test_template_column_lanes_use_all_available_inner_width() -> None:
+    geometry = _template_column_geometry(x=12.0, width=291.0)
+
+    assert geometry.rank_width == pytest.approx(40.0)
+    assert geometry.player_left == pytest.approx(54.0)
+    assert geometry.movement_width == pytest.approx(24.0)
+    assert geometry.context_width == pytest.approx(139.0)
+    assert geometry.player_width == pytest.approx(84.0)
+    assert (
+        geometry.rank_width
+        + geometry.player_width
+        + geometry.movement_width
+        + geometry.context_width
+    ) == pytest.approx(geometry.inner_right - geometry.inner_left)
+    assert _movement_label(3) == "+3"
+    assert _movement_label(-2) == "-2"
+    assert _movement_label(0) == "0"
+
+
+def _row_words(
+    words: list[dict[str, object]],
+    row: RankRow,
+    inspection: PageInspection,
+) -> list[dict[str, object]]:
+    column = inspection.columns[row.column]
+    center = (row.top + row.bottom) / 2
+    return sorted(
+        (
+            word
+            for word in words
+            if column.x_start <= float(word["x0"]) <= column.x_end
+            and abs(((float(word["top"]) + float(word["bottom"])) / 2) - center) <= 1.5
+        ),
+        key=lambda word: float(word["x0"]),
     )
 
 

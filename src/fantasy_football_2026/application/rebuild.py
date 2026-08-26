@@ -21,7 +21,7 @@ from fantasy_football_2026.errors import InjuryContextError
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Refresh every context source and rebuild both fantasy cheat-sheet PDFs."
+        description="Refresh every source and rebuild the custom-ranked ESPN-template PDF."
     )
     parser.add_argument("--pdf", type=Path, default=Path(DEFAULT_SOURCE_PDF))
     mode = parser.add_mutually_exclusive_group()
@@ -32,7 +32,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--skip-legacy-pdf",
         action="store_true",
-        help="skip rebuilding the source-order annotated PDF",
+        help="skip the compatibility copy under the source-derived filename",
     )
     parser.add_argument(
         "--plan",
@@ -75,7 +75,7 @@ def main(argv: list[str] | None = None) -> int:
     if not args.skip_legacy_pdf:
         legacy_name = f"{args.pdf.stem}-{args.teams}-team-rounds.pdf"
         print(
-            "Source-order PDF: "
+            "Compatibility PDF: "
             f"{(Path.cwd() / DirectoryName.OUTPUT / DirectoryName.PDF / legacy_name).resolve()}"
         )
     print(

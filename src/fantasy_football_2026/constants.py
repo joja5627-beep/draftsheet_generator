@@ -119,6 +119,14 @@ class SourceUrl:
         "https://www.fantasypros.com/nfl/rankings/half-point-ppr-cheatsheets.php"
     )
     FFTODAY_HALF_PPR: Final = "https://www.fftoday.com/rankings/26-adp-half-ppr.html"
+    FANTASY_FOOTBALL_CALCULATOR_HALF_PPR: Final = (
+        "https://fantasyfootballcalculator.com/rankings/half-ppr"
+    )
+    LINEUPBEAT_HALF_PPR: Final = "https://lineupbeat.com/nfl/rankings/"
+    PRO_FOOTBALL_MANIA_HALF_PPR: Final = "https://profootballmania.com/fantasy-football-rankings/"
+    ROTOBALLER_HALF_PPR: Final = (
+        "https://www.rotoballer.com/fantasy-football-draft-rankings-august-updates-2026/1905031"
+    )
     FFTODAY_PROJECTIONS: Final = (
         "https://www.fftoday.com/rankings/playerproj.php?Season=2026&PosID={position_id}&LeagueID=1"
     )

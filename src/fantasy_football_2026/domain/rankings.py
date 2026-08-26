@@ -11,14 +11,8 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
-from reportlab.lib.colors import HexColor
-from reportlab.lib.pagesizes import landscape, letter
-from reportlab.pdfgen.canvas import Canvas
-
 from fantasy_football_2026.constants import (
     DEFAULT_LEAGUE_TEAMS,
-    HANDCUFF_HIGHLIGHT_COLOR,
-    SLEEPER_HIGHLIGHT_COLOR,
     ContextFile,
     DirectoryName,
     OutputFile,
@@ -26,10 +20,8 @@ from fantasy_football_2026.constants import (
 from fantasy_football_2026.domain.normalization import normalize_name
 from fantasy_football_2026.errors import InjuryContextError, StorageError
 from fantasy_football_2026.infrastructure.storage import load_json_object, write_json, write_text
-from fantasy_football_2026.presentation.buckets import BUCKET_COLORS
 from fantasy_football_2026.presentation.pdf import draft_round_for_rank
 
-WEIGHTED_ROUND_GAP = 5.5
 DEPTH_ORDER_PATTERN = re.compile(r"^(?P<position>QB|RB|TE)(?P<order>\d+)$")
 
 
@@ -157,11 +149,6 @@ def build_parser() -> argparse.ArgumentParser:
         type=Path,
         default=Path(DirectoryName.OUTPUT, DirectoryName.CHEAT_SHEET, OutputFile.REWEIGHTED_CSV),
     )
-    parser.add_argument(
-        "--pdf-output",
-        type=Path,
-        default=Path(DirectoryName.OUTPUT, DirectoryName.PDF, OutputFile.REWEIGHTED_PDF),
-    )
     parser.add_argument("--teams", type=int, default=DEFAULT_LEAGUE_TEAMS)
     return parser
 
@@ -181,12 +168,10 @@ def main(argv: list[str] | None = None) -> int:
         audit_json_path=args.audit_json,
         audit_markdown_path=args.audit_markdown,
         csv_path=args.csv_output,
-        pdf_path=args.pdf_output,
         teams=args.teams,
     )
     print(f"Reweighted players: {result['player_count']}")
     print(f"Players moved: {result['moved_count']}")
-    print(f"PDF: {Path(result['pdf_path']).resolve()}")
     return 0
 
 
@@ -204,7 +189,6 @@ def update_reweighted_rankings(
     audit_json_path: Path,
     audit_markdown_path: Path,
     csv_path: Path,
-    pdf_path: Path,
     teams: int,
 ) -> dict[str, Any]:
     if teams < 2:
@@ -330,6 +314,7 @@ def update_reweighted_rankings(
         positions=frozenset(str(value) for value in role_policy["positions"]),
         minimum_score_advantage=float(role_policy["minimum_score_advantage"]),
     )
+    ranked = _refresh_position_ranks(ranked)
     value_policy = model["round_value_highlights"]
     ranked = _annotate_round_value_picks(
         ranked,
@@ -347,6 +332,7 @@ def update_reweighted_rankings(
         generated_at=generated_at,
         model=model,
         players=ranked,
+        market_players=market_players,
         market_metadata=market_document["metadata"],
         depth_metadata=depth_document["metadata"],
         injury_metadata=injury_document["metadata"],
@@ -405,16 +391,7 @@ def update_reweighted_rankings(
     write_json(audit_json_path, audit)
     write_text(audit_markdown_path, render_audit_markdown(audit))
     _write_csv(csv_path, ranked)
-    render_pdf(
-        pdf_path,
-        ranked,
-        generated_at=generated_at,
-        teams=teams,
-        highlighted_players=highlighted_players,
-        round_value_players=round_value_players,
-        handcuff_players=handcuff_players,
-    )
-    return {
+    result = {
         "player_count": len(ranked),
         "moved_count": sum(player.rank_delta != 0 for player in ranked),
         "role_ordering_correction_count": len(role_corrections),
@@ -422,8 +399,8 @@ def update_reweighted_rankings(
         "markdown_path": str(markdown_path),
         "audit_json_path": str(audit_json_path),
         "csv_path": str(csv_path),
-        "pdf_path": str(pdf_path),
     }
+    return result
 
 
 def _bounded_reorder(
@@ -466,7 +443,7 @@ def _apply_same_team_depth_chart_tiebreaker(
     positions: frozenset[str],
     minimum_score_advantage: float,
 ) -> tuple[tuple[ReweightedPlayer, ...], tuple[RoleOrderingCorrection, ...]]:
-    """Correct teammate role inversions without overriding the model's adjusted score."""
+    """Correct teammate role inversions when the better role has no lower model score."""
     ordered = list(players)
     corrections: list[RoleOrderingCorrection] = []
     changed = True
@@ -485,7 +462,7 @@ def _apply_same_team_depth_chart_tiebreaker(
                 if (
                     lower_order is None
                     or lower_order >= upper_order
-                    or score_advantage <= minimum_score_advantage
+                    or score_advantage < minimum_score_advantage
                 ):
                     continue
                 upper_new_rank = lower_index + 1
@@ -537,6 +514,20 @@ def _comparable_depth_order(
     return int(match.group("order"))
 
 
+def _refresh_position_ranks(
+    players: tuple[ReweightedPlayer, ...],
+) -> tuple[ReweightedPlayer, ...]:
+    """Recalculate positional ranks after the final overall order is established."""
+    counts: dict[str, int] = {}
+    refreshed: list[ReweightedPlayer] = []
+    for player in players:
+        counts[player.position] = counts.get(player.position, 0) + 1
+        refreshed.append(
+            replace(player, position_rank=f"{player.position}{counts[player.position]}")
+        )
+    return tuple(refreshed)
+
+
 def render_markdown(metadata: dict[str, Any], players: tuple[ReweightedPlayer, ...]) -> str:
     weights = metadata["weights"]
     lines = [
@@ -549,11 +540,11 @@ def render_markdown(metadata: dict[str, Any], players: tuple[ReweightedPlayer, .
         "## Model",
         "",
         "Every displayed signal is refreshed or derived from automated inputs. "
-        "The weighted market consensus establishes the movement anchor. A two-point score "
+        "The equal-source market consensus establishes the movement anchor. A two-point score "
         "gap is required to swap players, and every move is bounded by the configured rank "
         "cap. Corroborated missed-game projections can expand only the downside cap. A "
-        "same-team QB/RB/TE role inversion is corrected only when the better depth-chart "
-        "role also has the higher adjusted score. One automated round-value target is selected "
+        "same-team QB/RB/TE role inversion is corrected when the better depth-chart "
+        "role has no lower adjusted score. One automated round-value target is selected "
         "from each round using the largest positive score-supported discount versus consensus; "
         "kickers and defenses are excluded.",
         "",
@@ -596,229 +587,6 @@ def render_markdown(metadata: dict[str, Any], players: tuple[ReweightedPlayer, .
     return "\n".join(lines)
 
 
-def render_pdf(
-    path: Path,
-    players: tuple[ReweightedPlayer, ...],
-    *,
-    generated_at: str,
-    teams: int,
-    highlighted_players: frozenset[str],
-    round_value_players: frozenset[str],
-    handcuff_players: frozenset[str],
-) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    temporary = path.with_name(f".{path.name}.tmp")
-    canvas = Canvas(str(temporary), pagesize=landscape(letter))
-    width, height = landscape(letter)
-    canvas.setTitle("2026 Reweighted Fantasy Football Cheat Sheet")
-    canvas.setAuthor("fantasy-football-2026 reproducible ranking pipeline")
-    rows_per_column = 50
-    columns_per_page = 3
-    rows_per_page = rows_per_column * columns_per_page
-    margin = 16.0
-    column_gap = 5.0
-    column_width = (width - (2 * margin) - (column_gap * 2)) / columns_per_page
-    row_height = 9.95
-
-    for page_start in range(0, len(players), rows_per_page):
-        page_number = (page_start // rows_per_page) + 1
-        canvas.setFillColor(HexColor("#17324D"))
-        canvas.setFont("Helvetica-Bold", 13)
-        canvas.drawString(margin, height - 20, "2026 Custom-League Reweighted Top 300")
-        canvas.setFont("Helvetica", 6.5)
-        canvas.setFillColor(HexColor("#4A5B6B"))
-        canvas.drawRightString(
-            width - margin,
-            height - 18,
-            f"{teams}-team rounds | rebuilt {generated_at[:10]} | page {page_number}/2",
-        )
-        canvas.drawString(
-            margin,
-            height - 31,
-            "Delta is improvement vs blended-consensus anchor. Signals: DC depth, O offense, "
-            "L line, S schedule, I projected weeks missed.",
-        )
-        legend_x = width - 230
-        canvas.setFillColor(HexColor(SLEEPER_HIGHLIGHT_COLOR))
-        canvas.setStrokeColor(HexColor("#D6A83B"))
-        canvas.setLineWidth(0.45)
-        canvas.rect(legend_x, height - 33, 9, 7, stroke=1, fill=1)
-        canvas.setFillColor(HexColor("#4A5B6B"))
-        canvas.setFont("Helvetica-Bold", 6.0)
-        canvas.drawString(legend_x + 13, height - 31.5, "Sleeper, rookie or round value")
-        handcuff_legend_x = legend_x + 112
-        canvas.setFillColor(HexColor(HANDCUFF_HIGHLIGHT_COLOR))
-        canvas.setStrokeColor(HexColor("#9B7DB8"))
-        canvas.rect(handcuff_legend_x, height - 33, 9, 7, stroke=1, fill=1)
-        canvas.setFillColor(HexColor("#4A5B6B"))
-        canvas.drawString(handcuff_legend_x + 13, height - 31.5, "RB handcuff")
-
-        for column in range(columns_per_page):
-            x = margin + column * (column_width + column_gap)
-            start = page_start + column * rows_per_column
-            subset = players[start : start + rows_per_column]
-            _draw_pdf_column(
-                canvas,
-                subset,
-                x=x,
-                top=height - 48,
-                width=column_width,
-                row_height=row_height,
-                teams=teams,
-                highlighted_players=highlighted_players,
-                round_value_players=round_value_players,
-                handcuff_players=handcuff_players,
-            )
-        canvas.setStrokeColor(HexColor("#C8D4DE"))
-        canvas.line(margin, 17, width - margin, 17)
-        canvas.setFillColor(HexColor("#5D6B78"))
-        canvas.setFont("Helvetica", 5.5)
-        canvas.drawString(
-            margin,
-            9,
-            "Projection-first model: availability-adjusted custom VBD + consensus and "
-            "live-context guardrails. See context/source_audit.md.",
-        )
-        canvas.showPage()
-    canvas.save()
-    temporary.replace(path)
-
-
-def _draw_pdf_column(
-    canvas: Canvas,
-    players: tuple[ReweightedPlayer, ...],
-    *,
-    x: float,
-    top: float,
-    width: float,
-    row_height: float,
-    teams: int,
-    highlighted_players: frozenset[str],
-    round_value_players: frozenset[str],
-    handcuff_players: frozenset[str],
-) -> None:
-    canvas.setFillColor(HexColor("#EAF2F8"))
-    canvas.rect(x, top, width, 10, stroke=0, fill=1)
-    canvas.setFillColor(HexColor("#17324D"))
-    canvas.setFont("Helvetica-Bold", 5.4)
-    canvas.drawString(x + 2, top + 3, "#")
-    canvas.drawString(x + 16, top + 3, "PLAYER")
-    canvas.drawString(x + 108, top + 3, "POS")
-    canvas.drawCentredString(x + 142, top + 3, "D")
-    canvas.drawCentredString(x + 164, top + 3, "DC")
-    canvas.drawCentredString(x + 190, top + 3, "O")
-    canvas.drawCentredString(x + 204, top + 3, "L")
-    canvas.drawCentredString(x + 218, top + 3, "S")
-    canvas.drawCentredString(x + 232, top + 3, "I")
-    canvas.drawRightString(x + width - 2, top + 3, "BYE")
-    y = top - 1
-    for player in players:
-        starts_round = player.final_rank > 1 and (player.final_rank - 1) % teams == 0
-        if starts_round:
-            y -= WEIGHTED_ROUND_GAP
-        y -= row_height
-        highlight_color = _row_highlight_color(
-            player.name,
-            sleeper_players=highlighted_players,
-            round_value_players=round_value_players,
-            handcuff_players=handcuff_players,
-        )
-        if highlight_color:
-            canvas.setFillColor(HexColor(highlight_color))
-            canvas.rect(x, y - 1, width, row_height, stroke=0, fill=1)
-        elif player.final_rank % 2 == 0:
-            canvas.setFillColor(HexColor("#F7F9FB"))
-            canvas.rect(x, y - 1, width, row_height, stroke=0, fill=1)
-        if starts_round:
-            _draw_weighted_round_divider(
-                canvas,
-                x=x,
-                width=width,
-                y=y + row_height + (WEIGHTED_ROUND_GAP / 2) - 1,
-                round_number=draft_round_for_rank(player.final_rank, teams),
-            )
-        canvas.setFillColor(HexColor("#233746"))
-        canvas.setFont("Helvetica-Bold", 5.8)
-        canvas.drawRightString(x + 13, y + 1.4, str(player.final_rank))
-        canvas.setFont("Helvetica", 5.7)
-        canvas.drawString(x + 16, y + 1.4, _fit_name(player.name, 22))
-        canvas.setFont("Helvetica-Bold", 5.3)
-        canvas.drawString(x + 108, y + 1.4, f"{player.position}-{player.team}")
-        delta = f"+{player.rank_delta}" if player.rank_delta > 0 else str(player.rank_delta)
-        delta_color = (
-            "#34785B"
-            if player.rank_delta > 0
-            else "#A84F52"
-            if player.rank_delta < 0
-            else "#6B7782"
-        )
-        canvas.setFillColor(HexColor(delta_color))
-        canvas.drawRightString(x + 148, y + 1.4, delta)
-        _draw_metric(
-            canvas,
-            x + 164,
-            y + 1.4,
-            player.depth_chart_label,
-            _depth_bucket(player.depth_chart_label),
-        )
-        _draw_metric(
-            canvas,
-            x + 190,
-            y + 1.4,
-            _number(player.offense_rank),
-            _rank_bucket(player.offense_rank),
-        )
-        _draw_metric(
-            canvas,
-            x + 204,
-            y + 1.4,
-            _number(player.offensive_line_rank),
-            _rank_bucket(player.offensive_line_rank),
-        )
-        _draw_metric(
-            canvas,
-            x + 218,
-            y + 1.4,
-            _number(player.strength_of_schedule_rank),
-            _rank_bucket(player.strength_of_schedule_rank),
-        )
-        _draw_metric(
-            canvas,
-            x + 232,
-            y + 1.4,
-            player.injury_weeks,
-            _injury_bucket(player.injury_weeks),
-        )
-        canvas.setFillColor(HexColor("#4D5B67"))
-        canvas.setFont("Helvetica", 5.2)
-        canvas.drawRightString(x + width - 2, y + 1.4, str(player.bye_week or "--"))
-
-
-def _draw_weighted_round_divider(
-    canvas: Canvas,
-    *,
-    x: float,
-    width: float,
-    y: float,
-    round_number: int,
-) -> None:
-    center = x + (width / 2)
-    label_half_width = 7.5
-    canvas.setStrokeColor(HexColor("#75AADB"))
-    canvas.setLineWidth(0.7)
-    canvas.line(x, y, center - label_half_width, y)
-    canvas.line(center + label_half_width, y, x + width, y)
-    canvas.setFillColor(HexColor("#6889A6"))
-    canvas.setFont("Helvetica-Bold", 4.5)
-    canvas.drawCentredString(center, y - 1.5, f"R{round_number}")
-
-
-def _draw_metric(canvas: Canvas, x: float, y: float, value: str, bucket: str) -> None:
-    canvas.setFillColor(HexColor(BUCKET_COLORS[bucket]))
-    canvas.setFont("Helvetica-Bold", 5.1)
-    canvas.drawCentredString(x, y, value)
-
-
 def render_audit_markdown(audit: dict[str, Any]) -> str:
     lines = [
         "# Ranking source and reproducibility audit",
@@ -853,11 +621,34 @@ def render_audit_markdown(audit: dict[str, Any]) -> str:
             "",
             "## Coverage",
             "",
-            f"- Three-source market rows: **{audit['coverage']['market_three_source']}/300**",
+            f"- Five-plus-source market rows: "
+            f"**{audit['coverage']['market_five_plus_source']}/300**",
+            f"- Seven-source market rows: **{audit['coverage']['market_seven_source']}/300**",
             "- Two-source custom projection rows: "
             f"**{audit['coverage']['projection_two_source']}/300**",
             f"- Two-source opportunity coverage: **{audit['coverage']['depth_two_source']}**",
             "- Active manual score inputs: **0**",
+            "",
+            "## Ranking anomaly audit",
+            "",
+            f"- Players reviewed against at least five ranks: "
+            f"**{audit['ranking_anomalies']['reviewed_player_count']}**",
+            f"- Consensus outliers: **{audit['ranking_anomalies']['consensus_outlier_count']}**",
+            f"- Remaining comparable-role inversions: "
+            f"**{audit['ranking_anomalies']['role_inversion_count']}**",
+            f"- Explained exceptions: **{audit['ranking_anomalies']['explained_count']}**",
+            f"- Unresolved anomalies: **{audit['ranking_anomalies']['unresolved_count']}**",
+            "",
+        ]
+    )
+    for item in audit["ranking_anomalies"]["consensus_outliers"]:
+        lines.append(
+            f"- **{item['player']}**: final {item['final_rank']}, median "
+            f"{item['consensus_median']:g}, delta {item['rank_delta_from_median']:+g}; "
+            f"{item['status']} - {item['reason']}."
+        )
+    lines.extend(
+        [
             "",
             "## Rebuild contract",
             "",
@@ -879,13 +670,19 @@ def _build_audit(
     generated_at: str,
     model: dict[str, Any],
     players: tuple[ReweightedPlayer, ...],
+    market_players: list[dict[str, Any]],
     market_metadata: dict[str, Any],
     depth_metadata: dict[str, Any],
     injury_metadata: dict[str, Any],
 ) -> dict[str, Any]:
     registry = model["source_registry"]
     minimum_sources = 2
-    status = "PASS"
+    anomaly_audit = _build_consensus_anomaly_audit(
+        players=players,
+        market_players=market_players,
+        model=model,
+    )
+    status = "PASS" if anomaly_audit["unresolved_count"] == 0 else "FAIL"
     player_count = len(players)
     two_source_rows = {
         key: sum(player.source_coverage[key] >= minimum_sources for player in players)
@@ -911,7 +708,7 @@ def _build_audit(
             "weight_or_role": f"{float(weights['baseline_consensus']):.0%}",
             "two_source_rows": two_source_rows["baseline"],
             "neutral_rows": 0,
-            "evidence_rule": "weighted ESPN, FantasyPros, and FFToday consensus",
+            "evidence_rule": "simple mean of up to seven independent expert and market ranks",
         },
         "custom_projected_value": {
             "weight_or_role": f"{float(weights['custom_projected_value']):.0%}",
@@ -964,9 +761,17 @@ def _build_audit(
         "movement_anchor_policy": model["movement_anchor"],
         "injury_adjustment_policy": model["injury_adjustment"],
         "round_value_highlight_policy": model["round_value_highlights"],
+        "consensus_anomaly_guardrail": model["consensus_anomaly_guardrail"],
+        "ranking_anomalies": anomaly_audit,
         "coverage": {
             "market_three_source": sum(
                 player.source_coverage["baseline"] >= 3 for player in players
+            ),
+            "market_five_plus_source": sum(
+                player.source_coverage["baseline"] >= 5 for player in players
+            ),
+            "market_seven_source": sum(
+                player.source_coverage["baseline"] >= 7 for player in players
             ),
             "depth_two_source": sum(
                 player.source_coverage["opportunity"] >= 2 for player in players
@@ -990,6 +795,121 @@ def _build_audit(
             "injury": injury_metadata.get("generated_at"),
         },
     }
+
+
+def _build_consensus_anomaly_audit(
+    *,
+    players: tuple[ReweightedPlayer, ...],
+    market_players: list[dict[str, Any]],
+    model: dict[str, Any],
+) -> dict[str, Any]:
+    policy = model["consensus_anomaly_guardrail"]
+    minimum_sources = int(policy["minimum_sources"])
+    market_by_source = {int(player["source_rank"]): player for player in market_players}
+    items: list[dict[str, Any]] = []
+    for player in players:
+        market = market_by_source[player.source_rank]
+        source_count = int(market.get("source_count") or 0)
+        if source_count < minimum_sources:
+            continue
+        consensus_median = float(market["consensus_median"])
+        tolerance = _consensus_anomaly_tolerance(consensus_median, policy)
+        delta = player.final_rank - consensus_median
+        if abs(delta) <= tolerance:
+            continue
+        excess = max(1, math.ceil(abs(delta) - tolerance))
+        injury_explained = delta > 0 and player.injury_movement_bonus >= excess
+        items.append(
+            {
+                "player": player.name,
+                "position": player.position,
+                "team": player.team,
+                "final_rank": player.final_rank,
+                "consensus_median": consensus_median,
+                "consensus_mean": float(market["consensus_rank"]),
+                "consensus_range": float(market["consensus_range"]),
+                "source_count": source_count,
+                "rank_delta_from_median": round(delta, 2),
+                "tolerance": tolerance,
+                "status": "explained" if injury_explained else "unresolved",
+                "reason": (
+                    "corroborated injury absence expands downside movement"
+                    if injury_explained
+                    else "final rank exceeds the allowed multi-source consensus divergence"
+                ),
+            }
+        )
+
+    role_inversions = _find_role_ordering_anomalies(players, model=model)
+    unresolved_count = sum(item["status"] == "unresolved" for item in items) + sum(
+        item["status"] == "unresolved" for item in role_inversions
+    )
+    return {
+        "status": "PASS" if unresolved_count == 0 else "FAIL",
+        "reviewed_player_count": sum(
+            int(player.get("source_count") or 0) >= minimum_sources for player in market_players
+        ),
+        "consensus_outlier_count": len(items),
+        "role_inversion_count": len(role_inversions),
+        "explained_count": sum(item["status"] == "explained" for item in items)
+        + sum(item["status"] == "explained" for item in role_inversions),
+        "unresolved_count": unresolved_count,
+        "consensus_outliers": items,
+        "role_inversions": role_inversions,
+    }
+
+
+def _consensus_anomaly_tolerance(rank: float, policy: dict[str, Any]) -> int:
+    for band in policy["rank_band_tolerances"]:
+        if int(band["minimum_rank"]) <= rank <= int(band["maximum_rank"]):
+            return int(band["spots"])
+    raise InjuryContextError(f"No consensus anomaly tolerance configured for rank {rank}.")
+
+
+def _find_role_ordering_anomalies(
+    players: tuple[ReweightedPlayer, ...],
+    *,
+    model: dict[str, Any],
+) -> list[dict[str, Any]]:
+    role_policy = model["same_team_depth_chart_tiebreaker"]
+    positions = frozenset(str(value) for value in role_policy["positions"])
+    minimum_advantage = float(role_policy["minimum_score_advantage"])
+    anomalies: list[dict[str, Any]] = []
+    for upper_index, upper in enumerate(players):
+        upper_order = _comparable_depth_order(upper, positions=positions)
+        if upper_order is None:
+            continue
+        for lower_index in range(upper_index + 1, len(players)):
+            lower = players[lower_index]
+            if lower.team != upper.team or lower.position != upper.position:
+                continue
+            lower_order = _comparable_depth_order(lower, positions=positions)
+            if lower_order is None or lower_order >= upper_order:
+                continue
+            score_advantage = lower.adjusted_score - upper.adjusted_score
+            if score_advantage < minimum_advantage:
+                continue
+            can_correct = _movement_is_allowed(upper, lower_index + 1) and _movement_is_allowed(
+                lower, upper_index + 1
+            )
+            anomalies.append(
+                {
+                    "team": upper.team,
+                    "position": upper.position,
+                    "higher_ranked_player": upper.name,
+                    "higher_ranked_role": upper.depth_chart_label,
+                    "lower_ranked_player": lower.name,
+                    "lower_ranked_role": lower.depth_chart_label,
+                    "score_advantage": round(score_advantage, 3),
+                    "status": "unresolved" if can_correct else "explained",
+                    "reason": (
+                        "correctable role inversion remains after ranking"
+                        if can_correct
+                        else "movement caps intentionally prevent the role-order swap"
+                    ),
+                }
+            )
+    return anomalies
 
 
 def _write_csv(path: Path, players: tuple[ReweightedPlayer, ...]) -> None:
@@ -1053,6 +973,8 @@ def _validate_model(model: dict[str, Any]) -> None:
         "weighted_consensus_order"
     ):
         raise InjuryContextError("Ranking model movement anchor must use weighted_consensus_order.")
+    if movement_anchor.get("aggregation") != "equal_source_mean":
+        raise InjuryContextError("Ranking model movement anchor must use equal_source_mean.")
     injury_adjustment = model.get("injury_adjustment")
     required_injury_adjustment = {
         "availability_penalty_per_game",
@@ -1104,6 +1026,24 @@ def _validate_model(model: dict[str, Any]) -> None:
     minimum_advantage = role_policy.get("minimum_score_advantage")
     if not isinstance(minimum_advantage, (int, float)) or minimum_advantage < 0:
         raise InjuryContextError("Depth-chart tiebreaker score advantage must be non-negative.")
+    anomaly_policy = model.get("consensus_anomaly_guardrail")
+    if not isinstance(anomaly_policy, dict):
+        raise InjuryContextError("Ranking model is missing the consensus anomaly guardrail.")
+    if (
+        not isinstance(anomaly_policy.get("minimum_sources"), int)
+        or not 3 <= int(anomaly_policy["minimum_sources"]) <= 7
+    ):
+        raise InjuryContextError("Consensus anomaly minimum sources must be between 3 and 7.")
+    anomaly_bands = anomaly_policy.get("rank_band_tolerances")
+    if not isinstance(anomaly_bands, list) or not anomaly_bands:
+        raise InjuryContextError("Consensus anomaly guardrail needs rank-band tolerances.")
+    covered_ranks = {
+        rank
+        for band in anomaly_bands
+        for rank in range(int(band["minimum_rank"]), int(band["maximum_rank"]) + 1)
+    }
+    if covered_ranks != set(range(1, 301)) or any(int(band["spots"]) < 1 for band in anomaly_bands):
+        raise InjuryContextError("Consensus anomaly tolerances must cover ranks 1-300 once.")
     required_source_groups = {
         "custom_projected_value",
         "baseline_consensus",
@@ -1332,21 +1272,6 @@ def _load_handcuff_players(path: Path) -> frozenset[str]:
     return frozenset(names)
 
 
-def _row_highlight_color(
-    name: str,
-    *,
-    sleeper_players: frozenset[str],
-    round_value_players: frozenset[str],
-    handcuff_players: frozenset[str],
-) -> str | None:
-    normalized = normalize_name(name)
-    if normalized in handcuff_players:
-        return HANDCUFF_HIGHLIGHT_COLOR
-    if normalized in sleeper_players or normalized in round_value_players:
-        return SLEEPER_HIGHLIGHT_COLOR
-    return None
-
-
 def _optional_int(value: Any) -> int | None:
     if value in {None, "", "--"}:
         return None
@@ -1365,38 +1290,8 @@ def _optional_float(value: Any) -> float | None:
         return None
 
 
-def _fit_name(name: str, width: int) -> str:
-    return name if len(name) <= width else name[: width - 1] + "."
-
-
-def _number(value: int | None) -> str:
-    return str(value) if value is not None else "--"
-
-
 def _number_float(value: float | None) -> str:
     return f"{value:.1f}" if value is not None else "--"
-
-
-def _rank_bucket(value: int | None) -> str:
-    if value is None or value >= 23:
-        return "red"
-    return "green" if value <= 10 else "yellow"
-
-
-def _depth_bucket(value: str) -> str:
-    if value == "DST" or value.endswith("1"):
-        return "green"
-    if value.endswith("2"):
-        return "yellow"
-    return "red"
-
-
-def _injury_bucket(value: str) -> str:
-    if value == "--":
-        return "green"
-    numbers = [int(item) for item in re.findall(r"\d+", value)]
-    maximum = max(numbers) if numbers else 99
-    return "green" if maximum == 0 else "yellow" if maximum <= 2 else "red"
 
 
 if __name__ == "__main__":

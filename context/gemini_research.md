@@ -561,7 +561,7 @@ the generated block, use the newer generated evidence.
 <!-- BEGIN GENERATED INJURY REWEIGHTING -->
 ### Live injury reweighting snapshot
 
-**Effective date:** 2026-08-25
+**Effective date:** 2026-08-26
 
 **Source:** [generated player injury context](./player_injuries.md)
 **Evidence policy:** Sleeper and ESPN are checked for every player; active signals are corroborated with dated team or specialist reports when a feed is incomplete.
@@ -585,7 +585,7 @@ Apply injury information through the existing **0-5 total risk penalty**, not as
 
 Multiply the fallback penalty by confidence: **high 1.0**, **medium 0.85**, **low 0.60**. Injury plus suspension, role, and other uncertainty remains capped at the guide's existing five-point total risk penalty.
 
-Current player tiers: **SEASON 0**, **VERY HIGH 0**, **HIGH 1**, **MEDIUM 0**, **SHORT 0**, **WATCH 52**, **CLEAR 225**.
+Current player tiers: **SEASON 0**, **VERY HIGH 0**, **HIGH 1**, **MEDIUM 0**, **SHORT 0**, **WATCH 55**, **CLEAR 222**.
 
 #### Players with possible regular-season availability impact
 
@@ -594,16 +594,18 @@ Current player tiers: **SEASON 0**, **VERY HIGH 0**, **HIGH 1**, **MEDIUM 0**, *
 | 152 | Jordyn Tyson | HIGH | 5-6 | 0.68 | 3.4 | medium | 2 | Sleeper Doubtful Strain; ESPN Doubtful Hamstring return 2026-10-18 |
 | 15 | Jeremiyah Love | WATCH | 0-1 | 0.97 | 0.4 | medium | 2 | Sleeper Questionable; ESPN Questionable Ankle return 2026-09-13 |
 | 53 | Luther Burden III | WATCH | 0-1 | 0.97 | 0.4 | medium | 2 | Sleeper Questionable; ESPN Questionable Groin return 2026-09-13 |
+| 80 | Brian Thomas Jr. | WATCH | 0-1 | 0.97 | 0.4 | medium | 2 | Sleeper Questionable; ESPN Questionable Shoulder return 2026-09-13 |
 | 100 | Chuba Hubbard | WATCH | 0-1 | 0.97 | 0.4 | medium | 2 | Sleeper Questionable; ESPN Questionable Hamstring return 2026-09-13 |
 | 106 | Kyle Monangai | WATCH | 0-1 | 0.97 | 0.4 | medium | 2 | Sleeper Questionable; ESPN Questionable Knee return 2026-09-13 |
 | 130 | Tank Dell | WATCH | 0-1 | 0.97 | 0.3 | low | 1 | Sleeper Questionable Surgery |
 | 138 | Alvin Kamara | WATCH | 0-1 | 0.97 | 0.4 | medium | 2 | Sleeper Questionable; ESPN Questionable Knee - MCL return 2026-09-13 |
 | 155 | Isiah Pacheco | WATCH | 0-1 | 0.97 | 0.4 | medium | 2 | Sleeper Questionable; ESPN Questionable Knee - MCL return 2026-09-13 |
-| 165 | Jaylin Noel | WATCH | 0-1 | 0.97 | 0.4 | medium | 2 | Sleeper Questionable; ESPN Questionable Hamstring return 2026-09-13 |
+| 165 | Jaylin Noel | WATCH | 0-1 | 0.97 | 0.3 | low | 1 | Sleeper Questionable |
+| 225 | Ty Johnson | WATCH | 0-1 | 0.97 | 0.4 | medium | 2 | Sleeper Questionable; ESPN Questionable Lower Leg return 2026-09-13 |
 
 #### Watchlist with no regular-season games currently projected
 
-Puka Nacua (#4), Christian McCaffrey (#6), Ashton Jeanty (#13), Breece Hall (#23), Malik Nabers (#29), Josh Jacobs (#30), Quinshon Judkins (#39), Emeka Egbuka (#42), Tyler Warren (#50), TreVeyon Henderson (#63), Michael Pittman Jr. (#66), DK Metcalf (#68), Alec Pierce (#70), Sam LaPorta (#73), Mike Evans (#76), Jakobi Meyers (#81), Khalil Shakir (#90), Xavier Worthy (#92), Patrick Mahomes (#94), Tucker Kraft (#101), George Kittle (#102), Jacory Croskey-Merritt (#107), Rachaad White (#108), Quentin Johnston (#112), Kenyon Sadiq (#118), De'Zhaun Stribling (#129), Zach Charbonnet (#137), Jalen McMillan (#145), Tre Harris (#204), Jordan James (#212), Ollie Gordon II (#222), Ty Johnson (#225), Isaiah Davis (#226), Xavier Legette (#227), Keon Coleman (#234), Adam Randall (#243), LeQuint Allen (#245), James Conner (#248), DJ Giddens (#251), Cade Otton (#260), Emanuel Wilson (#265), Tory Horton (#271), Phil Mafah (#276), Jawhar Jordan (#282)
+Ja'Marr Chase (#3), Puka Nacua (#4), Christian McCaffrey (#6), Ashton Jeanty (#13), Kenneth Walker III (#21), Breece Hall (#23), Chris Olave (#26), Malik Nabers (#29), Josh Jacobs (#30), Emeka Egbuka (#42), Tyler Warren (#50), TreVeyon Henderson (#63), Michael Pittman Jr. (#66), DK Metcalf (#68), Alec Pierce (#70), Sam LaPorta (#73), Mike Evans (#76), Jakobi Meyers (#81), Khalil Shakir (#90), Xavier Worthy (#92), Patrick Mahomes (#94), Tucker Kraft (#101), George Kittle (#102), Jacory Croskey-Merritt (#107), Rachaad White (#108), Quentin Johnston (#112), Josh Downs (#113), Kenyon Sadiq (#118), De'Zhaun Stribling (#129), Zach Charbonnet (#137), Jalen McMillan (#145), Keaton Mitchell (#154), Terrance Ferguson (#159), Tre Harris (#204), Jordan James (#212), Ollie Gordon II (#222), Isaiah Davis (#226), Xavier Legette (#227), Keon Coleman (#234), Adam Randall (#243), LeQuint Allen (#245), James Conner (#248), Emanuel Wilson (#265), Tory Horton (#271), Jawhar Jordan (#282)
 
 Treat this snapshot as time-sensitive. The full context includes evidence dates, source links, confidence, and rationale for every ranked player. A CLEAR result means no current designation was found; it is not a forecast of future health.
 <!-- END GENERATED INJURY REWEIGHTING -->

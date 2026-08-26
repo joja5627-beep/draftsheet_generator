@@ -553,7 +553,7 @@ class ProjectionContextBuilder:
         lines = [
             "# Custom-scored projection value",
             "",
-            f"**Generated:** `{metadata['generated_at']}`  ",
+            f"**Generated:** `{metadata['generated_at']}`",
             f"**Matched ranked skill players:** {metadata['matched_skill_players']}  ",
             "",
             metadata["method"],

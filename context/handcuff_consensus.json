@@ -4,41 +4,15 @@
       "consensus_score": 100.0,
       "depth_chart_label": "RB2",
       "depth_chart_order": 2,
-      "draft_action": "Handcuff target in Round 8 or later behind Kyren Williams.",
-      "fftoday_adp": 93.5,
-      "flags": [],
-      "highlighted": true,
-      "injury_weeks": "0",
-      "market_consensus_rank": 101.0,
-      "offense_rank": 1,
-      "player": "Blake Corum",
-      "source_families": [
-        "athlon",
-        "draft_sharks",
-        "fantasy_alarm",
-        "fantasy_life",
-        "fantasypros",
-        "pff",
-        "yahoo"
-      ],
-      "source_family_count": 7,
-      "starter": "Kyren Williams",
-      "starter_injury_weeks": "0",
-      "team": "LAR",
-      "tier": "A"
-    },
-    {
-      "consensus_score": 100.0,
-      "depth_chart_label": "RB2",
-      "depth_chart_order": 2,
-      "draft_action": "Handcuff target in Round 14 or later behind Jahmyr Gibbs.",
-      "fftoday_adp": 167.5,
+      "draft_action": "Handcuff target in Round 16 or later behind Jahmyr Gibbs.",
+      "fftoday_adp": 182.5,
       "flags": [],
       "highlighted": true,
       "injury_weeks": "0-1",
-      "market_consensus_rank": 157.5,
+      "market_consensus_rank": 152.58,
       "offense_rank": 3,
       "player": "Isiah Pacheco",
+      "projected_points": 100.8,
       "source_families": [
         "athlon",
         "draft_sharks",
@@ -51,8 +25,10 @@
       "source_family_count": 7,
       "starter": "Jahmyr Gibbs",
       "starter_injury_weeks": "0",
+      "starter_projected_points": 313.15,
       "team": "DET",
-      "tier": "A"
+      "tier": "A",
+      "top_two_projected_points_share": 0.244
     },
     {
       "consensus_score": 100.0,
@@ -63,9 +39,10 @@
       "flags": [],
       "highlighted": true,
       "injury_weeks": "0",
-      "market_consensus_rank": 225.0,
+      "market_consensus_rank": 223.0,
       "offense_rank": 5,
       "player": "Justice Hill",
+      "projected_points": 83.45,
       "source_families": [
         "athlon",
         "draft_sharks",
@@ -76,21 +53,24 @@
       "source_family_count": 5,
       "starter": "Derrick Henry",
       "starter_injury_weeks": "0",
+      "starter_projected_points": 244.75,
       "team": "BAL",
-      "tier": "A"
+      "tier": "A",
+      "top_two_projected_points_share": 0.254
     },
     {
       "consensus_score": 100.0,
       "depth_chart_label": "RB2",
       "depth_chart_order": 2,
-      "draft_action": "Handcuff target in Round 19 or later behind Christian McCaffrey.",
-      "fftoday_adp": 217.0,
+      "draft_action": "Handcuff target in Round 17 or later behind Christian McCaffrey.",
+      "fftoday_adp": 201.5,
       "flags": [],
       "highlighted": true,
       "injury_weeks": "0",
-      "market_consensus_rank": 229.8,
+      "market_consensus_rank": 239.5,
       "offense_rank": 7,
       "player": "Kaelon Black",
+      "projected_points": 35.2,
       "source_families": [
         "athlon",
         "draft_sharks",
@@ -101,47 +81,24 @@
       "source_family_count": 5,
       "starter": "Christian McCaffrey",
       "starter_injury_weeks": "0",
+      "starter_projected_points": 291.45,
       "team": "SF",
-      "tier": "A"
+      "tier": "A",
+      "top_two_projected_points_share": 0.108
     },
     {
       "consensus_score": 100.0,
       "depth_chart_label": "RB2",
       "depth_chart_order": 2,
-      "draft_action": "Handcuff target in Round 9 or later behind D'Andre Swift.",
-      "fftoday_adp": 101.0,
-      "flags": [],
-      "highlighted": true,
-      "injury_weeks": "0-1",
-      "market_consensus_rank": 106.5,
-      "offense_rank": 10,
-      "player": "Kyle Monangai",
-      "source_families": [
-        "athlon",
-        "draft_sharks",
-        "fantasy_alarm",
-        "fantasy_life",
-        "fantasypros",
-        "yahoo"
-      ],
-      "source_family_count": 6,
-      "starter": "D'Andre Swift",
-      "starter_injury_weeks": "0",
-      "team": "CHI",
-      "tier": "A"
-    },
-    {
-      "consensus_score": 100.0,
-      "depth_chart_label": "RB2",
-      "depth_chart_order": 2,
-      "draft_action": "Handcuff target in Round 14 or later behind Josh Jacobs.",
-      "fftoday_adp": 160.0,
+      "draft_action": "Handcuff target in Round 13 or later behind Josh Jacobs.",
+      "fftoday_adp": 146.0,
       "flags": [],
       "highlighted": true,
       "injury_weeks": "0",
-      "market_consensus_rank": 172.8,
+      "market_consensus_rank": 184.83,
       "offense_rank": 9,
       "player": "MarShawn Lloyd",
+      "projected_points": 71.5,
       "source_families": [
         "athlon",
         "draft_sharks",
@@ -152,8 +109,10 @@
       "source_family_count": 5,
       "starter": "Josh Jacobs",
       "starter_injury_weeks": "0",
+      "starter_projected_points": 223.05,
       "team": "GB",
-      "tier": "A"
+      "tier": "A",
+      "top_two_projected_points_share": 0.243
     },
     {
       "consensus_score": 100.0,
@@ -164,9 +123,10 @@
       "flags": [],
       "highlighted": true,
       "injury_weeks": "0",
-      "market_consensus_rank": 246.75,
+      "market_consensus_rank": 241.0,
       "offense_rank": 4,
       "player": "Samaje Perine",
+      "projected_points": 75.35,
       "source_families": [
         "athlon",
         "draft_sharks",
@@ -177,8 +137,10 @@
       "source_family_count": 5,
       "starter": "Chase Brown",
       "starter_injury_weeks": "0",
+      "starter_projected_points": 228.05,
       "team": "CIN",
-      "tier": "A"
+      "tier": "A",
+      "top_two_projected_points_share": 0.248
     },
     {
       "consensus_score": 100.0,
@@ -188,10 +150,11 @@
       "fftoday_adp": null,
       "flags": [],
       "highlighted": true,
-      "injury_weeks": "0",
-      "market_consensus_rank": 248.12,
+      "injury_weeks": "0-1",
+      "market_consensus_rank": 241.75,
       "offense_rank": 2,
       "player": "Ty Johnson",
+      "projected_points": 73.2,
       "source_families": [
         "athlon",
         "fantasy_alarm",
@@ -201,69 +164,24 @@
       "source_family_count": 4,
       "starter": "James Cook III",
       "starter_injury_weeks": "0",
+      "starter_projected_points": 249.75,
       "team": "BUF",
-      "tier": "A"
-    },
-    {
-      "consensus_score": 100.0,
-      "depth_chart_label": "RB2",
-      "depth_chart_order": 2,
-      "draft_action": "Handcuff target in Round 13 or later behind Jadarian Price.",
-      "fftoday_adp": 148.0,
-      "flags": [],
-      "highlighted": true,
-      "injury_weeks": "0",
-      "market_consensus_rank": 142.7,
-      "offense_rank": 8,
-      "player": "Zach Charbonnet",
-      "source_families": [
-        "athlon",
-        "fantasy_alarm",
-        "fantasypros",
-        "yahoo"
-      ],
-      "source_family_count": 4,
-      "starter": "Jadarian Price",
-      "starter_injury_weeks": "0",
-      "team": "SEA",
-      "tier": "A"
+      "tier": "A",
+      "top_two_projected_points_share": 0.227
     },
     {
       "consensus_score": 99.0,
       "depth_chart_label": "RB2",
       "depth_chart_order": 2,
-      "draft_action": "Handcuff target in Round 11 or later behind Jordan Mason.",
-      "fftoday_adp": 127.5,
-      "flags": [],
-      "highlighted": true,
-      "injury_weeks": "0",
-      "market_consensus_rank": 117.5,
-      "offense_rank": 19,
-      "player": "Aaron Jones Sr.",
-      "source_families": [
-        "athlon",
-        "draft_sharks",
-        "fantasypros",
-        "yahoo"
-      ],
-      "source_family_count": 4,
-      "starter": "Jordan Mason",
-      "starter_injury_weeks": "0",
-      "team": "MIN",
-      "tier": "A"
-    },
-    {
-      "consensus_score": 99.0,
-      "depth_chart_label": "RB2",
-      "depth_chart_order": 2,
-      "draft_action": "Handcuff target in Round 22 or later behind Jonathan Taylor.",
+      "draft_action": "Handcuff target in Round 23 or later behind Jonathan Taylor.",
       "fftoday_adp": null,
       "flags": [],
       "highlighted": true,
       "injury_weeks": "0",
-      "market_consensus_rank": 263.5,
+      "market_consensus_rank": 267.5,
       "offense_rank": 17,
       "player": "DJ Giddens",
+      "projected_points": 25.65,
       "source_families": [
         "athlon",
         "fantasy_alarm",
@@ -273,21 +191,24 @@
       "source_family_count": 4,
       "starter": "Jonathan Taylor",
       "starter_injury_weeks": "0",
+      "starter_projected_points": 267.5,
       "team": "IND",
-      "tier": "A"
+      "tier": "A",
+      "top_two_projected_points_share": 0.087
     },
     {
       "consensus_score": 99.0,
       "depth_chart_label": "RB2",
       "depth_chart_order": 2,
       "draft_action": "Handcuff target in Round 11 or later behind Omarion Hampton.",
-      "fftoday_adp": 130.5,
+      "fftoday_adp": 128.0,
       "flags": [],
       "highlighted": true,
       "injury_weeks": "0",
-      "market_consensus_rank": 141.3,
+      "market_consensus_rank": 149.0,
       "offense_rank": 14,
       "player": "Keaton Mitchell",
+      "projected_points": 69.3,
       "source_families": [
         "athlon",
         "draft_sharks",
@@ -298,21 +219,24 @@
       "source_family_count": 5,
       "starter": "Omarion Hampton",
       "starter_injury_weeks": "0",
+      "starter_projected_points": 228.1,
       "team": "LAC",
-      "tier": "A"
+      "tier": "A",
+      "top_two_projected_points_share": 0.233
     },
     {
       "consensus_score": 99.0,
       "depth_chart_label": "RB2",
       "depth_chart_order": 2,
       "draft_action": "Handcuff target in Round 12 or later behind Saquon Barkley.",
-      "fftoday_adp": 143.0,
+      "fftoday_adp": 142.5,
       "flags": [],
       "highlighted": true,
       "injury_weeks": "0",
-      "market_consensus_rank": 145.2,
+      "market_consensus_rank": 148.9,
       "offense_rank": 12,
       "player": "Tank Bigsby",
+      "projected_points": 57.65,
       "source_families": [
         "athlon",
         "draft_sharks",
@@ -323,21 +247,24 @@
       "source_family_count": 5,
       "starter": "Saquon Barkley",
       "starter_injury_weeks": "0",
+      "starter_projected_points": 236.2,
       "team": "PHI",
-      "tier": "A"
+      "tier": "A",
+      "top_two_projected_points_share": 0.196
     },
     {
       "consensus_score": 99.0,
       "depth_chart_label": "RB2",
       "depth_chart_order": 2,
-      "draft_action": "Handcuff target in Round 12 or later behind Cam Skattebo.",
-      "fftoday_adp": 135.0,
+      "draft_action": "Handcuff target in Round 13 or later behind Cam Skattebo.",
+      "fftoday_adp": 153.0,
       "flags": [],
       "highlighted": true,
       "injury_weeks": "0",
-      "market_consensus_rank": 149.9,
+      "market_consensus_rank": 146.83,
       "offense_rank": 22,
       "player": "Tyrone Tracy Jr.",
+      "projected_points": 74.2,
       "source_families": [
         "athlon",
         "draft_sharks",
@@ -349,33 +276,10 @@
       "source_family_count": 6,
       "starter": "Cam Skattebo",
       "starter_injury_weeks": "0",
+      "starter_projected_points": 202.35,
       "team": "NYG",
-      "tier": "A"
-    },
-    {
-      "consensus_score": 99.0,
-      "depth_chart_label": "RB2",
-      "depth_chart_order": 2,
-      "draft_action": "Handcuff target in Round 12 or later behind David Montgomery.",
-      "fftoday_adp": 140.5,
-      "flags": [],
-      "highlighted": true,
-      "injury_weeks": "0",
-      "market_consensus_rank": 129.0,
-      "offense_rank": 20,
-      "player": "Woody Marks",
-      "source_families": [
-        "athlon",
-        "draft_sharks",
-        "fantasy_life",
-        "fantasypros",
-        "yahoo"
-      ],
-      "source_family_count": 5,
-      "starter": "David Montgomery",
-      "starter_injury_weeks": "0",
-      "team": "HOU",
-      "tier": "A"
+      "tier": "A",
+      "top_two_projected_points_share": 0.268
     },
     {
       "consensus_score": 96.0,
@@ -386,9 +290,10 @@
       "flags": [],
       "highlighted": true,
       "injury_weeks": "0",
-      "market_consensus_rank": 127.9,
+      "market_consensus_rank": 129.08,
       "offense_rank": 16,
       "player": "Chris Rodriguez Jr.",
+      "projected_points": 75.65,
       "source_families": [
         "athlon",
         "draft_sharks",
@@ -399,119 +304,24 @@
       "source_family_count": 5,
       "starter": "Bhayshul Tuten",
       "starter_injury_weeks": "0",
+      "starter_projected_points": 189.85,
       "team": "JAC",
-      "tier": "A"
-    },
-    {
-      "consensus_score": 96.0,
-      "depth_chart_label": "RB2",
-      "depth_chart_order": 2,
-      "draft_action": "Handcuff target in Round 10 or later behind Bucky Irving.",
-      "fftoday_adp": 112.5,
-      "flags": [],
-      "highlighted": true,
-      "injury_weeks": "0",
-      "market_consensus_rank": 105.9,
-      "offense_rank": 18,
-      "player": "Kenny Gainwell",
-      "source_families": [
-        "athlon",
-        "fantasy_alarm",
-        "fantasy_life",
-        "fantasypros",
-        "yahoo"
-      ],
-      "source_family_count": 5,
-      "starter": "Bucky Irving",
-      "starter_injury_weeks": "0",
-      "team": "TB",
-      "tier": "A"
-    },
-    {
-      "consensus_score": 96.0,
-      "depth_chart_label": "RB2",
-      "depth_chart_order": 2,
-      "draft_action": "Handcuff target in Round 8 or later behind J.K. Dobbins.",
-      "fftoday_adp": 94.5,
-      "flags": [],
-      "highlighted": true,
-      "injury_weeks": "0",
-      "market_consensus_rank": 104.0,
-      "offense_rank": 21,
-      "player": "RJ Harvey",
-      "source_families": [
-        "athlon",
-        "fantasy_alarm",
-        "fantasy_life",
-        "yahoo"
-      ],
-      "source_family_count": 4,
-      "starter": "J.K. Dobbins",
-      "starter_injury_weeks": "0",
-      "team": "DEN",
-      "tier": "A"
-    },
-    {
-      "consensus_score": 96.0,
-      "depth_chart_label": "RB2",
-      "depth_chart_order": 2,
-      "draft_action": "Handcuff target in Round 10 or later behind Jacory Croskey-Merritt.",
-      "fftoday_adp": 112.0,
-      "flags": [],
-      "highlighted": true,
-      "injury_weeks": "0",
-      "market_consensus_rank": 110.8,
-      "offense_rank": 15,
-      "player": "Rachaad White",
-      "source_families": [
-        "athlon",
-        "draft_sharks",
-        "fantasy_alarm",
-        "fantasypros",
-        "yahoo"
-      ],
-      "source_family_count": 5,
-      "starter": "Jacory Croskey-Merritt",
-      "starter_injury_weeks": "0",
-      "team": "WAS",
-      "tier": "A"
+      "tier": "A",
+      "top_two_projected_points_share": 0.285
     },
     {
       "consensus_score": 95.0,
       "depth_chart_label": "RB2",
       "depth_chart_order": 2,
-      "draft_action": "Handcuff target in Round 14 or later behind Travis Etienne Jr.",
-      "fftoday_adp": 157.0,
-      "flags": [],
-      "highlighted": true,
-      "injury_weeks": "0-1",
-      "market_consensus_rank": 147.8,
-      "offense_rank": 23,
-      "player": "Alvin Kamara",
-      "source_families": [
-        "athlon",
-        "draft_sharks",
-        "fantasypros",
-        "yahoo"
-      ],
-      "source_family_count": 4,
-      "starter": "Travis Etienne Jr.",
-      "starter_injury_weeks": "0",
-      "team": "NO",
-      "tier": "A"
-    },
-    {
-      "consensus_score": 95.0,
-      "depth_chart_label": "RB2",
-      "depth_chart_order": 2,
-      "draft_action": "Handcuff target in Round 18 or later behind Breece Hall.",
-      "fftoday_adp": 206.0,
+      "draft_action": "Handcuff target in Round 15 or later behind Breece Hall.",
+      "fftoday_adp": 179.0,
       "flags": [],
       "highlighted": true,
       "injury_weeks": "0",
-      "market_consensus_rank": 179.1,
+      "market_consensus_rank": 181.4,
       "offense_rank": 32,
       "player": "Braelon Allen",
+      "projected_points": 65.3,
       "source_families": [
         "athlon",
         "draft_sharks",
@@ -522,21 +332,24 @@
       "source_family_count": 5,
       "starter": "Breece Hall",
       "starter_injury_weeks": "0",
+      "starter_projected_points": 228.25,
       "team": "NYJ",
-      "tier": "A"
+      "tier": "A",
+      "top_two_projected_points_share": 0.222
     },
     {
       "consensus_score": 95.0,
       "depth_chart_label": "RB2",
       "depth_chart_order": 2,
       "draft_action": "Handcuff target in Round 15 or later behind Bijan Robinson.",
-      "fftoday_adp": 169.5,
+      "fftoday_adp": 169.0,
       "flags": [],
       "highlighted": true,
       "injury_weeks": "0",
-      "market_consensus_rank": 152.7,
+      "market_consensus_rank": 157.33,
       "offense_rank": 25,
       "player": "Brian Robinson Jr.",
+      "projected_points": 81.45,
       "source_families": [
         "athlon",
         "draft_sharks",
@@ -549,21 +362,24 @@
       "source_family_count": 7,
       "starter": "Bijan Robinson",
       "starter_injury_weeks": "0",
+      "starter_projected_points": 306.95,
       "team": "ATL",
-      "tier": "A"
+      "tier": "A",
+      "top_two_projected_points_share": 0.21
     },
     {
       "consensus_score": 95.0,
       "depth_chart_label": "RB2",
       "depth_chart_order": 2,
       "draft_action": "Handcuff target in Round 15 or later behind Quinshon Judkins.",
-      "fftoday_adp": 169.0,
+      "fftoday_adp": 177.0,
       "flags": [],
       "highlighted": true,
       "injury_weeks": "0",
-      "market_consensus_rank": 158.1,
+      "market_consensus_rank": 161.4,
       "offense_rank": 30,
       "player": "Dylan Sampson",
+      "projected_points": 79.8,
       "source_families": [
         "athlon",
         "draft_sharks",
@@ -574,8 +390,10 @@
       "source_family_count": 5,
       "starter": "Quinshon Judkins",
       "starter_injury_weeks": "0",
+      "starter_projected_points": 193.95,
       "team": "CLE",
-      "tier": "A"
+      "tier": "A",
+      "top_two_projected_points_share": 0.292
     },
     {
       "consensus_score": 95.0,
@@ -586,9 +404,10 @@
       "flags": [],
       "highlighted": true,
       "injury_weeks": "0",
-      "market_consensus_rank": 224.75,
+      "market_consensus_rank": 223.4,
       "offense_rank": 29,
       "player": "Jaylen Wright",
+      "projected_points": 42.35,
       "source_families": [
         "athlon",
         "fantasypros",
@@ -598,21 +417,24 @@
       "source_family_count": 4,
       "starter": "De'Von Achane",
       "starter_injury_weeks": "0",
+      "starter_projected_points": 242.3,
       "team": "MIA",
-      "tier": "A"
+      "tier": "A",
+      "top_two_projected_points_share": 0.149
     },
     {
       "consensus_score": 95.0,
       "depth_chart_label": "RB2",
       "depth_chart_order": 2,
-      "draft_action": "Handcuff target in Round 15 or later behind Ashton Jeanty.",
-      "fftoday_adp": 180.5,
+      "draft_action": "Handcuff target in Round 13 or later behind Ashton Jeanty.",
+      "fftoday_adp": 148.0,
       "flags": [],
       "highlighted": true,
       "injury_weeks": "0",
-      "market_consensus_rank": 168.7,
+      "market_consensus_rank": 165.83,
       "offense_rank": 28,
       "player": "Mike Washington Jr.",
+      "projected_points": 54.15,
       "source_families": [
         "athlon",
         "draft_sharks",
@@ -624,46 +446,24 @@
       "source_family_count": 6,
       "starter": "Ashton Jeanty",
       "starter_injury_weeks": "0",
+      "starter_projected_points": 233.6,
       "team": "LV",
-      "tier": "A"
-    },
-    {
-      "consensus_score": 95.0,
-      "depth_chart_label": "RB2",
-      "depth_chart_order": 2,
-      "draft_action": "Handcuff target in Round 13 or later behind Tony Pollard.",
-      "fftoday_adp": 150.5,
-      "flags": [],
-      "highlighted": true,
-      "injury_weeks": "0",
-      "market_consensus_rank": 138.8,
-      "offense_rank": 27,
-      "player": "Tyjae Spears",
-      "source_families": [
-        "athlon",
-        "draft_sharks",
-        "fantasy_life",
-        "fantasypros",
-        "yahoo"
-      ],
-      "source_family_count": 5,
-      "starter": "Tony Pollard",
-      "starter_injury_weeks": "0",
-      "team": "TEN",
-      "tier": "A"
+      "tier": "A",
+      "top_two_projected_points_share": 0.188
     },
     {
       "consensus_score": 95.0,
       "depth_chart_label": "RB2",
       "depth_chart_order": 2,
       "draft_action": "Handcuff target in Round 12 or later behind Jeremiyah Love.",
-      "fftoday_adp": 144.5,
+      "fftoday_adp": 138.5,
       "flags": [],
       "highlighted": true,
       "injury_weeks": "0",
-      "market_consensus_rank": 136.0,
+      "market_consensus_rank": 142.08,
       "offense_rank": 31,
       "player": "Tyler Allgeier",
+      "projected_points": 75.3,
       "source_families": [
         "athlon",
         "draft_sharks",
@@ -676,95 +476,24 @@
       "source_family_count": 7,
       "starter": "Jeremiyah Love",
       "starter_injury_weeks": "0-1",
+      "starter_projected_points": 231.0,
       "team": "ARI",
-      "tier": "A"
-    },
-    {
-      "consensus_score": 94.0,
-      "depth_chart_label": "RB2",
-      "depth_chart_order": 2,
-      "draft_action": "Handcuff target in Round 6 or later behind TreVeyon Henderson.",
-      "fftoday_adp": 69.5,
-      "flags": [],
-      "highlighted": true,
-      "injury_weeks": "0",
-      "market_consensus_rank": 68.6,
-      "offense_rank": 13,
-      "player": "Rhamondre Stevenson",
-      "source_families": [
-        "athlon",
-        "fantasy_alarm",
-        "fantasypros",
-        "yahoo"
-      ],
-      "source_family_count": 4,
-      "starter": "TreVeyon Henderson",
-      "starter_injury_weeks": "0",
-      "team": "NE",
-      "tier": "A"
-    },
-    {
-      "consensus_score": 92.0,
-      "depth_chart_label": "RB2",
-      "depth_chart_order": 2,
-      "draft_action": "Handcuff target in Round 7 or later behind Chuba Hubbard.",
-      "fftoday_adp": 78.0,
-      "flags": [],
-      "highlighted": true,
-      "injury_weeks": "0",
-      "market_consensus_rank": 87.8,
-      "offense_rank": 26,
-      "player": "Jonathon Brooks",
-      "source_families": [
-        "athlon",
-        "fantasy_life",
-        "fantasypros",
-        "pff",
-        "yahoo"
-      ],
-      "source_family_count": 5,
-      "starter": "Chuba Hubbard",
-      "starter_injury_weeks": "0-1",
-      "team": "CAR",
-      "tier": "A"
-    },
-    {
-      "consensus_score": 92.0,
-      "depth_chart_label": "RB2",
-      "depth_chart_order": 2,
-      "draft_action": "Handcuff target in Round 8 or later behind Jaylen Warren.",
-      "fftoday_adp": 87.5,
-      "flags": [],
-      "highlighted": true,
-      "injury_weeks": "0",
-      "market_consensus_rank": 87.3,
-      "offense_rank": 24,
-      "player": "Rico Dowdle",
-      "source_families": [
-        "athlon",
-        "fantasy_life",
-        "fantasypros",
-        "pff",
-        "yahoo"
-      ],
-      "source_family_count": 5,
-      "starter": "Jaylen Warren",
-      "starter_injury_weeks": "0",
-      "team": "PIT",
-      "tier": "A"
+      "tier": "A",
+      "top_two_projected_points_share": 0.246
     },
     {
       "consensus_score": 63.0,
       "depth_chart_label": "RB2",
       "depth_chart_order": 2,
-      "draft_action": "Handcuff target in Round 23 or later behind Kenneth Walker III.",
+      "draft_action": "Handcuff target in Round 24 or later behind Kenneth Walker III.",
       "fftoday_adp": null,
       "flags": [],
       "highlighted": true,
       "injury_weeks": "0",
-      "market_consensus_rank": 276.5,
+      "market_consensus_rank": 278.67,
       "offense_rank": 11,
       "player": "Emari Demercado",
+      "projected_points": 52.95,
       "source_families": [
         "athlon",
         "yahoo"
@@ -772,23 +501,26 @@
       "source_family_count": 2,
       "starter": "Kenneth Walker III",
       "starter_injury_weeks": "0",
+      "starter_projected_points": 225.9,
       "team": "KC",
-      "tier": "B"
+      "tier": "B",
+      "top_two_projected_points_share": 0.19
     },
     {
       "consensus_score": 93.0,
       "depth_chart_label": "RB3",
       "depth_chart_order": 3,
       "draft_action": "Watchlist only; needs stronger consensus, direct RB2 status, or health.",
-      "fftoday_adp": 169.0,
+      "fftoday_adp": 171.0,
       "flags": [
         "third-in-depth-order"
       ],
       "highlighted": false,
       "injury_weeks": "0",
-      "market_consensus_rank": 204.5,
+      "market_consensus_rank": 207.2,
       "offense_rank": 6,
       "player": "Jaydon Blue",
+      "projected_points": 43.5,
       "source_families": [
         "athlon",
         "draft_sharks",
@@ -799,8 +531,10 @@
       "source_family_count": 5,
       "starter": "Javonte Williams",
       "starter_injury_weeks": "0",
+      "starter_projected_points": 218.85,
       "team": "DAL",
-      "tier": "C"
+      "tier": "C",
+      "top_two_projected_points_share": 0.166
     },
     {
       "consensus_score": 93.0,
@@ -813,9 +547,10 @@
       ],
       "highlighted": false,
       "injury_weeks": "0",
-      "market_consensus_rank": 168.2,
+      "market_consensus_rank": 174.4,
       "offense_rank": 2,
       "player": "Ray Davis",
+      "projected_points": 43.65,
       "source_families": [
         "athlon",
         "draft_sharks",
@@ -826,23 +561,26 @@
       "source_family_count": 5,
       "starter": "James Cook III",
       "starter_injury_weeks": "0",
+      "starter_projected_points": 249.75,
       "team": "BUF",
-      "tier": "C"
+      "tier": "C",
+      "top_two_projected_points_share": 0.149
     },
     {
       "consensus_score": 89.0,
       "depth_chart_label": "RB3",
       "depth_chart_order": 3,
       "draft_action": "Watchlist only; needs stronger consensus, direct RB2 status, or health.",
-      "fftoday_adp": 197.0,
+      "fftoday_adp": 173.5,
       "flags": [
         "third-in-depth-order"
       ],
       "highlighted": false,
       "injury_weeks": "0",
-      "market_consensus_rank": 200.1,
+      "market_consensus_rank": 186.75,
       "offense_rank": 11,
       "player": "Emmett Johnson",
+      "projected_points": 38.65,
       "source_families": [
         "athlon",
         "draft_sharks",
@@ -854,8 +592,310 @@
       "source_family_count": 6,
       "starter": "Kenneth Walker III",
       "starter_injury_weeks": "0",
+      "starter_projected_points": 225.9,
       "team": "KC",
-      "tier": "C"
+      "tier": "C",
+      "top_two_projected_points_share": 0.146
+    },
+    {
+      "consensus_score": 83.0,
+      "depth_chart_label": "RB2",
+      "depth_chart_order": 2,
+      "draft_action": "Watchlist only; projected workload indicates a committee role.",
+      "fftoday_adp": 152.5,
+      "flags": [
+        "committee-profile"
+      ],
+      "highlighted": false,
+      "injury_weeks": "0",
+      "market_consensus_rank": 156.42,
+      "offense_rank": 8,
+      "player": "Zach Charbonnet",
+      "projected_points": 105.85,
+      "source_families": [
+        "athlon",
+        "fantasy_alarm",
+        "fantasypros",
+        "yahoo"
+      ],
+      "source_family_count": 4,
+      "starter": "Jadarian Price",
+      "starter_injury_weeks": "0",
+      "starter_projected_points": 166.85,
+      "team": "SEA",
+      "tier": "C",
+      "top_two_projected_points_share": 0.388
+    },
+    {
+      "consensus_score": 80.0,
+      "depth_chart_label": "RB2",
+      "depth_chart_order": 2,
+      "draft_action": "Watchlist only; projected workload indicates a committee role.",
+      "fftoday_adp": 89.0,
+      "flags": [
+        "committee-profile"
+      ],
+      "highlighted": false,
+      "injury_weeks": "0",
+      "market_consensus_rank": 98.33,
+      "offense_rank": 1,
+      "player": "Blake Corum",
+      "projected_points": 131.9,
+      "source_families": [
+        "athlon",
+        "draft_sharks",
+        "fantasy_alarm",
+        "fantasy_life",
+        "fantasypros",
+        "pff",
+        "yahoo"
+      ],
+      "source_family_count": 7,
+      "starter": "Kyren Williams",
+      "starter_injury_weeks": "0",
+      "starter_projected_points": 212.3,
+      "team": "LAR",
+      "tier": "C",
+      "top_two_projected_points_share": 0.383
+    },
+    {
+      "consensus_score": 80.0,
+      "depth_chart_label": "RB2",
+      "depth_chart_order": 2,
+      "draft_action": "Watchlist only; projected workload indicates a committee role.",
+      "fftoday_adp": 108.0,
+      "flags": [
+        "committee-profile"
+      ],
+      "highlighted": false,
+      "injury_weeks": "0-1",
+      "market_consensus_rank": 105.71,
+      "offense_rank": 10,
+      "player": "Kyle Monangai",
+      "projected_points": 137.85,
+      "source_families": [
+        "athlon",
+        "draft_sharks",
+        "fantasy_alarm",
+        "fantasy_life",
+        "fantasypros",
+        "yahoo"
+      ],
+      "source_family_count": 6,
+      "starter": "D'Andre Swift",
+      "starter_injury_weeks": "0",
+      "starter_projected_points": 191.15,
+      "team": "CHI",
+      "tier": "C",
+      "top_two_projected_points_share": 0.419
+    },
+    {
+      "consensus_score": 79.0,
+      "depth_chart_label": "RB2",
+      "depth_chart_order": 2,
+      "draft_action": "Watchlist only; projected workload indicates a committee role.",
+      "fftoday_adp": 126.5,
+      "flags": [
+        "committee-profile"
+      ],
+      "highlighted": false,
+      "injury_weeks": "0",
+      "market_consensus_rank": 120.93,
+      "offense_rank": 19,
+      "player": "Aaron Jones Sr.",
+      "projected_points": 136.8,
+      "source_families": [
+        "athlon",
+        "draft_sharks",
+        "fantasypros",
+        "yahoo"
+      ],
+      "source_family_count": 4,
+      "starter": "Jordan Mason",
+      "starter_injury_weeks": "0",
+      "starter_projected_points": 127.5,
+      "team": "MIN",
+      "tier": "C",
+      "top_two_projected_points_share": 0.518
+    },
+    {
+      "consensus_score": 79.0,
+      "depth_chart_label": "RB2",
+      "depth_chart_order": 2,
+      "draft_action": "Watchlist only; projected workload indicates a committee role.",
+      "fftoday_adp": 139.5,
+      "flags": [
+        "committee-profile"
+      ],
+      "highlighted": false,
+      "injury_weeks": "0",
+      "market_consensus_rank": 136.08,
+      "offense_rank": 20,
+      "player": "Woody Marks",
+      "projected_points": 106.35,
+      "source_families": [
+        "athlon",
+        "draft_sharks",
+        "fantasy_life",
+        "fantasypros",
+        "yahoo"
+      ],
+      "source_family_count": 5,
+      "starter": "David Montgomery",
+      "starter_injury_weeks": "0",
+      "starter_projected_points": 173.55,
+      "team": "HOU",
+      "tier": "C",
+      "top_two_projected_points_share": 0.38
+    },
+    {
+      "consensus_score": 76.0,
+      "depth_chart_label": "RB2",
+      "depth_chart_order": 2,
+      "draft_action": "Watchlist only; projected workload indicates a committee role.",
+      "fftoday_adp": 111.5,
+      "flags": [
+        "committee-profile"
+      ],
+      "highlighted": false,
+      "injury_weeks": "0",
+      "market_consensus_rank": 106.93,
+      "offense_rank": 18,
+      "player": "Kenny Gainwell",
+      "projected_points": 131.1,
+      "source_families": [
+        "athlon",
+        "fantasy_alarm",
+        "fantasy_life",
+        "fantasypros",
+        "yahoo"
+      ],
+      "source_family_count": 5,
+      "starter": "Bucky Irving",
+      "starter_injury_weeks": "0",
+      "starter_projected_points": 191.25,
+      "team": "TB",
+      "tier": "C",
+      "top_two_projected_points_share": 0.407
+    },
+    {
+      "consensus_score": 76.0,
+      "depth_chart_label": "RB2",
+      "depth_chart_order": 2,
+      "draft_action": "Watchlist only; projected workload indicates a committee role.",
+      "fftoday_adp": 98.5,
+      "flags": [
+        "committee-profile"
+      ],
+      "highlighted": false,
+      "injury_weeks": "0",
+      "market_consensus_rank": 109.21,
+      "offense_rank": 21,
+      "player": "RJ Harvey",
+      "projected_points": 122.35,
+      "source_families": [
+        "athlon",
+        "fantasy_alarm",
+        "fantasy_life",
+        "yahoo"
+      ],
+      "source_family_count": 4,
+      "starter": "J.K. Dobbins",
+      "starter_injury_weeks": "0",
+      "starter_projected_points": 158.35,
+      "team": "DEN",
+      "tier": "C",
+      "top_two_projected_points_share": 0.436
+    },
+    {
+      "consensus_score": 76.0,
+      "depth_chart_label": "RB2",
+      "depth_chart_order": 2,
+      "draft_action": "Watchlist only; projected workload indicates a committee role.",
+      "fftoday_adp": 114.5,
+      "flags": [
+        "committee-profile"
+      ],
+      "highlighted": false,
+      "injury_weeks": "0",
+      "market_consensus_rank": 115.25,
+      "offense_rank": 15,
+      "player": "Rachaad White",
+      "projected_points": 139.7,
+      "source_families": [
+        "athlon",
+        "draft_sharks",
+        "fantasy_alarm",
+        "fantasypros",
+        "yahoo"
+      ],
+      "source_family_count": 5,
+      "starter": "Jacory Croskey-Merritt",
+      "starter_injury_weeks": "0",
+      "starter_projected_points": 136.45,
+      "team": "WAS",
+      "tier": "C",
+      "top_two_projected_points_share": 0.506
+    },
+    {
+      "consensus_score": 75.0,
+      "depth_chart_label": "RB2",
+      "depth_chart_order": 2,
+      "draft_action": "Watchlist only; projected workload indicates a committee role.",
+      "fftoday_adp": 177.5,
+      "flags": [
+        "committee-profile"
+      ],
+      "highlighted": false,
+      "injury_weeks": "0-1",
+      "market_consensus_rank": 162.42,
+      "offense_rank": 23,
+      "player": "Alvin Kamara",
+      "projected_points": 101.05,
+      "source_families": [
+        "athlon",
+        "draft_sharks",
+        "fantasy_life",
+        "fantasypros",
+        "yahoo"
+      ],
+      "source_family_count": 5,
+      "starter": "Travis Etienne Jr.",
+      "starter_injury_weeks": "0",
+      "starter_projected_points": 206.55,
+      "team": "NO",
+      "tier": "C",
+      "top_two_projected_points_share": 0.329
+    },
+    {
+      "consensus_score": 75.0,
+      "depth_chart_label": "RB2",
+      "depth_chart_order": 2,
+      "draft_action": "Watchlist only; projected workload indicates a committee role.",
+      "fftoday_adp": 147.0,
+      "flags": [
+        "committee-profile"
+      ],
+      "highlighted": false,
+      "injury_weeks": "0",
+      "market_consensus_rank": 142.5,
+      "offense_rank": 27,
+      "player": "Tyjae Spears",
+      "projected_points": 111.1,
+      "source_families": [
+        "athlon",
+        "draft_sharks",
+        "fantasy_life",
+        "fantasypros",
+        "yahoo"
+      ],
+      "source_family_count": 5,
+      "starter": "Tony Pollard",
+      "starter_injury_weeks": "0",
+      "starter_projected_points": 168.95,
+      "team": "TEN",
+      "tier": "C",
+      "top_two_projected_points_share": 0.397
     },
     {
       "consensus_score": 75.0,
@@ -868,9 +908,10 @@
       ],
       "highlighted": false,
       "injury_weeks": "0",
-      "market_consensus_rank": 240.75,
+      "market_consensus_rank": 232.0,
       "offense_rank": 7,
       "player": "Jordan James",
+      "projected_points": 32.15,
       "source_families": [
         "athlon",
         "fantasy_alarm",
@@ -879,23 +920,115 @@
       "source_family_count": 3,
       "starter": "Christian McCaffrey",
       "starter_injury_weeks": "0",
+      "starter_projected_points": 291.45,
       "team": "SF",
-      "tier": "C"
+      "tier": "C",
+      "top_two_projected_points_share": 0.099
+    },
+    {
+      "consensus_score": 74.0,
+      "depth_chart_label": "RB2",
+      "depth_chart_order": 2,
+      "draft_action": "Watchlist only; projected workload indicates a committee role.",
+      "fftoday_adp": 69.0,
+      "flags": [
+        "committee-profile"
+      ],
+      "highlighted": false,
+      "injury_weeks": "0",
+      "market_consensus_rank": 71.86,
+      "offense_rank": 13,
+      "player": "Rhamondre Stevenson",
+      "projected_points": 169.6,
+      "source_families": [
+        "athlon",
+        "fantasy_alarm",
+        "fantasypros",
+        "yahoo"
+      ],
+      "source_family_count": 4,
+      "starter": "TreVeyon Henderson",
+      "starter_injury_weeks": "0",
+      "starter_projected_points": 169.15,
+      "team": "NE",
+      "tier": "C",
+      "top_two_projected_points_share": 0.501
+    },
+    {
+      "consensus_score": 72.0,
+      "depth_chart_label": "RB2",
+      "depth_chart_order": 2,
+      "draft_action": "Watchlist only; projected workload indicates a committee role.",
+      "fftoday_adp": 75.5,
+      "flags": [
+        "committee-profile"
+      ],
+      "highlighted": false,
+      "injury_weeks": "0",
+      "market_consensus_rank": 97.21,
+      "offense_rank": 26,
+      "player": "Jonathon Brooks",
+      "projected_points": 137.85,
+      "source_families": [
+        "athlon",
+        "fantasy_life",
+        "fantasypros",
+        "pff",
+        "yahoo"
+      ],
+      "source_family_count": 5,
+      "starter": "Chuba Hubbard",
+      "starter_injury_weeks": "0-1",
+      "starter_projected_points": 150.45,
+      "team": "CAR",
+      "tier": "C",
+      "top_two_projected_points_share": 0.478
+    },
+    {
+      "consensus_score": 72.0,
+      "depth_chart_label": "RB2",
+      "depth_chart_order": 2,
+      "draft_action": "Watchlist only; projected workload indicates a committee role.",
+      "fftoday_adp": 82.0,
+      "flags": [
+        "committee-profile"
+      ],
+      "highlighted": false,
+      "injury_weeks": "0",
+      "market_consensus_rank": 83.86,
+      "offense_rank": 24,
+      "player": "Rico Dowdle",
+      "projected_points": 156.75,
+      "source_families": [
+        "athlon",
+        "fantasy_life",
+        "fantasypros",
+        "pff",
+        "yahoo"
+      ],
+      "source_family_count": 5,
+      "starter": "Jaylen Warren",
+      "starter_injury_weeks": "0",
+      "starter_projected_points": 166.45,
+      "team": "PIT",
+      "tier": "C",
+      "top_two_projected_points_share": 0.485
     },
     {
       "consensus_score": 71.0,
       "depth_chart_label": "RB3",
       "depth_chart_order": 3,
       "draft_action": "Watchlist only; needs stronger consensus, direct RB2 status, or health.",
-      "fftoday_adp": 153.5,
+      "fftoday_adp": 141.5,
       "flags": [
         "third-in-depth-order"
       ],
       "highlighted": false,
       "injury_weeks": "0",
-      "market_consensus_rank": 149.0,
+      "market_consensus_rank": 151.7,
       "offense_rank": 21,
       "player": "Jonah Coleman",
+      "projected_points": 56.7,
       "source_families": [
         "draft_sharks",
         "fantasy_alarm",
@@ -904,23 +1037,26 @@
       "source_family_count": 3,
       "starter": "J.K. Dobbins",
       "starter_injury_weeks": "0",
+      "starter_projected_points": 158.35,
       "team": "DEN",
-      "tier": "C"
+      "tier": "C",
+      "top_two_projected_points_share": 0.264
     },
     {
       "consensus_score": 71.0,
       "depth_chart_label": "RB3",
       "depth_chart_order": 3,
       "draft_action": "Watchlist only; needs stronger consensus, direct RB2 status, or health.",
-      "fftoday_adp": 218.5,
+      "fftoday_adp": 228.5,
       "flags": [
         "third-in-depth-order"
       ],
       "highlighted": false,
       "injury_weeks": "0",
-      "market_consensus_rank": 199.4,
+      "market_consensus_rank": 210.5,
       "offense_rank": 14,
       "player": "Kimani Vidal",
+      "projected_points": 40.15,
       "source_families": [
         "athlon",
         "fantasypros",
@@ -929,8 +1065,10 @@
       "source_family_count": 3,
       "starter": "Omarion Hampton",
       "starter_injury_weeks": "0",
+      "starter_projected_points": 228.1,
       "team": "LAC",
-      "tier": "C"
+      "tier": "C",
+      "top_two_projected_points_share": 0.15
     },
     {
       "consensus_score": 71.0,
@@ -943,9 +1081,10 @@
       ],
       "highlighted": false,
       "injury_weeks": "0",
-      "market_consensus_rank": 281.88,
+      "market_consensus_rank": 259.5,
       "offense_rank": 17,
       "player": "Seth McGowan",
+      "projected_points": 22.6,
       "source_families": [
         "draft_sharks",
         "fantasy_alarm",
@@ -954,23 +1093,26 @@
       "source_family_count": 3,
       "starter": "Jonathan Taylor",
       "starter_injury_weeks": "0",
+      "starter_projected_points": 267.5,
       "team": "IND",
-      "tier": "C"
+      "tier": "C",
+      "top_two_projected_points_share": 0.078
     },
     {
       "consensus_score": 67.0,
       "depth_chart_label": "RB3",
       "depth_chart_order": 3,
       "draft_action": "Watchlist only; needs stronger consensus, direct RB2 status, or health.",
-      "fftoday_adp": 222.0,
+      "fftoday_adp": 237.5,
       "flags": [
         "third-in-depth-order"
       ],
       "highlighted": false,
       "injury_weeks": "0",
-      "market_consensus_rank": 226.5,
+      "market_consensus_rank": 242.5,
       "offense_rank": 29,
       "player": "Ollie Gordon II",
+      "projected_points": 31.0,
       "source_families": [
         "athlon",
         "draft_sharks",
@@ -979,23 +1121,26 @@
       "source_family_count": 3,
       "starter": "De'Von Achane",
       "starter_injury_weeks": "0",
+      "starter_projected_points": 242.3,
       "team": "MIA",
-      "tier": "C"
+      "tier": "C",
+      "top_two_projected_points_share": 0.113
     },
     {
       "consensus_score": 57.0,
       "depth_chart_label": "RB3",
       "depth_chart_order": 3,
       "draft_action": "Watchlist only; needs stronger consensus, direct RB2 status, or health.",
-      "fftoday_adp": null,
+      "fftoday_adp": 238.5,
       "flags": [
         "third-in-depth-order"
       ],
       "highlighted": false,
       "injury_weeks": "0",
-      "market_consensus_rank": 270.5,
+      "market_consensus_rank": 268.12,
       "offense_rank": 5,
       "player": "Adam Randall",
+      "projected_points": 22.0,
       "source_families": [
         "fantasypros",
         "fantrax"
@@ -1003,8 +1148,10 @@
       "source_family_count": 2,
       "starter": "Derrick Henry",
       "starter_injury_weeks": "0",
+      "starter_projected_points": 244.75,
       "team": "BAL",
-      "tier": "C"
+      "tier": "C",
+      "top_two_projected_points_share": 0.082
     },
     {
       "consensus_score": 57.0,
@@ -1017,9 +1164,10 @@
       ],
       "highlighted": false,
       "injury_weeks": "0",
-      "market_consensus_rank": 251.88,
+      "market_consensus_rank": 247.0,
       "offense_rank": 9,
       "player": "Chris Brooks",
+      "projected_points": 25.0,
       "source_families": [
         "draft_sharks",
         "fantasypros"
@@ -1027,8 +1175,10 @@
       "source_family_count": 2,
       "starter": "Josh Jacobs",
       "starter_injury_weeks": "0",
+      "starter_projected_points": 223.05,
       "team": "GB",
-      "tier": "C"
+      "tier": "C",
+      "top_two_projected_points_share": 0.101
     },
     {
       "consensus_score": 57.0,
@@ -1041,9 +1191,10 @@
       ],
       "highlighted": false,
       "injury_weeks": "0",
-      "market_consensus_rank": 225.62,
+      "market_consensus_rank": 220.75,
       "offense_rank": 8,
       "player": "Emanuel Wilson",
+      "projected_points": 8.2,
       "source_families": [
         "athlon",
         "fantasy_alarm"
@@ -1051,8 +1202,10 @@
       "source_family_count": 2,
       "starter": "Jadarian Price",
       "starter_injury_weeks": "0",
+      "starter_projected_points": 166.85,
       "team": "SEA",
-      "tier": "C"
+      "tier": "C",
+      "top_two_projected_points_share": 0.047
     },
     {
       "consensus_score": 53.0,
@@ -1065,9 +1218,10 @@
       ],
       "highlighted": false,
       "injury_weeks": "0",
-      "market_consensus_rank": 258.75,
+      "market_consensus_rank": 268.0,
       "offense_rank": 16,
       "player": "LeQuint Allen",
+      "projected_points": 35.45,
       "source_families": [
         "draft_sharks",
         "fantasy_life"
@@ -1075,8 +1229,10 @@
       "source_family_count": 2,
       "starter": "Bhayshul Tuten",
       "starter_injury_weeks": "0",
+      "starter_projected_points": 189.85,
       "team": "JAC",
-      "tier": "C"
+      "tier": "C",
+      "top_two_projected_points_share": 0.157
     },
     {
       "consensus_score": 53.0,
@@ -1089,9 +1245,10 @@
       ],
       "highlighted": false,
       "injury_weeks": "0",
-      "market_consensus_rank": 296.62,
+      "market_consensus_rank": 290.5,
       "offense_rank": 12,
       "player": "Will Shipley",
+      "projected_points": 24.9,
       "source_families": [
         "fantasy_life",
         "fantasypros"
@@ -1099,8 +1256,10 @@
       "source_family_count": 2,
       "starter": "Saquon Barkley",
       "starter_injury_weeks": "0",
+      "starter_projected_points": 236.2,
       "team": "PHI",
-      "tier": "C"
+      "tier": "C",
+      "top_two_projected_points_share": 0.095
     },
     {
       "consensus_score": 39.0,
@@ -1113,123 +1272,140 @@
       ],
       "highlighted": false,
       "injury_weeks": "0",
-      "market_consensus_rank": 290.5,
+      "market_consensus_rank": 294.33,
       "offense_rank": 4,
       "player": "Tahj Brooks",
+      "projected_points": 13.6,
       "source_families": [
         "fantasypros"
       ],
       "source_family_count": 1,
       "starter": "Chase Brown",
       "starter_injury_weeks": "0",
+      "starter_projected_points": 228.05,
       "team": "CIN",
-      "tier": "C"
+      "tier": "C",
+      "top_two_projected_points_share": 0.056
     },
     {
       "consensus_score": 35.0,
       "depth_chart_label": "RB3",
       "depth_chart_order": 3,
       "draft_action": "Watchlist only; needs stronger consensus, direct RB2 status, or health.",
-      "fftoday_adp": null,
+      "fftoday_adp": 209.0,
       "flags": [
         "third-in-depth-order"
       ],
       "highlighted": false,
       "injury_weeks": "0",
-      "market_consensus_rank": 261.38,
+      "market_consensus_rank": 259.6,
       "offense_rank": 22,
       "player": "Najee Harris",
+      "projected_points": 40.45,
       "source_families": [
         "fantasypros"
       ],
       "source_family_count": 1,
       "starter": "Cam Skattebo",
       "starter_injury_weeks": "0",
+      "starter_projected_points": 202.35,
       "team": "NYG",
-      "tier": "C"
+      "tier": "C",
+      "top_two_projected_points_share": 0.167
     },
     {
       "consensus_score": 35.0,
       "depth_chart_label": "RB3",
       "depth_chart_order": 3,
       "draft_action": "Watchlist only; needs stronger consensus, direct RB2 status, or health.",
-      "fftoday_adp": 211.5,
+      "fftoday_adp": 223.0,
       "flags": [
         "third-in-depth-order"
       ],
       "highlighted": false,
       "injury_weeks": "0",
-      "market_consensus_rank": 206.9,
+      "market_consensus_rank": 202.0,
       "offense_rank": 18,
       "player": "Sean Tucker",
+      "projected_points": 41.75,
       "source_families": [
         "draft_sharks"
       ],
       "source_family_count": 1,
       "starter": "Bucky Irving",
       "starter_injury_weeks": "0",
+      "starter_projected_points": 191.25,
       "team": "TB",
-      "tier": "C"
+      "tier": "C",
+      "top_two_projected_points_share": 0.179
     },
     {
       "consensus_score": 31.0,
       "depth_chart_label": "RB3",
       "depth_chart_order": 3,
       "draft_action": "Watchlist only; needs stronger consensus, direct RB2 status, or health.",
-      "fftoday_adp": null,
+      "fftoday_adp": 232.5,
       "flags": [
         "third-in-depth-order"
       ],
       "highlighted": false,
       "injury_weeks": "0",
-      "market_consensus_rank": 238.5,
+      "market_consensus_rank": 248.9,
       "offense_rank": 32,
       "player": "Isaiah Davis",
+      "projected_points": 38.05,
       "source_families": [
         "fantasypros"
       ],
       "source_family_count": 1,
       "starter": "Breece Hall",
       "starter_injury_weeks": "0",
+      "starter_projected_points": 228.25,
       "team": "NYJ",
-      "tier": "C"
+      "tier": "C",
+      "top_two_projected_points_share": 0.143
     },
     {
       "consensus_score": 31.0,
       "depth_chart_label": "RB3",
       "depth_chart_order": 3,
       "draft_action": "Watchlist only; needs stronger consensus, direct RB2 status, or health.",
-      "fftoday_adp": 228.0,
+      "fftoday_adp": 234.5,
       "flags": [
         "third-in-depth-order"
       ],
       "highlighted": false,
       "injury_weeks": "0",
-      "market_consensus_rank": 223.5,
+      "market_consensus_rank": 233.7,
       "offense_rank": 31,
       "player": "James Conner",
+      "projected_points": 30.0,
       "source_families": [
         "fantasy_alarm"
       ],
       "source_family_count": 1,
       "starter": "Jeremiyah Love",
       "starter_injury_weeks": "0-1",
+      "starter_projected_points": 231.0,
       "team": "ARI",
-      "tier": "C"
+      "tier": "C",
+      "top_two_projected_points_share": 0.115
     }
   ],
   "metadata": {
-    "generated_at": "2026-08-25T15:53:56+00:00",
+    "generated_at": "2026-08-26T14:32:55+00:00",
     "inputs": {
       "catalog": "/Users/jjackson/dev/fantasy_football_2026/context/handcuff_sources.json",
       "depth": "/Users/jjackson/dev/fantasy_football_2026/context/player_depth_charts.json",
       "injury": "/Users/jjackson/dev/fantasy_football_2026/context/player_injuries.json",
-      "market": "/Users/jjackson/dev/fantasy_football_2026/context/market_context.json"
+      "market": "/Users/jjackson/dev/fantasy_football_2026/context/market_context.json",
+      "projections": "/Users/jjackson/dev/fantasy_football_2026/context/projection_context.json"
     },
-    "method": "Publisher families are deduplicated; a player must be a current ranked RB2/RB3. Highlighting requires RB2 status, candidate health, and the configured minimum number of independent publisher families.",
+    "maximum_top_two_projected_points_share": 0.3,
+    "method": "Publisher families are deduplicated; a player must be a current ranked RB2/RB3. Highlighting requires RB2 status, candidate health, the configured minimum number of independent publisher families, and no more than the configured share of the starter-plus-candidate projected fantasy points. This last gate removes committee backs with meaningful standalone workloads.",
     "minimum_available_sources": 5,
     "minimum_families_to_highlight": 2,
-    "schema_version": "1.0.0",
+    "schema_version": "1.1.0",
     "source_pages": 8,
     "source_pages_ok": 8,
     "source_pages_with_errors": 0
@@ -1246,7 +1422,6 @@
         "jonathan taylor",
         "james cook",
         "ashton jeanty",
-        "drake london",
         "jeremiyah love",
         "saquon barkley",
         "derrick henry",
@@ -1254,16 +1429,12 @@
         "kenneth walker",
         "omarion hampton",
         "breece hall",
-        "a j brown",
         "josh jacobs",
         "javonte williams",
         "travis etienne",
         "kyren williams",
         "quinshon judkins",
         "cam skattebo",
-        "ladd mcconkey",
-        "tee higgins",
-        "jaylen waddle",
         "david montgomery",
         "rhamondre stevenson",
         "rico dowdle",
@@ -1308,7 +1479,7 @@
         "tahj brooks",
         "seth mcgowan"
       ],
-      "retrieved_at": "2026-08-25T13:22:50+00:00",
+      "retrieved_at": "2026-08-26T12:52:04+00:00",
       "source_id": "fantasypros_handcuffs",
       "status": "ok",
       "url": "https://www.fantasypros.com/2026/05/fantasy-football-running-back-handcuff-rankings-2026/"
@@ -1327,7 +1498,7 @@
         "malik willis",
         "jaylen wright"
       ],
-      "retrieved_at": "2026-08-25T13:22:51+00:00",
+      "retrieved_at": "2026-08-26T12:52:04+00:00",
       "source_id": "pff_handcuffs",
       "status": "ok",
       "url": "https://www.pff.com/news/fantasy-football-2026-best-running-back-handcuffs"
@@ -1338,8 +1509,8 @@
       "from_cache": true,
       "players": [
         "jahmyr gibbs",
-        "amon ra st brown",
         "ashton jeanty",
+        "breece hall",
         "kyren williams",
         "cam skattebo",
         "bucky irving",
@@ -1349,14 +1520,13 @@
         "kenny gainwell",
         "jonathon brooks",
         "chuba hubbard",
-        "dallas goedert",
         "j k dobbins",
         "kyle monangai",
-        "isaiah likely",
         "jordan mason",
         "blake corum",
         "rj harvey",
         "woody marks",
+        "alvin kamara",
         "tyjae spears",
         "chris rodriguez",
         "brian robinson",
@@ -1376,9 +1546,10 @@
         "jaydon blue",
         "emmett johnson",
         "lequint allen",
-        "will shipley"
+        "will shipley",
+        "kendre miller"
       ],
-      "retrieved_at": "2026-08-25T13:22:51+00:00",
+      "retrieved_at": "2026-08-26T12:52:05+00:00",
       "source_id": "fantasy_life_handcuffs",
       "status": "ok",
       "url": "https://www.fantasylife.com/articles/fantasy/fantasy-football-rb-handcuff-rankings-and-tiers-for-2026-blake-c"
@@ -1437,7 +1608,7 @@
         "seth mcgowan",
         "kaleb johnson"
       ],
-      "retrieved_at": "2026-08-25T13:22:52+00:00",
+      "retrieved_at": "2026-08-26T12:52:05+00:00",
       "source_id": "draft_sharks_handcuffs",
       "status": "ok",
       "url": "https://www.draftsharks.com/article/best-rb-handcuffs"
@@ -1482,7 +1653,7 @@
         "emanuel wilson",
         "seth mcgowan"
       ],
-      "retrieved_at": "2026-08-25T13:22:53+00:00",
+      "retrieved_at": "2026-08-26T12:52:06+00:00",
       "source_id": "fantasy_alarm_handcuffs",
       "status": "ok",
       "url": "https://www.fantasyalarm.com/articles/nfl/fantasy-football-draft-guide/2026-handcuff-rankings/192276"
@@ -1507,7 +1678,7 @@
         "adam randall",
         "emmett johnson"
       ],
-      "retrieved_at": "2026-08-25T13:22:53+00:00",
+      "retrieved_at": "2026-08-26T12:52:07+00:00",
       "source_id": "fantrax_handcuffs",
       "status": "ok",
       "url": "https://fantraxhq.com/6-underrated-rb-handcuffs-for-fantasy-football-in-2026/"
@@ -1540,6 +1711,7 @@
         "jadarian price",
         "treveyon henderson",
         "rhamondre stevenson",
+        "patrick mahomes",
         "jaylen warren",
         "rico dowdle",
         "kenny gainwell",
@@ -1586,7 +1758,7 @@
         "emanuel wilson",
         "phil mafah"
       ],
-      "retrieved_at": "2026-08-25T13:22:55+00:00",
+      "retrieved_at": "2026-08-26T12:52:08+00:00",
       "source_id": "athlon_rb2_tiers_yahoo_mirror",
       "status": "ok",
       "url": "https://sports.yahoo.com/articles/2026-fantasy-football-rb2-tiers-234759356.html"
@@ -1623,6 +1795,7 @@
         "jadarian price",
         "treveyon henderson",
         "rhamondre stevenson",
+        "patrick mahomes",
         "jaylen warren",
         "rico dowdle",
         "tony pollard",
@@ -1663,7 +1836,7 @@
         "emari demercado",
         "dj giddens"
       ],
-      "retrieved_at": "2026-08-25T13:22:56+00:00",
+      "retrieved_at": "2026-08-26T12:52:09+00:00",
       "source_id": "yahoo_top_handcuffs",
       "status": "ok",
       "url": "https://sports.yahoo.com/articles/top-6-rb-handcuffs-target-202618605.html"

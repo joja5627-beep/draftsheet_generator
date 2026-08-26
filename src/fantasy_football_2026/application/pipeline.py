@@ -18,6 +18,8 @@ from fantasy_football_2026.consensus.common import CachedArticleClient
 from fantasy_football_2026.consensus.handcuffs import HandcuffConsensusBuilder
 from fantasy_football_2026.consensus.sleepers import SleeperConsensusBuilder
 from fantasy_football_2026.constants import (
+    HANDCUFF_HIGHLIGHT_COLOR,
+    SLEEPER_HIGHLIGHT_COLOR,
     TOTAL_RANKED_PLAYERS,
     CacheName,
     ContextFile,
@@ -25,13 +27,11 @@ from fantasy_football_2026.constants import (
     StageName,
 )
 from fantasy_football_2026.domain.draft import DraftContextBuilder, DraftContextInputs
+from fantasy_football_2026.domain.normalization import normalize_name
 from fantasy_football_2026.domain.rankings import update_reweighted_rankings
 from fantasy_football_2026.infrastructure.storage import DEFAULT_STORE, ArtifactStore
-from fantasy_football_2026.presentation.pdf import highlight_draft_rounds, reflow_draft_sheet
-from fantasy_football_2026.sources.depth_charts import (
-    load_draft_sheet_context,
-    update_depth_chart_context,
-)
+from fantasy_football_2026.presentation.pdf import render_reweighted_template_pdf
+from fantasy_football_2026.sources.depth_charts import update_depth_chart_context
 from fantasy_football_2026.sources.injuries import update_injury_context
 from fantasy_football_2026.sources.market import update_market_context
 from fantasy_football_2026.sources.projections import ProjectionContextBuilder
@@ -209,7 +209,12 @@ class SleeperConsensusStage(PipelineStage):
 
 class HandcuffConsensusStage(PipelineStage):
     name = StageName.HANDCUFF_CONSENSUS
-    dependencies = (StageName.MARKET, StageName.DEPTH_CHARTS, StageName.INJURIES)
+    dependencies = (
+        StageName.MARKET,
+        StageName.DEPTH_CHARTS,
+        StageName.INJURIES,
+        StageName.PROJECTIONS,
+    )
 
     def run(self, context: PipelineContext) -> StageResult:
         paths = context.paths
@@ -218,6 +223,7 @@ class HandcuffConsensusStage(PipelineStage):
             market_path=paths.context_file(ContextFile.MARKET_JSON),
             depth_path=paths.context_file(ContextFile.PLAYER_DEPTH_JSON),
             injury_path=paths.context_file(ContextFile.INJURIES_JSON),
+            projections_path=paths.context_file(ContextFile.PROJECTIONS_JSON),
             client=CachedArticleClient(
                 cache_dir=paths.cache / CacheName.HANDCUFF_SOURCES,
                 refresh=context.config.refresh,
@@ -258,30 +264,46 @@ class UnifiedContextStage(PipelineStage):
 
 class SourceOrderPdfStage(PipelineStage):
     name = StageName.SOURCE_ORDER_PDF
-    dependencies = (StageName.UNIFIED_CONTEXT,)
+    dependencies = (StageName.RANKINGS,)
 
     def run(self, context: PipelineContext) -> StageResult:
         paths = context.paths
-        paths.temporary.mkdir(parents=True, exist_ok=True)
-        temporary = paths.temporary / f".{paths.source_pdf.stem}-expanded-layout.pdf"
-        output = paths.output_pdf(f"{paths.source_pdf.stem}-{context.config.teams}-team-rounds.pdf")
-        try:
-            reflow_draft_sheet(paths.source_pdf, temporary, teams=context.config.teams)
-            result = highlight_draft_rounds(
-                temporary,
-                output,
-                teams=context.config.teams,
-                draft_context_labels=load_draft_sheet_context(
-                    paths.context_file(ContextFile.DRAFT_CONTEXT_JSON)
-                ),
-            )
-        finally:
-            temporary.unlink(missing_ok=True)
+        output = paths.output_pdf(OutputFile.REWEIGHTED_PDF)
+        legacy_output = paths.output_pdf(
+            f"{paths.source_pdf.stem}-{context.config.teams}-team-rounds.pdf"
+        )
+        rankings = DEFAULT_STORE.load_object(paths.context_file(ContextFile.REWEIGHTED_JSON))
+        rank_mapping, _, _, highlight_colors = _template_pdf_contract(
+            rankings=rankings,
+            sleepers=DEFAULT_STORE.load_object(
+                paths.context_file(ContextFile.SLEEPER_CONSENSUS_JSON)
+            ),
+            handcuffs=DEFAULT_STORE.load_object(
+                paths.context_file(ContextFile.HANDCUFF_CONSENSUS_JSON)
+            ),
+        )
+        players = rankings.get("players")
+        if not isinstance(players, list):
+            raise PipelineError("Template PDF requires reweighted player rows.")
+        result = render_reweighted_template_pdf(
+            paths.source_pdf,
+            output,
+            teams=context.config.teams,
+            players=players,
+            row_highlight_colors=highlight_colors,
+        )
+        outputs = [output]
+        if context.config.build_legacy_pdf:
+            DEFAULT_STORE.write_bytes(legacy_output, output.read_bytes())
+            outputs.append(legacy_output)
         return StageResult(
-            (output,),
+            tuple(outputs),
             {
-                "ranks": len(result.ranks_found),
-                "rounds": len(result.rounds_found),
+                "ranks": TOTAL_RANKED_PLAYERS,
+                "rounds": (TOTAL_RANKED_PLAYERS + context.config.teams - 1) // context.config.teams,
+                "pages": result.page_count,
+                "reordered_players": sum(source != final for source, final in rank_mapping.items()),
+                "target_highlights": len(highlight_colors),
             },
         )
 
@@ -299,7 +321,6 @@ class RankingStage(PipelineStage):
 
     def run(self, context: PipelineContext) -> StageResult:
         paths = context.paths
-        pdf_path = paths.output_pdf(OutputFile.REWEIGHTED_PDF)
         result = update_reweighted_rankings(
             market_path=paths.context_file(ContextFile.MARKET_JSON),
             depth_path=paths.context_file(ContextFile.PLAYER_DEPTH_JSON),
@@ -313,7 +334,6 @@ class RankingStage(PipelineStage):
             audit_json_path=paths.context_file(ContextFile.SOURCE_AUDIT_JSON),
             audit_markdown_path=paths.context_file(ContextFile.SOURCE_AUDIT_MARKDOWN),
             csv_path=paths.output_cheat_sheet(OutputFile.REWEIGHTED_CSV),
-            pdf_path=pdf_path,
             teams=context.config.teams,
         )
         return StageResult(
@@ -323,7 +343,6 @@ class RankingStage(PipelineStage):
                 paths.context_file(ContextFile.SOURCE_AUDIT_JSON),
                 paths.context_file(ContextFile.SOURCE_AUDIT_MARKDOWN),
                 paths.output_cheat_sheet(OutputFile.REWEIGHTED_CSV),
-                pdf_path,
             ),
             result,
         )
@@ -331,7 +350,11 @@ class RankingStage(PipelineStage):
 
 class ValidationStage(PipelineStage):
     name = StageName.VALIDATION
-    dependencies = (StageName.UNIFIED_CONTEXT, StageName.RANKINGS)
+    dependencies = (
+        StageName.UNIFIED_CONTEXT,
+        StageName.RANKINGS,
+        StageName.SOURCE_ORDER_PDF,
+    )
 
     def __init__(self, *, store: ArtifactStore = DEFAULT_STORE) -> None:
         self.store = store
@@ -340,6 +363,7 @@ class ValidationStage(PipelineStage):
         paths = context.paths
         unified = self.store.load_object(paths.context_file(ContextFile.DRAFT_CONTEXT_JSON))
         rankings = self.store.load_object(paths.context_file(ContextFile.REWEIGHTED_JSON))
+        source_audit = self.store.load_object(paths.context_file(ContextFile.SOURCE_AUDIT_JSON))
         unified_players = unified.get("players", [])
         ranked_players = rankings.get("players", [])
         value_policy = rankings.get("metadata", {}).get("round_value_highlight_policy", {})
@@ -358,6 +382,8 @@ class ValidationStage(PipelineStage):
             if player.get("round_value_pick") is True:
                 selected_value_counts[draft_round] = selected_value_counts.get(draft_round, 0) + 1
         checks = {
+            "ranking_anomaly_audit": source_audit.get("status") == "PASS"
+            and source_audit.get("ranking_anomalies", {}).get("unresolved_count") == 0,
             "unified_player_count": len(unified_players) == TOTAL_RANKED_PLAYERS,
             "unified_ranks_contiguous": [player.get("rank") for player in unified_players]
             == list(range(1, TOTAL_RANKED_PLAYERS + 1)),
@@ -433,11 +459,69 @@ class FantasyPipelineFactory:
             SleeperConsensusStage(),
             HandcuffConsensusStage(),
             UnifiedContextStage(),
+            RankingStage(),
+            SourceOrderPdfStage(),
+            ValidationStage(),
         ]
-        if config.build_legacy_pdf:
-            stages.append(SourceOrderPdfStage())
-        stages.extend((RankingStage(), ValidationStage()))
         return tuple(stages)
+
+
+def _template_pdf_contract(
+    *,
+    rankings: dict[str, object],
+    sleepers: dict[str, object],
+    handcuffs: dict[str, object],
+) -> tuple[
+    dict[int, int],
+    dict[int, str],
+    dict[int, tuple[str, str, str, str, str]],
+    dict[int, str],
+]:
+    players = rankings.get("players")
+    if not isinstance(players, list) or len(players) != TOTAL_RANKED_PLAYERS:
+        raise PipelineError("Template PDF requires the complete reweighted Top 300.")
+
+    sleeper_names = {
+        normalize_name(str(item.get("player") or ""))
+        for key in ("sleepers", "rookie_breakout_candidates")
+        for item in sleepers.get(key, [])
+        if isinstance(item, dict) and item.get("player")
+    }
+    handcuff_names = {
+        normalize_name(str(item.get("player") or ""))
+        for item in handcuffs.get("candidates", [])
+        if isinstance(item, dict) and item.get("player") and item.get("highlighted") is True
+    }
+    rank_mapping: dict[int, int] = {}
+    position_labels: dict[int, str] = {}
+    context_labels: dict[int, tuple[str, str, str, str, str]] = {}
+    highlight_colors: dict[int, str] = {}
+    for player in players:
+        if not isinstance(player, dict):
+            raise PipelineError("Template PDF ranking rows must be objects.")
+        source_rank = int(player["source_rank"])
+        final_rank = int(player["final_rank"])
+        rank_mapping[source_rank] = final_rank
+        position_labels[final_rank] = str(player["position_rank"])
+        context_labels[final_rank] = (
+            str(player.get("depth_chart_label") or "--"),
+            str(player.get("offense_rank") or "--"),
+            str(player.get("offensive_line_rank") or "--"),
+            str(player.get("strength_of_schedule_rank") or "--"),
+            str(player.get("injury_weeks") or "--"),
+        )
+        name = normalize_name(str(player.get("name") or ""))
+        if name in handcuff_names:
+            highlight_colors[final_rank] = HANDCUFF_HIGHLIGHT_COLOR
+        elif name in sleeper_names or player.get("round_value_pick") is True:
+            highlight_colors[final_rank] = SLEEPER_HIGHLIGHT_COLOR
+
+    expected = set(range(1, TOTAL_RANKED_PLAYERS + 1))
+    if set(rank_mapping) != expected or set(rank_mapping.values()) != expected:
+        raise PipelineError("Template PDF ranks must map source ranks 1-300 to final ranks 1-300.")
+    if set(position_labels) != expected:
+        raise PipelineError("Template PDF positional labels must cover final ranks 1-300.")
+    return rank_mapping, position_labels, context_labels, highlight_colors
 
 
 def default_pipeline(

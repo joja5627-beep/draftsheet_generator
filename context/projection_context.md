@@ -1,6 +1,6 @@
 # Custom-scored projection value
 
-**Generated:** `2026-08-25T15:53:53+00:00`  
+**Generated:** `2026-08-26T14:32:48+00:00`
 **Matched ranked skill players:** 260  
 
 The simple mean of ESPN Mike Clay and FFToday raw-stat projections is scored under the league's base rules. RB/WR baselines come from a league-wide starter and flex simulation; one-QB and one-TE baselines use the configured median-starter correction. K/DST receive no projected-value premium because they are streamable and historically difficult to project.

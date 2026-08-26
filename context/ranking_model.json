@@ -1,5 +1,5 @@
 {
-  "model_version": "3.3.0",
+  "model_version": "3.4.0",
   "description": "Projection-first custom-league value model. Aggregated raw-stat projections are scored under league rules and converted to corrected value over baseline; market and live context remain conservative guardrails.",
   "weights": {
     "custom_projected_value": 0.60,
@@ -12,8 +12,9 @@
   "risk_penalty_cap": 8.0,
   "movement_anchor": {
     "strategy": "weighted_consensus_order",
+    "aggregation": "equal_source_mean",
     "tie_breaker": "espn_source_rank",
-    "rule": "Order the baseline by the weighted ESPN, FantasyPros, and FFToday consensus; use ESPN only as the deterministic tie-breaker and lineage reference."
+    "rule": "Order the baseline by the simple mean of all available ranks from ESPN, FantasyPros, FFToday, RotoBaller, Fantasy Football Calculator, LineupBeat, and Pro Football Mania; use ESPN only as the deterministic tie-breaker and lineage reference."
   },
   "injury_adjustment": {
     "availability_penalty_per_game": 0.65,
@@ -33,7 +34,17 @@
   "same_team_depth_chart_tiebreaker": {
     "positions": ["QB", "RB", "TE"],
     "minimum_score_advantage": 0.0,
-    "rule": "When comparable teammates are inverted, promote the better depth-chart role only when it also has the higher adjusted score and both movement caps remain valid."
+    "rule": "When comparable teammates are inverted, promote the better depth-chart role when its adjusted score is no lower and both movement caps remain valid."
+  },
+  "consensus_anomaly_guardrail": {
+    "minimum_sources": 5,
+    "rank_band_tolerances": [
+      {"minimum_rank": 1, "maximum_rank": 24, "spots": 8},
+      {"minimum_rank": 25, "maximum_rank": 72, "spots": 12},
+      {"minimum_rank": 73, "maximum_rank": 144, "spots": 20},
+      {"minimum_rank": 145, "maximum_rank": 300, "spots": 32}
+    ],
+    "rule": "Flag any final rank outside the rank-band tolerance around the seven-source median. A downward exception is resolved only when corroborated injury evidence expands the downside movement allowance; all other exceptions fail validation."
   },
   "league_structure": {
     "starting_slots": {
@@ -73,7 +84,11 @@
     "baseline_consensus": [
       {"name": "ESPN 2026 PPR Top 300", "role": "projection baseline", "url": "https://g.espncdn.com/s/ffldraftkit/26/NFL26_CS_PPR300.pdf?adddata=2026CS_PPR300"},
       {"name": "FantasyPros half-PPR ECR", "role": "multi-expert consensus", "url": "https://www.fantasypros.com/nfl/rankings/half-point-ppr-cheatsheets.php"},
-      {"name": "FFToday half-PPR ADP", "role": "Underdog and Yahoo market price", "url": "https://www.fftoday.com/rankings/26-adp-half-ppr.html"}
+      {"name": "FFToday half-PPR ADP", "role": "Underdog and Yahoo market price", "url": "https://www.fftoday.com/rankings/26-adp-half-ppr.html"},
+      {"name": "RotoBaller half-PPR Top 300", "role": "independent accurate-ranker board", "url": "https://www.rotoballer.com/fantasy-football-draft-rankings-august-updates-2026/1905031"},
+      {"name": "Fantasy Football Calculator half-PPR", "role": "daily mock-draft market", "url": "https://fantasyfootballcalculator.com/rankings/half-ppr"},
+      {"name": "LineupBeat half-PPR Top 200", "role": "projection and replacement-value board", "url": "https://lineupbeat.com/nfl/rankings/"},
+      {"name": "Pro Football Mania half-PPR", "role": "editorial board with mock-ADP context", "url": "https://profootballmania.com/fantasy-football-rankings/"}
     ],
     "opportunity": [
       {"name": "Sleeper NFL player API", "role": "primary live roster depth", "url": "https://api.sleeper.app/v1/players/nfl?active=true"},

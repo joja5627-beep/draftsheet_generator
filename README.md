@@ -1,29 +1,38 @@
 # Fantasy Football 2026 PDF Tools
 
-This Poetry project builds a reproducible, league-adjusted fantasy-football cheat sheet
-and retains the original source-order PDF annotation tool.
+This Poetry project builds a reproducible, league-adjusted fantasy-football cheat sheet by
+reusing the original ESPN Top 300 design. The source PDF stays untouched; the generated
+two-page, double-sided copy reorders its player rows using the custom model and adds live
+context. Each side uses two wider 75-player columns for draft-day readability.
+Overall and parenthesized positional ranks are both recalculated from that final order.
 For a 12-team draft, overall ranks 1-12 are round 1, ranks 13-24 are round 2, and so
 on through ranks 289-300 in round 25.
 
 The default style uses clean light-blue (`#75AADB`) boundary lines and small round
-labels placed in the removed salary slots. It does not shade the player rows, so names
-and team depth-chart slots stay clear. Salary-cap dollar values are removed by default,
-and the neighboring bye-week area is replaced by five compact columns: current Sleeper
-depth-chart slot (`DC`), projected team offense rank (`OFF`), and projected offensive-
-line rank (`OL`), plus position-specific fantasy strength of schedule (`SOS`, where 1 is
-easiest and 32 hardest), and projected regular-season fantasy weeks missed (`INJ`). Each
+labels placed in the removed salary slots. It does not shade entire draft rounds; only
+automated target rows receive the pale yellow or lavender fills. Salary-cap dollar values are
+removed by default, and every ranking column is divided into contiguous lanes that use its
+full printable width. The compact rank lane shifts player names left, while the expanded and
+larger-type context lanes remove the unused gap before the added data. A signed movement
+column (`MOV`) shows each player's change from the
+seven-source consensus anchor (`+` means promoted, `-` means demoted, and `0` means unchanged).
+It is followed by five compact context columns: current Sleeper depth-chart slot (`DC`),
+projected team offense rank (`OFF`), and projected offensive-line rank (`OL`), plus
+position-specific fantasy strength of schedule (`SOS`, where 1 is easiest and 32 hardest),
+and projected regular-season fantasy weeks missed (`INJ`). Each
 value uses one coordinated, muted palette: green (`#34785B`)
 for favorable ranks 1-10 or a first-string depth-chart slot, amber-yellow (`#956B1D`) for
 ranks 11-22 or second string, and red (`#A84F52`) for ranks 23-32, third string or deeper,
 and unavailable data. For `INJ`, green is 0 weeks, yellow is 1-2 weeks, and red is 3+
 weeks or an unresolved active injury. A color index is printed above the rankings. Player
-names are compacted to 4.5 pt, while the fixed five-column metric grid uses 4.1 pt condensed
+names are compacted to 4.5 pt, while the fixed context metric grid uses 4.1 pt condensed
 bold values (3.9 pt for longer injury ranges) so all lanes remain aligned and separated.
 The default output removes the source footer
 and redistributes its space into larger
 row gaps, with extra room around every round divider.
 The source PDF remains untouched: `pdfplumber` detects the ranking rows, `reportlab`
-draws the line overlay, and `pypdf` merges that overlay into a new file.
+redraws them in custom-rank order and adds the context/highlight overlays, and `pypdf`
+merges those layers into a new file that retains the ESPN template.
 
 ## Repository policy
 
@@ -65,7 +74,7 @@ poetry build
 ## One-command rebuild
 
 Refresh every automated source, rebuild the normalized context, reweight the Top 300,
-write the source audit and CSV, and regenerate both PDFs:
+write the source audit and CSV, and regenerate the ESPN-template PDF:
 
 ```bash
 poetry run fantasy-rebuild --refresh
@@ -91,10 +100,10 @@ The rebuild order is fixed and fail-closed:
 
 ```text
 team offense/OL -> schedule -> injuries -> Sleeper + ESPN depth charts
-         -> ESPN/FantasyPros/FFToday market
+         -> seven-source expert/market consensus
          -> ESPN Mike Clay + FFToday raw-stat projection ensemble
          -> sleeper/rookie consensus + RB handcuff consensus -> unified player context
-         -> source-order annotated PDF + weighted ranking model -> validation/manifest
+         -> weighted ranking model -> reordered ESPN-template PDF -> validation/manifest
 ```
 
 Primary outputs:
@@ -115,15 +124,17 @@ Primary outputs:
 - `context/reweighted_cheat_sheet.md` - readable version of the complete calculation
 - `context/source_audit.json` and `.md` - coverage, freshness, and unsupported-signal audit
 - `output/cheat_sheet/reweighted_cheat_sheet.csv` - sortable draft-day data
-- `output/pdf/fantasy-football-2026-reweighted-cheat-sheet.pdf` - the actual reordered board
-  with labeled `R2`-`R25` divider lanes for a 12-team league
-- `output/pdf/NFL26_CS_PPR300-12-team-rounds.pdf` - the ESPN-order annotated reference
+- `output/pdf/fantasy-football-2026-reweighted-cheat-sheet.pdf` - the primary two-page,
+  double-sided deliverable: the original ESPN design with rows moved into custom-rank order, labeled
+  `R2`-`R25` divider lanes, five context columns, and target highlights
+- `output/pdf/NFL26_CS_PPR300-12-team-rounds.pdf` - an identical compatibility copy under
+  the earlier source-derived filename
 - `context/context_validation.json` - machine-readable invariant checks for both 300-player
   datasets and every required PDF field
 - `context/build_manifest.json` - stage timing, status, metrics, and SHA-256 hashes for every
   generated artifact; failed runs record the exact stage and error
 
-The reweighted PDF uses palette-matched yellow for every current sleeper or rookie target from
+The reweighted ESPN-template PDF uses palette-matched yellow for every current sleeper or rookie target from
 `context/sleeper_consensus.json` and for one automated value pick in each draft round. A round
 value is the non-kicker/non-defense player with the largest positive gap between the blended
 consensus anchor and the rank supported by the complete adjusted score. The model stores the
@@ -131,11 +142,12 @@ score-supported rank, value delta, draft round, and selection flag in the genera
 CSV so every yellow value designation is auditable and refreshes on the next rebuild.
 
 Eligible running back handcuffs from `context/handcuff_consensus.json` remain pale lavender.
-Both keys appear on every page. Handcuffs require current RB2 status, candidate health, and
-mentions from at least two independent publisher families; RB3 and single-source candidates
-remain in the generated watchlist without a highlight. If a player qualifies for both yellow
-and handcuff categories, lavender takes precedence so the handcuff role stays visible. No
-highlight category depends on a hard-coded player list.
+Both keys appear in the legend on each side. Handcuffs require current RB2 status, candidate health,
+mentions from at least two independent publisher families, and no more than 30% of the
+starter-plus-candidate projected fantasy points. That workload gate keeps committee backs,
+RB3s, and unresolved roles in the generated watchlist without a highlight. If a player
+qualifies for both yellow and handcuff categories, lavender takes precedence so the handcuff
+role stays visible. No highlight category depends on a hard-coded player list.
 
 ### Ranking contract
 
@@ -152,11 +164,12 @@ uses every normalized signal in the score:
 - availability-adjusted projections plus capped 0-8 residual injury risk
 ```
 
-The weighted ESPN/FantasyPros/FFToday consensus establishes the baseline order and movement
-anchor; ESPN remains only the deterministic tie-breaker and lineage reference. The order
+The equal-source mean of ESPN, FantasyPros, FFToday, RotoBaller, Fantasy Football Calculator,
+LineupBeat, and Pro Football Mania establishes the baseline order and movement anchor; ESPN
+remains only the deterministic tie-breaker and lineage reference. The order
 normally changes only when the adjusted-score difference reaches two points.
 One deterministic tiebreaker corrects same-team QB, RB, or TE role inversions when the
-better depth-chart role also has the higher adjusted score. It never forces a starter over a
+better depth-chart role has an equal or higher adjusted score. It never forces a starter over a
 more valuable backup, and it still respects both players' movement caps. Ordinary movement
 is capped at 2 spots for ranks 1-24, 4 for 25-72, 8 for 73-144, and 12 after rank 144. This
 keeps context from turning a modest edge into a multi-tier leap.
@@ -184,8 +197,9 @@ See `context/weighting_strategy_research.md` for the comparison and evidence bou
 
 ### Source and freshness policy
 
-- Baseline: ESPN PPR Top 300, FantasyPros half-PPR expert consensus, and FFToday's
-  Underdog/Yahoo half-PPR ADP blend
+- Baseline: simple mean of every available rank from ESPN, FantasyPros, FFToday, RotoBaller,
+  Fantasy Football Calculator, LineupBeat, and Pro Football Mania. The source median and range
+  feed an automated unresolved-anomaly validation gate.
 - Projected value: simple mean of ESPN Mike Clay and FFToday raw-stat projections,
   rescored from the league export on each rebuild
 - Opportunity: Sleeper depth order plus ESPN's independent team depth charts
@@ -280,14 +294,17 @@ poetry run fantasy-pdf inspect NFL26_CS_PPR300.pdf
 This verifies that the tool detects ranks 1-300 and the four printed ranking columns
 before it changes anything.
 
-## Create only the source-order highlighted sheet
+## Create a source-order context-only sheet
 
 ```bash
 poetry run fantasy-rebuild --refresh
 poetry run fantasy-pdf highlight-rounds NFL26_CS_PPR300.pdf
 ```
 
-This also refreshes `context/team_projections.json`, then writes `context/player_depth_charts.md` and
+The standalone `fantasy-pdf` command keeps ESPN order and only adds context. The full
+`fantasy-rebuild` pipeline instead moves the same source rows into custom-rank order. The
+standalone workflow also refreshes `context/team_projections.json`, then writes
+`context/player_depth_charts.md` and
 `context/player_depth_charts.json`, merging the dated team rankings in
 `context/team_projections.json` and the position-specific schedule ranks in
 `context/strength_of_schedule.json`, plus the injury-week labels in
@@ -315,8 +332,7 @@ poetry run fantasy-sleepers --refresh
 poetry run fantasy-handcuffs --refresh
 ```
 
-This cross-references ESPN PPR rank, FantasyPros half-PPR expert consensus, and
-FFToday's half-PPR ADP in `context/market_context.md` and
+This cross-references all seven expert and market ranks in `context/market_context.md` and
 `context/market_context.json`. `context/sleeper_sources.json` is the maintainable source
 catalog; article pages are cached under `context/cache/sleeper_sources/`. The generated
 boards live in `context/sleeper_consensus.md` and `.json`. Their consensus counts each
@@ -327,8 +343,10 @@ fails closed if fewer than the configured minimum number of pages are available.
 `context/handcuff_sources.json` maintains the independent handcuff source catalog. Pages
 are cached under `context/cache/handcuff_sources/`, and the builder deduplicates publisher
 families before checking every mentioned player against the automated RB depth and injury
-feeds. Its generated board lives in `context/handcuff_consensus.md` and `.json` and follows
-the same fail-closed source-coverage policy.
+feeds. It also checks league-scored projections and only promotes backs projected for 30% or
+less of the top-two backfield points; larger shares are treated as committee profiles. Its
+generated board lives in `context/handcuff_consensus.md` and `.json` and follows the same
+fail-closed source-coverage policy.
 
 To adjust the league size or line color:
 

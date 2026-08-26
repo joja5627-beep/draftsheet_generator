@@ -1,8 +1,9 @@
 {
-  "schema_version": "1.0.0",
-  "policy": "Each publisher family contributes at most one vote. Player names must appear in the refreshed page and candidates must also be current live RB2/RB3 depth-chart entries.",
+  "schema_version": "1.1.0",
+  "policy": "Each publisher family contributes at most one vote. Player names must appear in the refreshed page and candidates must also be current live RB2/RB3 depth-chart entries. Targets must project for no more than 30% of the starter-plus-candidate fantasy points so committee backs remain watchlist-only.",
   "minimum_available_sources": 5,
   "minimum_families_to_highlight": 2,
+  "maximum_top_two_projected_points_share": 0.3,
   "sources": [
     {
       "id": "fantasypros_handcuffs",
