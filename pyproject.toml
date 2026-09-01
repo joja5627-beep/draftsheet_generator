@@ -17,7 +17,7 @@ classifiers = [
 dependencies = [
     "pdfplumber>=0.11,<1.0",
     "pymupdf>=1.26,<2",
-    "pypdf>=5,<7",
+    "pypdf>=6.16.2,<7",
     "reportlab>=4.2,<5",
 ]
 
