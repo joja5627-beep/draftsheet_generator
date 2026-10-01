@@ -42,7 +42,7 @@ include = ["src/fantasy_football_2026/py.typed"]
 
 [tool.poetry.group.dev.dependencies]
 pytest = ">=8,<10"
-ruff = ">=0.12,<1"
+ruff = ">=0.16.9,<1"
 
 [tool.pytest.ini_options]
 addopts = "-q --strict-config --strict-markers"
