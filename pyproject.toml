@@ -41,7 +41,7 @@ packages = [
 include = ["src/fantasy_football_2026/py.typed"]
 
 [tool.poetry.group.dev.dependencies]
-pytest = ">=8,<10"
+pytest = ">=9.2.0,<10"
 ruff = ">=0.12,<1"
 
 [tool.pytest.ini_options]
